@@ -1,0 +1,58 @@
+create database DBAlasGt;
+use DBAlasGt;
+
+create table tipoUsuario(
+	tipoUsuarioId tinyint auto_increment not null,
+    tipoUsuarioDesc varchar(100) not null,
+    primary key PK_tipoUsuario (tipoUsuarioId)
+);
+
+create table estadoPedido(
+	estadoPedidoId tinyint auto_increment not null,
+    estadoPedidoDesc varchar(100) not null,
+    primary key PK_estadoPedido (estadoPedidoId)
+);
+
+create table Usuario(
+	usuarioId int auto_increment not null,
+    userName varchar(25) unique not null,
+    usuarioNombre varchar(50) not null,
+    usuarioApellido varchar(50) not null,
+    usuarioTelefono varchar(8) unique not null,
+    usuarioContrasena varchar(20) not null,
+    tipoUsuarioId tinyint not null,
+    primary key PK_usuario (usuarioId),
+	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId)
+);
+
+create table Pedido(
+	pedidoId int auto_increment not null,
+    pedidoFecha date not null,
+    pedidoDesc varchar(50) not null,
+    pedidoTelefonoReceptor varchar(8) not null,
+    pedidoDireccion varchar(50) not null,
+    pedidoMensajeroId int,
+    pedidoUsuarioId int not null,
+    pedidoEstadoId tinyint,
+    primary key PK_pedido (pedidoId),
+    constraint FK_Pedido_Mensajero foreign key (pedidoMensajeroId) references Usuario(UsuarioId),
+    constraint FK_Pedido_Usuario foreign key (pedidoUsuarioId) references Usuario(UsuarioId),
+    constraint FK_Pedido_PedidoEstado foreign key (pedidoEstadoId) references estadoPedido(estadoPedidoId)
+);
+
+create table Sala(
+	salaId int auto_increment not null,
+    salaDesc varchar(50) not null,
+    primary key PK_sala (salaId)
+);
+
+create table Mensaje(
+	mensajeId int auto_increment not null,
+    mensajeSalaId int not null, 
+    mensajeUsuarioId int not null,
+    mensajeDesc varchar(1000) not null,
+    mensajeFecha date not null,
+    primary key PK_mensaje (mensajeId),
+    constraint FK_Mensaje_Sala foreign key (mensajeSalaId) references Sala(salaId),
+    constraint FK_Mensaje_Usuario foreign key (mensajeUsuarioId) references Usuario(usuarioId)
+);
