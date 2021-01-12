@@ -3,22 +3,26 @@ use DBAlasGt;
 
 create table tipoUsuario(
 	tipoUsuarioId tinyint auto_increment not null,
-    tipoUsuarioDesc varchar(100) not null,
+    tipoUsuarioDesc varchar(25) not null,
     primary key PK_tipoUsuario (tipoUsuarioId)
 );
 
 create table estadoPedido(
 	estadoPedidoId tinyint auto_increment not null,
-    estadoPedidoDesc varchar(100) not null,
+    estadoPedidoDesc varchar(25) not null,
     primary key PK_estadoPedido (estadoPedidoId)
 );
 
+create table formaPago(
+	formaPagoId tinyint auto_increment not null,
+    formaPagoDesc varchar(10) unique not null,
+    primary key PK_formaPago (formaPagoId)
+);
 create table Usuario(
 	usuarioId int auto_increment not null,
     userName varchar(25) unique not null,
     usuarioNombre varchar(50) not null,
     usuarioApellido varchar(50) not null,
-    usuarioTelefono varchar(8) unique not null,
     usuarioContrasena varchar(20) not null,
     tipoUsuarioId tinyint not null,
     primary key PK_usuario (usuarioId),
@@ -33,11 +37,16 @@ create table Pedido(
     pedidoDireccion varchar(50) not null,
     pedidoMensajeroId int,
     pedidoUsuarioId int not null,
+    pedidoMonto decimal not null,
+    pedidoCosto decimal,
+    pedidoFormaPagoId tinyint,
     pedidoEstadoId tinyint,
+    pedidoComentario varchar(100),
     primary key PK_pedido (pedidoId),
     constraint FK_Pedido_Mensajero foreign key (pedidoMensajeroId) references Usuario(UsuarioId),
     constraint FK_Pedido_Usuario foreign key (pedidoUsuarioId) references Usuario(UsuarioId),
-    constraint FK_Pedido_PedidoEstado foreign key (pedidoEstadoId) references estadoPedido(estadoPedidoId)
+    constraint FK_Pedido_PedidoEstado foreign key (pedidoEstadoId) references estadoPedido(estadoPedidoId),
+    constraint FK_Pedido_FormaPago foreign key (pedidoFormaPagoId) references formaPago(formaPagoId)
 );
 
 create table Sala(

@@ -13,10 +13,10 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure SP_AgregarTipoUsuario(tipoUsuarioId tinyint, descripcion varchar(100))
+	create procedure SP_AgregarTipoUsuario(descripcion varchar(100))
 		begin
-			insert into tipousuario(tipoUsuarioId, tipoUsuarioDesc)
-				values(tipoUsuarioId, descripcion);
+			insert into tipousuario(tipoUsuarioDesc)
+				values(descripcion);
         end $$
 DELIMITER ;
 
@@ -56,10 +56,10 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_AgregarEstadoPedido(estado tinyint, descripcion varchar(100))
+	create procedure Sp_AgregarEstadoPedido(descripcion varchar(100))
 		begin
-			insert into estadopedido(estadoPedidoId, estadoPedidoDesc)
-				values(estado, descripcion);
+			insert into estadopedido(estadoPedidoDesc)
+				values(descripcion);
         end $$
 DELIMITER ;
 
@@ -79,6 +79,38 @@ DELIMITER $$
 		begin
 			delete from estadoPedido
 				where estadoPedidoId = idBuscado;
+        end $$
+DELIMITER ;
+
+
+#FormaPago
+
+DELIMITER $$
+	create procedure Sp_ListarFormaPago()
+		begin
+			select 
+				fp.formaPagoId,
+                fp.formaPagoDesc
+					from 
+						formaPago as fp;
+        end $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure Sp_AgregarFormaPago(descripcion varchar(10))
+		begin
+			insert into formaPago(formaPagoDesc)
+				values(descripcion);
+        end $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure Sp_EliminarFormaPago(idBuscado tinyint)
+		begin
+			delete from formaPago 
+				where formaPagoId = idBuscado;
         end $$
 DELIMITER ;
 
@@ -103,22 +135,21 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_AgregarUsuario(username varchar(25), nombre varchar(50), apellido varchar(50), telefono varchar(8), contrasena varchar(20), tipoUsuario tinyint)
+	create procedure Sp_AgregarUsuario(username varchar(25), nombre varchar(50), apellido varchar(50),contrasena varchar(20), tipoUsuario tinyint)
 		begin
-			insert into Usuario(userName,usuarioNombre,usuarioApellido,usuarioTelefono,usuarioContrasena,tipousuarioId)
+			insert into Usuario(userName,usuarioNombre,usuarioApellido,usuarioContrasena,tipousuarioId)
 				values(username,nombre,apellido,telefono,tipoUsuario);
         end $$
 DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ActualizarUsuario(idBuscado int,nuevoUsername varchar(25), nuevoNombre varchar(50), nuevoApellido varchar(50), nuevoTelefono varchar(8), nuevaContrasena varchar(20))
+	create procedure Sp_ActualizarUsuario(idBuscado int,nuevoUsername varchar(25), nuevoNombre varchar(50), nuevoApellido varchar(50), nuevaContrasena varchar(20))
 		begin
 			update Usuario 
 				set userName = nuevoUsername,
 					usuarioNombre = nuevoNombre,
 					usuarioApellido = nuevoApellido,
-                    usuarioTelefono = nuevoTelefono,
                     usuarioContrasena = nuevaContrasena
 						where usuarioId = idBuscado;
         end $$
@@ -155,39 +186,52 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_AgregarPedido(fecha date, descripcion varchar(50), telefonoReceptor varchar(8), direccion varchar(50),usuario int, estado tinyint)
+	create procedure Sp_AgregarPedido(fecha date, direccion varchar(50), usuario int, telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
 		begin
-			insert into Pedido(pedidoFecha,pedidoDesc,pedidoTelefonoReceptor,pedidoDireccion,pedidoMensajeroId,pedidoUsuarioId,pedidoEstadoId)
-				values(fecha, descripcion, telefonoReceptor, direccion, mensajero, usuario, estado);
+			insert into Pedido(pedidoFecha,pedidoDireccion,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoDesc,pedidoMonto,pedidoEstadoId)
+				values(fecha, direccion, usuario, telefono, descripcion, monto, estado);
         end $$
 DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ActualizarPedido(idBuscado int,nuevaDescripcion varchar(50), nuevaTelefonoReceptor varchar(8), nuevaDireccion varchar(50),nuevaUsuario int)
+	create procedure Sp_ActualizarPedido(idBuscado int,direccion varchar(50),telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
 		begin
-			update Pedido
+			update Pedido as p
 				set 
-					pedidoDesc = nuevaDescripcion,
-					pedidoTelefonoReceptor = nuevaTelefonoReceptor,
-					pedidoDireccion = nuevaDireccion,
-					pedidoUsuarioId = nuevaUsuario
+					p.pedidoDireccion = direccion,
+                    p.pedidoTelefonoReceptor = telefono,
+                    p.pedidoDesc = descripcion,
+                    p.pedidoMonto = monto,
+                    p.pedidoEstadoId = estado
 						where pedidoId = idBuscado;
 		end $$
 DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ConfirmarPedido(idBuscado int, mensajero int, estado int)
+	create procedure Sp_ConfirmarPedido(idBuscado int, mensajero int, costo decimal,estado int)
 		begin
-			update Pedido
+			update Pedido as p
 				set 
-					pedidoMensajeroId = mensajero,
-                    pedidoEstadoId = estado
+					p.pedidoMensajeroId = mensajero,
+					p.pedidoCosto = costo,
+                    p.pedidoEstadoId = estado
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
 
+
+DELIMITER $$
+	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100))
+		begin
+			update Pedido as p
+				set
+					p.pedidoFormaPagoId = formaPago, 
+					p.pedidoComentario = comentario
+						where pedidoId = idBuscado;
+        end $$
+DELIMITER ;
 
 DELIMITER $$
 	create procedure Sp_ActualizarTelefonoPedido(idBuscado int, telefono varchar(8))
