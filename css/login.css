@@ -1,0 +1,144 @@
+@font-face{
+    font-family: Cream Cake;
+    src: url("../assets/fonts/Cream\ Cake.ttf");
+}
+
+@font-face{
+    font-family: fa-regular-400;
+    src: url("../assets/fonts/fa-regular-400.ttf");
+}
+
+@font-face{
+    font-family: fa-brands-400;
+    src: url("../assets/fonts/fa-brands-400.ttf");
+}
+@font-face{
+    font-family: fa-solid-900;
+    src: url("../assets/fonts/fa-solid-900.ttf");
+}
+html{
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    
+    
+}
+.todo{
+    
+    background-image: url(../assets/images/fondo.png);
+    background-size: cover;
+    
+    padding: 0;
+    padding-top: 0;
+}
+
+.imagen_derecha{
+    width: 30%;
+    height: 15%;
+    position: absolute;
+    top: 30px;
+  
+}
+
+.imagen_izquierda{
+    
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    width: 30%;
+}
+
+.logo{
+    width: 15%;
+    margin-left: auto;
+    position: relative;
+
+}
+
+.titulos{
+    font-family: Cream Cake;
+    font-size: 66px;
+    color: #707070;
+}
+
+.inicio_sesion{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.caja{
+    text-align: center;
+    background-color: white;
+    border-radius: 25px;
+    padding: 42px;
+    padding-top: 25px;
+}
+
+.icono{
+    font-family: fa-regular-400;
+    font-size: 25px;
+    padding-right: 7px;
+    color: #432A90;
+}
+.iconoBrands{
+    font-family: fa-brands-400;
+    font-size: 25px;
+    color: #707070;
+}
+.iconoSolid{
+    font-family: fa-solid-900;
+    font-size: 25px;
+    padding-right: 7px;
+    color: #432A90;
+}
+
+.form-texto{
+
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+
+}
+
+.boton{
+    margin-top: 10px;
+    border-style: double;
+     border-width: 1px;
+     padding: 5px;
+    background-color: white;
+    border-radius: 10px;
+    font-family: Berlin Sans FB;
+    color: #432A90;
+}
+
+.boton:hover{
+    background-color: #401474;
+    color: white;
+    border-color: white;
+}
+
+.registrar{
+    font-family: Berlin Sans FB;
+    color: #432A90;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.registrar:hover{
+    cursor: pointer;
+    color: black;
+}
+.footerText{
+    font-family: Berlin Sans FB;
+    color: white;
+}
+
+.footer-background{
+    background-color: black;
+    text-align: center;
+}
