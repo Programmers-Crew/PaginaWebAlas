@@ -1,12 +1,12 @@
-<?php?>
-
+<?php
+?>
 
 
 <!DOCTYPE html>
+
 <html lang="es">
     <head>
-        <title>AlasGT</title>
-        
+        <title>AlasGT - Registrar Usuario</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" type="text/css">
@@ -23,14 +23,14 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
-    <body>     
-        <div style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
+    <body>
+    <div style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
             <section class="col-lg-12   col-xs-12  todo h-100">
                 <div class="imagen_derecha">
                     <img src="assets/images/nube derecha.png" class="img-fluid" >
                 </div>
                 <div class="logo">
-                    <img style="position: absolute;" src="assets/images/Logotipo sin fondo.png" class="img-fluid" >
+                   <a href="index.php"><img style="position: absolute;" src="assets/images/Logotipo sin fondo.png" class="img-fluid" ></a>
                 </div>
 
                 <div class="imagen_izquierda">
@@ -41,20 +41,23 @@
                 </div>
                     <div class="inicio_sesion">
                         <div class="caja col-lg-4 col-md-6 col-xs-6">
-                            <h2 class="titulos">Iniciar Sesión</h2>
+                            <h2 class="titulos">Registrar Usuario</h2>
                             <form action="#">
                                 <div style="display: flex;">
-                                    <p class="icono" style="color: #432A90;"> </p> <input class="form-control form-texto" placeholder="Ingrese su usuario" name="usuario"  type="text">
+                                    <p class="iconoSolid" style="color: #432A90;"> </p> <input class="form-control form-texto" style="margin-right: 2.5px;" placeholder="Ingrese su nombre" name="nombre" required  type="text">
+                                    <input class="form-control form-texto" placeholder="Ingrese su Apellido" name="apellido"  type="text" style="margin-left: 2.5px;" required>
                                 </div>
                                 <div style="display: flex;">
-                                <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseña"  type="password">
+                                <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuario"  type="text" required>
                                 </div>
-                                <input class="boton btn-lg" type="submit" value="INGRESAR">
+                                <div style="display: flex;">
+                                <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseña"  type="password" required>
+                                </div>
+                                <div style="display: flex;">
+                                <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Confirme su Contraseña" name="contraseña1"  type="password" required>
+                                </div>
+                                <input class="boton btn-lg" type="submit" value="¡Registrarme!">
                             </form>
-                            <br>
-                            <div style="text-align:right">
-                                <a class="registrar" href="index.php?c=Usuarios&a=registrarUsuario">Registrar Usuario</a>
-                            </div>
                         </div>
                     </div>
                 
@@ -117,5 +120,4 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    
 </html>
