@@ -178,26 +178,35 @@ DELIMITER $$
 				p.pedidoId,
                 p.pedidoFecha,
                 p.pedidoDireccion,
-				u.userName as cliente,
+				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
                 p.pedidoDesc,
-                u.userName as "mensajero",
+                mensajero.userName as mensajero,
+                P.pedidoMonto,
+                p.pedidoCosto,
+                fp.formaPagoDesc,
                 ep.estadoPedidoDesc
 				from
 					Pedido as p
-						inner join 
-							usuario as u
+						 inner JOIN	
+							usuario as cliente
 								on 
-										pedidoUsuarioId = usuarioId
-											and 
-                                            pedidoMensajeroId = 1
-												inner join 
-													estadopedido as ep
-														on 
-															pedidoEstadoId = estadoPedidoId
-																	;
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		inner join 
+																			estadopedido as ep
+																				on 
+																					pedidoEstadoId = estadoPedidoId;
         end $$
 DELIMITER ;
+
 
 call Sp_ListarPedido();
 
@@ -236,15 +245,16 @@ DELIMITER $$
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
-
+call Sp_ConfirmarPedido(3,4,50.0,2);
 
 DELIMITER $$
-	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100))
+	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100), estado int)
 		begin
 			update Pedido as p
 				set
 					p.pedidoFormaPagoId = formaPago, 
-					p.pedidoComentario = comentario
+					p.pedidoComentario = comentario,
+                    p.pedidoEstadoId = estado
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
