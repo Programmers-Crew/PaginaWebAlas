@@ -15,33 +15,34 @@ create table estadoPedido(
 
 create table formaPago(
 	formaPagoId tinyint auto_increment not null,
-    formaPagoDesc varchar(10) unique not null,
+    formaPagoDesc varchar(25) unique not null,
     primary key PK_formaPago (formaPagoId)
 );
+
 create table Usuario(
 	usuarioId int auto_increment not null,
     userName varchar(25) unique not null,
-    usuarioNombre varchar(50) not null,
-    usuarioApellido varchar(50) not null,
+	usuarioNombre varchar(50) not null,
+    usuarioApellido varchar(25) not null,
     usuarioContrasena varchar(20) not null,
     tipoUsuarioId tinyint not null,
     primary key PK_usuario (usuarioId),
 	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId)
 );
 
-create table Pedido(
+create table pedido(
 	pedidoId int auto_increment not null,
     pedidoFecha date not null,
-    pedidoDesc varchar(50) not null,
+	pedidoDesc varchar(50) not null,
     pedidoTelefonoReceptor varchar(8) not null,
     pedidoDireccion varchar(50) not null,
-    pedidoMensajeroId int,
     pedidoUsuarioId int not null,
+    pedidoComentario varchar(100),
+    pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
     pedidoCosto decimal,
     pedidoFormaPagoId tinyint,
-    pedidoEstadoId tinyint,
-    pedidoComentario varchar(100),
+    pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
     constraint FK_Pedido_Mensajero foreign key (pedidoMensajeroId) references Usuario(UsuarioId),
     constraint FK_Pedido_Usuario foreign key (pedidoUsuarioId) references Usuario(UsuarioId),
