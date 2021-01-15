@@ -144,8 +144,6 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
-call Sp_AgregarUsuario("Diego", "Hernandez", "aguila", "fer@123", 1);
-
 DELIMITER $$
 	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20))
 		begin
@@ -178,7 +176,8 @@ DELIMITER $$
 			select 
 				p.pedidoId,
                 p.pedidoFecha,
-                p.pedidoDireccion,
+                p.pedidoDireccionInicio,
+                p.pedidoDireccionFinal,
 				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
                 p.pedidoDesc,
@@ -246,7 +245,6 @@ DELIMITER $$
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
-call Sp_ConfirmarPedido(3,4,50.0,2);
 
 DELIMITER $$
 	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100), estado int)
@@ -355,14 +353,9 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
-
-<<<<<<< HEAD
 #inserts obligatorios
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
 
-insert into usuario(userName,usuarioNombre,usuarioApellido,usuarioContrasena,tipoUsuarioId) values("Admin","Administrador","Administrador","admin",1);
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ordonez2003';
-=======
 #PROCEDURE EXTRA
 DELIMITER $$
 	create procedure Sp_ListarMesajeros()
@@ -423,8 +416,6 @@ DELIMITER $$
 												
         end $$
 DELIMITER ;
-call Sp_BuscarMensajero("Chuiito");
-call Sp_ListarMesajeros();
 
 DELIMITER $$
 	create procedure Sp_EliminarUsuarioPorNombre(username varchar(25))
@@ -473,4 +464,3 @@ DELIMITER $$
 												
         end $$
 DELIMITER ;
->>>>>>> Diego-Gonzalez
