@@ -7,7 +7,7 @@ create table tipoUsuario(
     primary key PK_tipoUsuario (tipoUsuarioId)
 );
 
-create table estadoPedido(
+create table estadoPedido( 
 	estadoPedidoId tinyint auto_increment not null,
     estadoPedidoDesc varchar(25) not null,
     primary key PK_estadoPedido (estadoPedidoId)
@@ -35,7 +35,8 @@ create table pedido(
     pedidoFecha date not null,
 	pedidoDesc varchar(50) not null,
     pedidoTelefonoReceptor varchar(8) not null,
-    pedidoDireccion varchar(50) not null,
+    pedidoDireccionInicio varchar(50) not null,
+    pedidoDireccionFinal varchar(50) not null,
     pedidoUsuarioId int not null,
     pedidoComentario varchar(100),
     pedidoMensajeroId int default "1",

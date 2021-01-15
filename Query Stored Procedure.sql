@@ -130,11 +130,11 @@ DELIMITER $$
 						Usuario as u
 							inner join 
 								tipoUsuario  as tu
-									on tipoUsuarioId = tipoUsuarioId;
+									on u.tipoUsuarioId = tu.tipoUsuarioId;
 
         end $$
 DELIMITER ;
-
+call Sp_ListarUsuario();
 
 DELIMITER $$
 	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), tipoUsuario tinyint)
@@ -144,6 +144,7 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+call Sp_AgregarUsuario("Diego", "Hernandez", "aguila", "fer@123", 1);
 
 DELIMITER $$
 	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20))
@@ -178,26 +179,35 @@ DELIMITER $$
 				p.pedidoId,
                 p.pedidoFecha,
                 p.pedidoDireccion,
-				u.userName as cliente,
+				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
                 p.pedidoDesc,
-                u.userName as "mensajero",
+                mensajero.userName as mensajero,
+                P.pedidoMonto,
+                p.pedidoCosto,
+                fp.formaPagoDesc,
                 ep.estadoPedidoDesc
 				from
 					Pedido as p
-						inner join 
-							usuario as u
+						 inner JOIN	
+							usuario as cliente
 								on 
-										pedidoUsuarioId = usuarioId
-											and 
-                                            pedidoMensajeroId = 1
-												inner join 
-													estadopedido as ep
-														on 
-															pedidoEstadoId = estadoPedidoId
-																	;
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		inner join 
+																			estadopedido as ep
+																				on 
+																					pedidoEstadoId = estadoPedidoId;
         end $$
 DELIMITER ;
+
 
 call Sp_ListarPedido();
 
@@ -236,15 +246,16 @@ DELIMITER $$
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
-
+call Sp_ConfirmarPedido(3,4,50.0,2);
 
 DELIMITER $$
-	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100))
+	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100), estado int)
 		begin
 			update Pedido as p
 				set
 					p.pedidoFormaPagoId = formaPago, 
-					p.pedidoComentario = comentario
+					p.pedidoComentario = comentario,
+                    p.pedidoEstadoId = estado
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
@@ -345,8 +356,121 @@ DELIMITER $$
 DELIMITER ;
 
 
+<<<<<<< HEAD
 #inserts obligatorios
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
 
 insert into usuario(userName,usuarioNombre,usuarioApellido,usuarioContrasena,tipoUsuarioId) values("Admin","Administrador","Administrador","admin",1);
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ordonez2003';
+=======
+#PROCEDURE EXTRA
+DELIMITER $$
+	create procedure Sp_ListarMesajeros()
+		begin
+			select 
+				u.usuarioId,
+                u.usuarioNombre,
+                u.usuarioApellido,
+                u.userName,
+                u.usuarioContrasena,
+                tu.tipoUsuarioDesc
+					from
+						usuario as u
+							inner join 
+								tipoUsuario as tu
+									on 
+										u.tipoUsuarioId = tu.tipoUsuarioId
+											where 
+												u.tipoUsuarioId = 1 or u.tipoUsuarioId = 2
+													and 
+														usuarioId != 1
+													order by u.usuarioId asc;
+												
+        end $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure Sp_LLenarTipoUsuario()
+		begin
+			select
+				tu.tipoUsuarioDesc
+					from
+						tipousuario as tu
+							where 
+								tu.tipoUsuarioId = 1 or tu.tipoUsuarioId = 2;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarMensajero(usernameBuscado varchar(25))
+		begin
+			select 
+				u.usuarioId,
+                u.usuarioNombre,
+                u.usuarioApellido,
+                u.userName,
+                u.usuarioContrasena,
+                tu.tipoUsuarioDesc
+					from
+						usuario as u
+							inner join 
+								tipoUsuario as tu
+									on 
+										u.tipoUsuarioId = tu.tipoUsuarioId
+											where 
+												userName = usernameBuscado;
+												
+        end $$
+DELIMITER ;
+call Sp_BuscarMensajero("Chuiito");
+call Sp_ListarMesajeros();
+
+DELIMITER $$
+	create procedure Sp_EliminarUsuarioPorNombre(username varchar(25))
+		begin
+			delete from usuario as u
+				where u.userName = username;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ActualizarPorNombre(username varchar(20),nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20))
+		begin
+			update 
+				usuario as u
+					set 
+						u.usuarioNombre = nombre,
+                        u.usuarioApellido = apellido,
+                        u.userName = nuevoUsername,
+                        u.usuarioContrasena = nuevaContrasena
+							where 
+								u.userName = username;
+        end $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure Sp_ListarClientes()
+		begin
+			select 
+				u.usuarioId,
+                u.usuarioNombre,
+                u.usuarioApellido,
+                u.userName,
+                u.usuarioContrasena
+					from
+						usuario as u
+							inner join 
+								tipoUsuario as tu
+									on 
+										u.tipoUsuarioId = tu.tipoUsuarioId
+											where 
+												u.tipoUsuarioId = 3
+													and 
+														usuarioId != 1
+													order by u.usuarioId asc;
+												
+        end $$
+DELIMITER ;
+>>>>>>> Diego-Gonzalez
