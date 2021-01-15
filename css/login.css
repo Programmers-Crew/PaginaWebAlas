@@ -57,6 +57,7 @@ body{
     padding-top: 0;
 }
 
+
 .imagen_derecha{
     width: 30%;
     height: 15%;
@@ -144,9 +145,10 @@ body{
 
 .form-texto{
 
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    background-color: transparent !important;
 
 }
 
@@ -212,9 +214,21 @@ body{
     margin: 10px !important;
 }
 
- input:focus, input[type]:focus{
+ .form-texto:focus{
     border-color: #432A90;
     box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
+    outline: 0 none;
+}
+
+.form-texto-correcto{
+    border-color: #0FE642;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #0FE642;
+    outline: 0 none;
+}
+
+.form-texto-incorrecto{
+    border-color: #E60F33;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #E60F33;
     outline: 0 none;
 }
 
@@ -222,4 +236,17 @@ body{
     border-color: #432A90;
     box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
     outline: 0 none;
+}
+
+.error{
+    font-family:Berlin Sans FB ;
+    color: red;
+}
+
+.grupo-correcto{
+    display: none !important;
+}
+
+.grupo-incorrecto{
+    display: block;
 }

@@ -137,7 +137,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(20), tipoUsuario tinyint)
+	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), tipoUsuario tinyint)
 		begin
 			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,tipoUsuarioId)
 				values(nombre, apellido, username, contrasena, tipoUsuario);
@@ -323,15 +323,30 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ValidarLogin(nombreUsuario varchar(25), contra varchar(25))
+	create procedure Sp_ValidarLogin(nombreUsuario varchar(25), contra varchar(200))
 		begin
 			select 
-				u.userName
+				u.userName, u.usuarioContrasena, u.usuarioNombre, u.usuarioApellido, u.tipoUsuarioId
 					from 
 						usuario as u
 							where userName = nombreUsuario and usuarioContrasena = contra;
         end $$
 DELIMITER ;
-
-
 #PROCEDURE EXTRA
+DELIMITER $$
+	create procedure Sp_VerificarUsuario(nombreUsuario varchar(25))
+		begin
+			select 
+				u.userName
+					from 
+						usuario as u
+							where userName = nombreUsuario;
+        end $$
+DELIMITER ;
+
+
+#inserts obligatorios
+insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
+
+insert into usuario(userName,usuarioNombre,usuarioApellido,usuarioContrasena,tipoUsuarioId) values("Admin","Administrador","Administrador","admin",1);
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ordonez2003';

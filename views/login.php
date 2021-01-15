@@ -42,14 +42,24 @@
                     <div class="inicio_sesion">
                         <div class="caja col-lg-4 col-md-6 col-xs-6">
                             <h2 class="titulos">Iniciar Sesión</h2>
-                            <form action="#">
+                            <form action="" method="POST">
+                                <?php
+                                    if(isset($registrarExito)){
+                                        echo "<p style='color:#0FE642; font-family: Berlin Sans FB'>".$registrarExito."</p>";
+                                    }
+                                ?>
                                 <div style="display: flex;">
-                                    <p class="icono" style="color: #432A90;"> </p> <input class="form-control form-texto" placeholder="Ingrese su usuario" name="usuario"  type="text">
+                                    <p class="icono" style="color: #432A90;"> </p> <input class="form-control form-texto" placeholder="Ingrese su usuario" name="usuario" required  type="text">
                                 </div>
                                 <div style="display: flex;">
-                                <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseña"  type="password">
+                                <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseña" required  type="password">
                                 </div>
                                 <input class="boton btn-lg" type="submit" value="INGRESAR">
+                                <?php
+                                    if(isset($errorLogin)){
+                                        echo "<p class='error'>".$errorLogin."</p>";
+                                    }
+                                ?>
                             </form>
                             <br>
                             <div style="text-align:right">
