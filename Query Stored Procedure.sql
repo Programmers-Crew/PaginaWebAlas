@@ -176,6 +176,7 @@ DELIMITER $$
 			select 
 				p.pedidoId,
                 p.pedidoFecha,
+                p.nombreReceptor,
                 p.pedidoDireccionInicio,
                 p.pedidoDireccionFinal,
 				cliente.userName as cliente,
@@ -208,7 +209,7 @@ DELIMITER $$
 DELIMITER ;
 
 
-call Sp_ListarPedido();
+drop procedure Sp_ListarPedido;
 
 DELIMITER $$
 	create procedure Sp_AgregarPedido(fecha date, direccion varchar(50), usuario int, telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
@@ -355,6 +356,8 @@ DELIMITER ;
 
 #inserts obligatorios
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
+insert into  estadoPedido(estadoPedidoDesc) values("En Revisión"),("Pendiente"),("Entregado");
+
 
 #PROCEDURE EXTRA
 DELIMITER $$

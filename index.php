@@ -19,7 +19,14 @@
             if($usuario->getTipo()=='2'){
                 require_once "views/InicioMensajero.php";
             }else{
-                require_once "views/InicioCliente.php";
+                if($usuario->getTipo() == '3'){
+                    require_once "views/InicioCliente.php";
+                }else{
+                    $errorLogin = "El Usuario y/o  contraseña  no existen";    
+                    require_once "config/cerrarSesion.php";
+                    require_once "views/login.php";
+                    
+                }
             }
             
         }
@@ -35,7 +42,12 @@
                     if($usuario->getTipo()=='2'){
                         require_once "views/InicioMensajero.php";
                     }else{
-                        require_once "views/InicioCliente.php";
+                        if($usuario->getTipo() == '3'){
+                            require_once "views/InicioCliente.php";
+                        }else{
+                            $errorLogin = "El Usuario y/o  contraseña  no existen";    
+                            require_once "views/login.php";
+                        }
                     }
                     
                 }
