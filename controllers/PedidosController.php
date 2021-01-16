@@ -20,10 +20,21 @@
         public function getPedidos(){
             $sql="call Sp_ListarPedido()";
             $resultado = $this->db->query($sql);
-
+            return $resultado;
         }
 
 
+        public function getPedidosBuscado($id){
+            $sql="call Sp_ListarPedido()";
+            $resultado = $this->db->query($sql);
+            return $resultado;
+        }
+    
+    
+    
     }
+
+
+
 
 ?>

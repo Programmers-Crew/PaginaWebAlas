@@ -209,8 +209,6 @@ DELIMITER $$
 DELIMITER ;
 
 
-drop procedure Sp_ListarPedido;
-
 DELIMITER $$
 	create procedure Sp_AgregarPedido(fecha date, direccion varchar(50), usuario int, telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
 		begin

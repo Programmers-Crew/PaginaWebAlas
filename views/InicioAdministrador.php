@@ -1,5 +1,13 @@
 <?php
-    
+    require_once 'controllers/PedidosController.php';
+    $pedidos = new PedidosController();
+    $result1 = $pedidos->getPedidos();
+
+    if(isset($_GET['id'])){
+        $result = $pedidos->getPedidoBuscado();
+
+    }
+
 
 ?>
 
@@ -39,8 +47,8 @@
                     <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
                 </a>
                 <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
-                <form class="form-inline navbar my-2 my-lg-0 col-xl-4 col-md-4 col-xs-4">
-                    <input style="padding: 0; margin:0" class="form-texto-buscar form-control   mr-sm-2 col-xl-9 col-md-9 col-xs-9" type="search" placeholder="Buscar Pedido">
+                <form class="form-inline navbar my-2 my-lg-0 col-xl-4 col-md-4 col-xs-4" action="">
+                    <input style="padding: 0; margin:0" name="search" class="form-texto-buscar form-control   mr-sm-2 col-xl-9 col-md-9 col-xs-9" type="search" placeholder="Buscar Pedido">
                     <button style="padding: 0; margin:0" class="boton-search col-xl-2 col-md-2 col-xs-2" type="submit"></button>
             </form>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,82 +98,94 @@
                     </select>
                 </div>
             </div>
+            <div id="pedidos">
+                <?php
+                    if($result->fetch_row()){
+                        foreach($result as $resultadoActual){
+                        echo "
+                            <div class='col-xl-12 row centrado'>
+                                <div  class='col-xl-5 col-md-8 col-xs-8 pedidos'>
+                                    <div class='row col-xl-12 col-md-12 col-xs-12' style='margin-top: 10px;'>
+                                        <div class='fecha col-xl-6 col-md-6 col-xs-6'>
+                                            <p class='fuentes campos'>fecha: ".$resultadoActual['pedidoFecha']."</p>
+                                        </div>
+                                        <div class='col-xl-6 col-md-6 col-xs-6' style='text-align: right;'>
+                                            <p class='campos fuentes'>".$resultadoActual['pedidoId']."</p>
+                                        </div>
+                                    </div>
+                                    <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2'>
+                                            <p class='campos fuentes'>Receptor:</p>
+                                        </div>
+                                        <div class='col-xl-4 col-md-4 col-xs-4'>
+                                            <p class='campos fuentes'>".$resultadoActual['nombreReceptor']."</p>
+                                        </div>
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2'>
+                                            <p class='campos fuentes'>Usuario:</p>
+                                        </div>
+                                        <div class='col-xl-3 col-md-3 col-xs-3'>
+                                            <p class='campos fuentes'>".$resultadoActual['cliente']."</p>
+                                        </div>
+                                    </div>
+                                    <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2'>
+                                            <p class='campos fuentes'>Descripción:</p>
+                                        </div>
+                                        <div class='col-xl-10' style='display:flex;  align-items:center'>
+                                            <p class='campos fuentes'>".$resultadoActual['pedidoDesc']."</p>
+                                        </div>
+                                    </div>
+                                    <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2'>
+                                            <p class='campos fuentes'>Dirección Recolección:</p>
+                                        </div>
+                                        <div class='col-xl-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                            <p class='campos fuentes'>".$resultadoActual['pedidoDireccionInicio']."</p>
+                                        </div>
+                                    </div>
+                                    <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                            <p class='campos fuentes'>Dirección Final:</p>
+                                        </div>
+                                        <div class='col-xl-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                            <p class='campos fuentes'>".$resultadoActual['pedidoDireccionFinal']."</p>
+                                        </div>
+                                    </div>
+                                    <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2'>
+                                            <p class='campos fuentes'>Mensajero:</p>
+                                        </div>
+                                        <div class='col-xl-4 col-md-4 col-xs-4'>
+                                            <p class='campos fuentes'>".$resultadoActual['mensajero']."</p>
+                                        </div>
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2'>
+                                            <p class='campos fuentes'>Teléfono:</p>
+                                        </div>
+                                        <div class='col-xl-3 col-md-3 col-xs-3'>
+                                            <p class='campos fuentes'>".$resultadoActual['pedidoTelefonoReceptor']."</p>
+                                        </div>
+                                    </div>
+                                    <div class='row col-xl-12 col-md-12 col-xs-12' >
+                                        <div class='fecha col-xl-2 col-md-2 col-xs-2'>
+                                            <p class='campos fuentes'>Estado:</p>
+                                        </div>
+                                        <div class='col-xl-4 col-md-4 col-xs-4'>
+                                            <p class='campos fuentes'>".$resultadoActual['estadoPedidoDesc']."</p>
+                                        </div>
+                                        <div class='col-xl-3 col-md-3 col-xs-3'>
+                                            <p class='campos fuentes'>Precio: ".$resultadoActual['pedidoMonto']."</p>
+                                        </div>
+                                        <div class='fecha col-xl-3 col-md-3 col-xs-3' style='float: right;'>
+                                            <a class='boton btn-lg' style='text-decoration: none;' href='#'>CONFIRMAR</a>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ";
+                        }
+                    }
 
-            <div class="col-xl-12 row centrado">
-                <div id="pedidos" class="col-xl-6 col-md-8 col-xs-8 pedidos">
-                    <div class="row col-xl-12" style="margin-top: 10px;">
-                        <div class="fecha col-xl-6">
-                            <p class="fuente campos">fecha: 00/00/0000</p>
-                        </div>
-                        <div class="col-xl-6" style="text-align: right;">
-                            <p class="campos fuentes">00000</p>
-                        </div>
-                    </div>
-                    <div class="row col-xl-12" >
-                        <div class="fecha col-xl-3">
-                            <p class="campos fuentes">Receptor:</p>
-                        </div>
-                        <div class="col-xl-3">
-                            <p class="campos fuentes">Lorem ipsum</p>
-                        </div>
-                        <div class="fecha col-xl-3">
-                            <p class="campos fuentes">Usuario:</p>
-                        </div>
-                        <div class="col-xl-3">
-                            <p class="campos fuentes">Lorem ipsum</p>
-                        </div>
-                    </div>
-                    <div class="row col-xl-12">
-                        <div class="fecha col-xl-2 centrado-absoluto">
-                            <p class="campos fuentes">Descripción:</p>
-                        </div>
-                        <div class="col-xl-10">
-                            <p class="campos fuentes">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur rerum vitae saepe facere error deserunt atque architecto beatae ducimus? Voluptates delectus totam omnis illum similique excepturi nam, labore vero amet.</p>
-                        </div>
-                    </div>
-                    <div class="row col-xl-12">
-                        <div class="fecha col-xl-2 centrado-absoluto">
-                            <p class="campos fuentes">Dirección Recolección:</p>
-                        </div>
-                        <div class="col-xl-10">
-                            <p class="campos fuentes">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur rerum vitae saepe facere error deserunt</p>
-                        </div>
-                    </div>
-                    <div class="row col-xl-12">
-                        <div class="fecha col-xl-2 centrado-absoluto">
-                            <p class="campos fuentes">Dirección Final:</p>
-                        </div>
-                        <div class="col-xl-10">
-                            <p class="campos fuentes">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur rerum vitae saepe facere error deserunt</p>
-                        </div>
-                    </div>
-                    <div class="row col-xl-12" >
-                        <div class="fecha col-xl-3">
-                            <p class="campos fuentes">Mensajero:</p>
-                        </div>
-                        <div class="col-xl-3">
-                            <p class="campos fuentes">Lorem ipsum</p>
-                        </div>
-                        <div class="fecha col-xl-3">
-                            <p class="campos fuentes">Teléfono:</p>
-                        </div>
-                        <div class="col-xl-3">
-                            <p class="campos fuentes">0000 0000</p>
-                        </div>
-                    </div>
-                    <div class="row col-xl-12" >
-                        <div class="fecha col-xl-3">
-                            <p class="campos fuentes">Estado:</p>
-                        </div>
-                        <div class="col-xl-3">
-                            <p class="campos fuentes">En REVISIÓN</p>
-                        </div>
-                        <div class="col-xl-3"></div>
-                        <div class="fecha col-xl-3" style="float: right;">
-                            <a class="boton btn-lg" style="text-decoration: none;" href="#">CONFIRMAR</a>
-                        </div>
-                    </div>
-                </div>
+                ?>
             </div>
 
         </section>
