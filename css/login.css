@@ -1,0 +1,252 @@
+@font-face{
+    font-family: Cream Cake;
+    src: url("../assets/fonts/Cream\ Cake.ttf");
+}
+
+@font-face{
+    font-family: fa-regular-400;
+    src: url("../assets/fonts/fa-regular-400.ttf");
+}
+
+@font-face{
+    font-family: fa-brands-400;
+    src: url("../assets/fonts/fa-brands-400.ttf");
+}
+@font-face{
+    font-family: fa-solid-900;
+    src: url("../assets/fonts/fa-solid-900.ttf");
+}
+
+@keyframes floating { 
+    0% { transform: translate(0,  0px); } 
+    50%  { transform: translate(0, 10px); } 
+    100%   { transform: translate(0, -0px); }     
+} 
+
+@keyframes slide { 
+    0% { transform: translate(0,  -105px); } 
+    100%   { transform: translate(0, 0px); }     
+}
+
+@keyframes moto { 
+    5% { transform: rotate(-45deg) }
+    97% { transform: translate(100vw,0px);}
+    98% {transform:translateX(0)}
+    99% {opacity: 0%;}
+    100% {opacity: 100%;}
+} 
+ 
+
+html{
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    
+    
+}
+.todo{
+    
+    background-image: url(../assets/images/fondo.png);
+    background-size: cover;
+    
+    padding: 0;
+    padding-top: 0;
+}
+
+
+.imagen_derecha{
+    width: 30%;
+    height: 15%;
+    position: absolute;
+    top: 30px;
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+
+  
+}
+
+.imagen_izquierda{
+    
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    width: 30%;
+    animation-name: floating;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}
+.moto{
+    
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.moto.animationx{
+    cursor: pointer;
+    animation-name: moto;
+    animation-duration: 4s;
+    animation-iteration-count: 1;
+}
+
+.logo{
+    width: 15%;
+    margin-left: auto;
+    position: relative;
+
+}
+
+.titulos{
+    font-family: Cream Cake;
+    font-size: 66px;
+    color: #707070;
+}
+
+.inicio_sesion{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.caja{
+    text-align: center;
+    background-color: white;
+    border-radius: 25px;
+    padding: 42px;
+    padding-top: 25px;
+    animation-name: slide;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+}
+
+.icono{
+    font-family: fa-regular-400;
+    font-size: 25px;
+    padding-right: 7px;
+    color: #707070;
+}
+.iconoBrands{
+    font-family: fa-brands-400;
+    font-size: 25px;
+    color: #707070;
+}
+.iconoSolid{
+    font-family: fa-solid-900;
+    font-size: 25px;
+    padding-right: 7px;
+    color: #432A90;
+}
+
+.form-texto{
+
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    background-color: transparent !important;
+
+}
+
+.boton{
+    margin-top: 10px;
+    border-style: double;
+     border-width: 1px;
+     padding: 5px;
+    background-color: white;
+    border-radius: 10px;
+    font-family: Berlin Sans FB;
+    color: #432A90;
+}
+.boton-black{
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #B23CFD;
+    font-family: Berlin Sans FB;
+    font-size: 14px;
+    color: white;
+}
+
+.boton-black:hover{
+    background-color: #9C27B0;
+    color: white;
+    border-color: black;
+}
+
+.boton:hover{
+    background-color: #401474;
+    color: white;
+    border-color: white;
+}
+
+.registrar{
+    font-family: Berlin Sans FB;
+    color: #432A90;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.registrar:hover{
+    cursor: pointer;
+    color: black;
+}
+.footerText{
+    font-family: Berlin Sans FB;
+    color: white;
+}
+
+.footer-background{
+    background-color: black;
+    text-align: center;
+}
+.facebook:hover{
+    color:white;
+    text-decoration: none;
+}
+
+
+.form-correo{
+    margin: 10px !important;
+}
+
+ .form-texto:focus{
+    border-color: #432A90;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
+    outline: 0 none;
+}
+
+.form-texto-correcto{
+    border-color: #0FE642;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #0FE642;
+    outline: 0 none;
+}
+
+.form-texto-incorrecto{
+    border-color: #E60F33;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #E60F33;
+    outline: 0 none;
+}
+
+.textarea1:focus{
+    border-color: #432A90;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
+    outline: 0 none;
+}
+
+.error{
+    font-family:Berlin Sans FB ;
+    color: red;
+}
+
+.grupo-correcto{
+    display: none !important;
+}
+
+.grupo-incorrecto{
+    display: block;
+}

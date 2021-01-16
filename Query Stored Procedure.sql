@@ -137,14 +137,12 @@ DELIMITER ;
 call Sp_ListarUsuario();
 
 DELIMITER $$
-	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(20), tipoUsuario tinyint)
+	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), tipoUsuario tinyint)
 		begin
 			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,tipoUsuarioId)
 				values(nombre, apellido, username, contrasena, tipoUsuario);
         end $$
 DELIMITER ;
-
-call Sp_AgregarUsuario("Diego", "Hernandez", "aguila", "fer@123", 1);
 
 DELIMITER $$
 	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20))
@@ -178,7 +176,9 @@ DELIMITER $$
 			select 
 				p.pedidoId,
                 p.pedidoFecha,
-                p.pedidoDireccion,
+                p.nombreReceptor,
+                p.pedidoDireccionInicio,
+                p.pedidoDireccionFinal,
 				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
                 p.pedidoDesc,
@@ -208,8 +208,6 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
-
-call Sp_ListarPedido();
 
 DELIMITER $$
 	create procedure Sp_AgregarPedido(fecha date, direccion varchar(50), usuario int, telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
@@ -246,7 +244,6 @@ DELIMITER $$
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
-call Sp_ConfirmarPedido(3,4,50.0,2);
 
 DELIMITER $$
 	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100), estado int)
@@ -334,15 +331,30 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ValidarLogin(nombreUsuario varchar(25), contra varchar(25))
+	create procedure Sp_ValidarLogin(nombreUsuario varchar(25), contra varchar(200))
 		begin
 			select 
-				u.userName
+				u.userName, u.usuarioContrasena, u.usuarioNombre, u.usuarioApellido, u.tipoUsuarioId
 					from 
 						usuario as u
 							where userName = nombreUsuario and usuarioContrasena = contra;
         end $$
 DELIMITER ;
+#PROCEDURE EXTRA
+DELIMITER $$
+	create procedure Sp_VerificarUsuario(nombreUsuario varchar(25))
+		begin
+			select 
+				u.userName
+					from 
+						usuario as u
+							where userName = nombreUsuario;
+        end $$
+DELIMITER ;
+
+#inserts obligatorios
+insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
+insert into  estadoPedido(estadoPedidoDesc) values("En Revisión"),("Pendiente"),("Entregado");
 
 
 #PROCEDURE EXTRA
@@ -405,8 +417,6 @@ DELIMITER $$
 												
         end $$
 DELIMITER ;
-call Sp_BuscarMensajero("Chuiito");
-call Sp_ListarMesajeros();
 
 DELIMITER $$
 	create procedure Sp_EliminarUsuarioPorNombre(username varchar(25))
