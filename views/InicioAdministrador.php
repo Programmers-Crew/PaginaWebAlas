@@ -1,14 +1,12 @@
 <?php
     require_once 'controllers/PedidosController.php';
     $pedidos = new PedidosController();
-    $result1 = $pedidos->getPedidos();
-
-    if(isset($_GET['id'])){
-        $result = $pedidos->getPedidoBuscado();
-
+    
+    if(isset($_POST['id'])){
+        $result1 = $pedidos->getPedidosBuscado($_POST['id']);
+    }else{
+        $result1 = $pedidos->getPedidos();
     }
-
-
 ?>
 
 
@@ -47,8 +45,8 @@
                     <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
                 </a>
                 <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
-                <form class="form-inline navbar my-2 my-lg-0 col-xl-4 col-md-4 col-xs-4" action="">
-                    <input style="padding: 0; margin:0" name="search" class="form-texto-buscar form-control   mr-sm-2 col-xl-9 col-md-9 col-xs-9" type="search" placeholder="Buscar Pedido">
+                <form class="form-inline navbar my-2 my-lg-0 col-xl-4 col-md-4 col-xs-4" action="index.php">
+                    <input style="padding: 0; margin:0" name="id" class="form-texto-buscar form-control   mr-sm-2 col-xl-9 col-md-9 col-xs-9" type="search" placeholder="Buscar Pedido">
                     <button style="padding: 0; margin:0" class="boton-search col-xl-2 col-md-2 col-xs-2" type="submit"></button>
             </form>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,6 +98,8 @@
             </div>
             <div id="pedidos">
                 <?php
+                   
+                    $result=$result1;
                     if($result->fetch_row()){
                         foreach($result as $resultadoActual){
                         echo "
