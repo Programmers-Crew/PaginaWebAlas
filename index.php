@@ -2,6 +2,7 @@
     require_once "config/config.php";
     require_once "config/databases.php";
     require_once "controllers/UsuariosController.php";
+    require_once "controllers/PedidosController.php";
     require_once "core/Routes.php";
 
     require_once "config/user_session.php";
@@ -12,24 +13,39 @@
 
     if(isset($_SESSION['usuario'])){
         $usuario -> setUsuario($usuarioSesion->getUsuarioActual());
-        
-        if($usuario->getTipo() == '1'){
-            require_once "views/InicioAdministrador.php";
-        }else{
-            if($usuario->getTipo()=='2'){
-                require_once "views/InicioMensajero.php";
-            }else{
-                if($usuario->getTipo() == '3'){
-                    require_once "views/InicioCliente.php";
-                }else{
-                    $errorLogin = "El Usuario y/o  contraseña  no existen";    
-                    require_once "config/cerrarSesion.php";
-                    require_once "views/login.php";
-                    
-                }
-            }
             
-        }
+        if(isset($_GET['a'])){
+            switch($_GET['a']){
+                case 'agregarUsuario':
+                    include_once 'views/AgregarUsuario.php';
+                    break;
+                case 'chat':
+                    include_once 'views/chat.php';
+                    break;
+                case 'editarCuenta':
+                    include_once 'views/editarCuenta.php';
+                    break;
+            }
+        }else{
+        
+            if($usuario->getTipo() == '1'){
+                require_once "views/InicioAdministrador.php";
+            }else{
+                if($usuario->getTipo()=='2'){
+                    require_once "views/InicioMensajero.php";
+                }else{
+                    if($usuario->getTipo() == '3'){
+                        require_once "views/InicioCliente.php";
+                    }else{
+                        $errorLogin = "El Usuario y/o  contraseña  no existen";    
+                        require_once "config/cerrarSesion.php";
+                        require_once "views/login.php";
+                        
+                    }
+                }
+            } 
+        } 
+
     }else{
         if(isset($_POST['usuario']) && isset($_POST['contraseña'])){
             $usuarioForm =$_POST['usuario'];

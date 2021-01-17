@@ -1,6 +1,6 @@
 <?php
 
-    class PedidosController{
+    class Pedidos{
         private $db;
         private $fecha;
         private $id;
@@ -25,11 +25,13 @@
 
 
         public function getPedidosBuscado($id){
-            $sql="call Sp_ListarPedido()";
+            $sql="call Sp_BuscarPedido($id)";
             $resultado = $this->db->query($sql);
             return $resultado;
         }
-    
+        public function agregarUsuario(){
+            include_once "views/AgregarUsuario.php";
+        }
     }
 
 

@@ -30,7 +30,7 @@
 
 @keyframes moto { 
     5% { transform: rotate(-45deg) }
-    97% { transform: translate(100vw,0px);}
+    97% { transform: translate(80vw,0px);}
     98% {transform:translateX(0)}
     99% {opacity: 0%;}
     100% {opacity: 100%;}
@@ -82,7 +82,7 @@ body{
 }
 .moto{
     
-    position: absolute;
+    position: fixed;
     bottom: 10px;
     left: 10px;
 }

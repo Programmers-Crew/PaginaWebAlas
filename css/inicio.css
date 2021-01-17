@@ -53,7 +53,7 @@ a{
 .imagen_derecha-inicio{
     width: 30%;
     height: 15%;
-    position: absolute;
+    position: fixed;
     top: 10vh;
     animation-name: floating;
     animation-duration: 3s;
@@ -64,7 +64,7 @@ a{
 
 .imagen_izquierda-inicio{
     
-    position: absolute;
+    position: fixed;
     bottom: 10vh;
     right: 0;
     width: 30%;
@@ -83,15 +83,32 @@ a{
     align-items:center;
 }
 
-.filtro{
+.drop{
+    background-color: #432A90 !important;
+    color:white;
+    font-family: Berlin Sans FB;
+    border: 2px solid #707070;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.drop:hover{
+    color:white;
+}
+.drop-content {
+    background-color: #432A90 !important;
+}
+.drop-content a{
+    background-color: #432A90 !important;
+}
+.dropdown-content a:hover {
+    background-color: #45349D !important;
     color: white;
-    background-color: transparent;
-    border-radius: 5px;
-    font-family: Berlin sans FB !important;    
 }
 
 .options{
     background-color: #432A90;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .panel{

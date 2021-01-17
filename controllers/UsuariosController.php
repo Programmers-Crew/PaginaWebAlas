@@ -22,6 +22,11 @@
             require_once "views/registrarUser.php";
         }
 
+
+        public function agregarusuario(){
+            require_once "views/AgregarUsuario.php";
+        }
+
         public function validarLogin($usuario,$contraseña){
             $validar = false;
             $md5Contraseña1 =  md5($contraseña);

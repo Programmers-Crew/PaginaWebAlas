@@ -50,7 +50,7 @@ DELIMITER $$
 				ep.estadoPedidoId,
                 ep.estadoPedidoDesc
 					from 
-						estadpPedido as ep;
+						estadoPedido as ep;
         end $$
 DELIMITER ;
 
@@ -75,7 +75,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_EliminarEstadpPedido (idBuscado tinyint)
+	create procedure Sp_EliminarEstadoPedido (idBuscado tinyint)
 		begin
 			delete from estadoPedido
 				where estadoPedidoId = idBuscado;
@@ -527,5 +527,3 @@ DELIMITER $$
 																						where p.pedidoId = idBuscado;
         end $$
 DELIMITER ;
-
-call Sp_BuscarPedido(4);
