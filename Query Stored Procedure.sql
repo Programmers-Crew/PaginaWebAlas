@@ -465,3 +465,67 @@ DELIMITER $$
 												
         end $$
 DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ListarMensajero()
+		begin
+			select 
+				u.userName
+					from usuario as u
+							inner join tipousuario as tu
+									on u.tipoUsuarioId = tu.tipoUsuarioId
+										where u.tipoUsuarioId = 2
+											and usuarioId != 1;
+								
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarDescPedido(idBuscado int)
+		begin
+			select pedidoDesc
+				from pedido
+					where pedidoId = idBuscado;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarPedido(idBuscado int)
+		begin 
+			select 
+				p.pedidoId,
+                p.pedidoFecha,
+                p.nombreReceptor,
+                p.pedidoDireccionInicio,
+                p.pedidoDireccionFinal,
+				cliente.userName as cliente,
+                p.pedidoTelefonoReceptor,
+                p.pedidoDesc,
+                mensajero.userName as mensajero,
+                P.pedidoMonto,
+                p.pedidoCosto,
+                fp.formaPagoDesc,
+                ep.estadoPedidoDesc
+				from
+					Pedido as p
+						 inner JOIN	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		inner join 
+																			estadopedido as ep
+																				on 
+																					pedidoEstadoId = estadoPedidoId
+																						where p.pedidoId = idBuscado;
+        end $$
+DELIMITER ;
+
+call Sp_BuscarPedido(4);
