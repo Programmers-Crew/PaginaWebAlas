@@ -51,6 +51,7 @@ create table pedido(
     constraint FK_Pedido_FormaPago foreign key (pedidoFormaPagoId) references formaPago(formaPagoId)
 );
 
+
 create table Sala(
 	salaId int auto_increment not null,
     salaDesc varchar(50) not null,

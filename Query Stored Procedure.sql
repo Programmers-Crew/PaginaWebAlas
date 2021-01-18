@@ -529,3 +529,84 @@ DELIMITER $$
 DELIMITER ;
 
 call Sp_BuscarPedido(4);
+
+
+DELIMITER $$
+	create procedure Sp_ListarPedidoPorEstado(estadoPedido varchar(25))
+		begin
+			select 
+				p.pedidoId,
+                p.pedidoFecha,
+                p.nombreReceptor,
+                p.pedidoDireccionInicio,
+                p.pedidoDireccionFinal,
+				cliente.userName as cliente,
+                p.pedidoTelefonoReceptor,
+                p.pedidoDesc,
+                mensajero.userName as mensajero,
+                P.pedidoMonto,
+                p.pedidoCosto,
+                fp.formaPagoDesc,
+                ep.estadoPedidoDesc
+				from
+					Pedido as p
+						 inner JOIN	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		inner join 
+																			estadopedido as ep
+																				on 
+																					pedidoEstadoId = estadoPedidoId
+																						where ep.estadoPedidoDesc = estadoPedido;
+        end $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure Sp_ListarPedidoPorFecha(fechaBusqueda date)
+		begin
+			select 
+				p.pedidoId,
+                p.pedidoFecha,
+                p.nombreReceptor,
+                p.pedidoDireccionInicio,
+                p.pedidoDireccionFinal,
+				cliente.userName as cliente,
+                p.pedidoTelefonoReceptor,
+                p.pedidoDesc,
+                mensajero.userName as mensajero,
+                P.pedidoMonto,
+                p.pedidoCosto,
+                fp.formaPagoDesc,
+                ep.estadoPedidoDesc
+				from
+					Pedido as p
+						 inner JOIN	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		inner join 
+																			estadopedido as ep
+																				on 
+																					pedidoEstadoId = estadoPedidoId
+																						where p.pedidoFecha = fechaBusqueda;
+        end $$
+DELIMITER ;
