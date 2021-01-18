@@ -56,13 +56,16 @@
             </nav>
         </header>
         <section class="h-100">
-        <div class="inicio_sesion">
+            <div class="inicio_sesion">
                         <div class="caja col-lg-5 col-md-9 col-xs-9">
                             <h2 class="titulos">Registrar Usuario</h2>
-                            <form action="index.php?c=Usuarios&a=guardarUsuario" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
+                            <form action="index.php?a=guardarUsuarioAdmin" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
                                 <?php
                                     if(isset($errorRegistrar)){
                                         echo "<p  class='error'>".$errorRegistrar."</p>";
+                                    }
+                                    if(isset($registrarExito)){
+                                        echo "<p  style='color:#0FE642; font-family: Berlin Sans FB'>".$registrarExito."</p>";
                                     }
                                 ?>
                                 <div class="col-lg-12 row" style="margin:0">    
@@ -115,10 +118,30 @@
                                     <div class="col-lg-12">
                                         <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
                                     </div>
+                                </div> 
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex;padding:0;">
+                                        <p class="iconoSolid"> </p>
+                                        <select class="form-control form-texto" form="formRegistrarUsuario" placeholder="Ingrese el tipo de Usuario" name="tipoUsuario" id="tipoUsuario" required>
+                                            <?php
+                                                $pedidos1 = new Pedidos();
+                                                $resultado = $pedidos1->listarTipoUsuario();
+
+                                                foreach($resultado as $resultadoActual){
+                                                    echo "
+                                                        <option value='".$resultadoActual['tipoUsuarioId']."'>".$resultadoActual['tipoUsuarioDesc']."</option>
+                                                    ";
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
+                                    </div>
                                 </div>    
                                 <div>
                                     <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
-                                </div>                            
+                                </div>                           
                                 <input class="boton btn-lg" type="submit" id="boton" value="¡Registrarme!">
                             </form>
                         </div>
@@ -163,6 +186,7 @@
             
         </footer>
     </body>
+    <script src="scripts/Formulario.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

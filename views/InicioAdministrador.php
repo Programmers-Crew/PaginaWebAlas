@@ -9,20 +9,22 @@
         if(isset($_GET['f'])){
             switch($_GET['f']){
                 case 'enRevision':
-
+                    $result1 = $pedidos->getPedidosEstado('En Revisión');
                     break;
                 case 'pendiente':
-                    
+                    $result1 = $pedidos->getPedidosEstado('Pendiente');
                     break;
                 case 'entregados':
-                    
+                    $result1 = $pedidos->getPedidosEstado('Entregado');
                     break;
                 case 'fecha':
-                        
+                    $result1 = $pedidos->getPedidosfecha($_POST['fecha']);
                     break;
             }
+        }else{
+            $result1 = $pedidos->getPedidos();
         }
-        $result1 = $pedidos->getPedidos();
+        
     }
 
 
@@ -84,10 +86,10 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Mi Cuenta
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="index.php?a=editarCuenta">Editar Cuenta</a>
+                        <div class="dropdown-menu dropdown-menu-right drop-content-black" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" style=" color:white !important;" href="index.php?a=editarCuenta">Editar Cuenta</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="config/cerrarSesion.php">Cerrar Sesión</a>
+                            <a class="dropdown-item" style=" color:white !important;" href="config/cerrarSesion.php">Cerrar Sesión</a>
                         </div>
                     </li>
                     </ul>
@@ -110,7 +112,7 @@
                 </div>
                 <div class="col-xl-2 col-md-2 col-xs-2 centrado-absoluto">
                     
-                    <div class="dropdown">
+                    <div class="dropdown col-xl-5 col-md-5 col-xs-5">
                         <button class=" drop btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             FILTRO
                         </button>
@@ -123,13 +125,24 @@
                         </div>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-md-2 col-xs-2 centrado-absoluto" style="display: none;" id="fecha">
+                    <div class="col-xl-5 col-md-5 col-xs-5 centrado-absoluto" style="display: none;" id="fecha">
                         <form action="index.php?f=fecha" method="POST">
                             <input type="date" required name="fecha" class="form-control">
                             <input type="submit" class="boton fuentes" value="Buscar">
                         </form>
                     </div>
+                </div>
+
             </div>
+            <?php
+                if(isset($errorRegistrar)){
+                    echo "<p  class='centrado fuentes h-100' style='font-size:2vw; color:white;'>".$errorRegistrar."</p>";
+                }else{
+                    if(isset($registrarExito)){
+                        echo "<p  class='centrado fuentes h-100' style='font-size:2vw; color:white;'>".$registrarExito."</p>";
+                    }
+                }
+            ?>
             <div id="pedidos">
             
                 <?php
@@ -141,7 +154,7 @@
                             
                         echo "
                             <div class='col-xl-12 row centrado'>
-                                <div  class='col-xl-5 col-md-8 col-xs-8 pedidos'>
+                                <div  class='col-xl-5 col-md-9 col-xs-9 pedidos'>
                                     <div class='row col-xl-12 col-md-12 col-xs-12' style='margin-top: 10px;'>
                                         <div class='fecha col-xl-6 col-md-6 col-xs-6'>
                                             <p class='fuentes campos'>fecha: ".$resultadoActual['pedidoFecha']."</p>
@@ -207,13 +220,26 @@
                                             <p class='campos fuentes'>Estado:</p>
                                         </div>
                                         <div class='col-xl-4 col-md-4 col-xs-4'>
-                                            <p class='campos fuentes'>".$resultadoActual['estadoPedidoDesc']."</p>
+                                            <p id='estado' class='campos fuentes'>".$resultadoActual['estadoPedidoDesc']."</p>
                                         </div>
                                         <div class='col-xl-3 col-md-3 col-xs-3'>
                                             <p class='campos fuentes'>Precio: ".$resultadoActual['pedidoMonto']."</p>
                                         </div>
                                         <div class='fecha col-xl-3 col-md-3 col-xs-3' style='float: right;'>
-                                            <a class='boton btn-lg' style='text-decoration: none;' href='#'>CONFIRMAR</a>
+                                        ";
+                                        if($resultadoActual['estadoPedidoDesc'] == 'En Revisión'){
+                                            echo "  <a id='botonConfirmar' class='boton btn-lg' style='text-decoration: none;' href='index.php?a=confirmar&id=".$resultadoActual['pedidoId']."'>CONFIRMAR</a>";
+                                        }else{
+                                            if($resultadoActual['estadoPedidoDesc'] == 'Pendiente'){
+                                                echo "  <a  class='boton btn-lg' style='text-decoration: none;' disabled >CONFIRMADO</a>";
+                                            }else{
+                                                if($resultadoActual['estadoPedidoDesc'] == 'Entregado'){
+                                                    echo "  <a  class='boton btn-lg' style='text-decoration: none;' disabled >ENTREGADO</a>";
+                                                }
+                                            }
+                                            
+                                        }
+                                        echo "
                                         </div>
                                         </div>
                                     </div>
@@ -223,7 +249,7 @@
                     }else{
                         
                         echo "
-                        <div class='centrado fuentes h-100' style='font-size:5vh; color:white;'>
+                        <div class='centrado fuentes h-100' style='font-size:2vw; color:white;'>
                             <span>No se encontraron resultados de la busqueda</span>
                         </div>";
                     }
@@ -288,7 +314,6 @@
     </script>
     <script>
         function fecha(){
-            console.log("hola");
             const filtroFecha = document.getElementById("fecha");
             filtroFecha.style.display = "flex";
         }

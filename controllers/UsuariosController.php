@@ -97,5 +97,24 @@
 
             return $validar;
         }
+        public function guardarUsuarioAdmin(){
+            $usuarioNombre = $_POST['nombre'];
+            $usuarioApellido = $_POST['apellido'];
+            $userName = $_POST['usuarioAgregar'];
+            $usuarioContrasena = $_POST['contraseñaAgregar'];
+            $tipoUsuarioId = $_POST['tipoUsuario'];
+            $md5Contraseña = md5($usuarioContrasena);
+            $validar = false;
+            $sql = "call Sp_AgregarUsuario('$usuarioNombre','$usuarioApellido','$userName','$md5Contraseña',$tipoUsuarioId)";
+            $resultado = $this->db->query($sql);
+
+            if(!$resultado){
+                $validar = true;
+            }else{
+                $validar = false;
+            }
+
+            return $validar;
+        }
     }
 ?>

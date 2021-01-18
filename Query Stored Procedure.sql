@@ -204,16 +204,16 @@ DELIMITER $$
 																		inner join 
 																			estadopedido as ep
 																				on 
-																					pedidoEstadoId = estadoPedidoId;
+																					pedidoEstadoId = estadoPedidoId order by p.pedidoFecha DESC;
         end $$
 DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_AgregarPedido(fecha date, direccion varchar(50), usuario int, telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
+	create procedure Sp_AgregarPedido(fecha date, direccionInicio varchar(150), direccionFinal varchar(150),  usuario int, telefono varchar(8), descripcion varchar(150), monto decimal, nombreReceptor varchar(50))
 		begin
-			insert into Pedido(pedidoFecha,pedidoDireccion,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoDesc,pedidoMonto,pedidoEstadoId)
-				values(fecha, direccion, usuario, telefono, descripcion, monto, estado);
+			insert into Pedido(pedidoFecha,pedidoDireccionInicio,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoDesc,pedidoMonto,nombreReceptor)
+				values(fecha, direccionInicio,direccionFinal, usuario, telefono, descripcion, monto, nombreReceptor);
         end $$
 DELIMITER ;
 
@@ -246,12 +246,12 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_ConfirmarPago(idBuscado int, formaPago decimal, comentario varchar(100), estado int)
+	create procedure Sp_ConfirmarPago(idBuscado int, costo decimal, mensajero int, estado int)
 		begin
 			update Pedido as p
 				set
-					p.pedidoFormaPagoId = formaPago, 
-					p.pedidoComentario = comentario,
+					p.pedidoCosto = costo, 
+                    p.pedidoMensajeroId = mensajero,
                     p.pedidoEstadoId = estado
 						where pedidoId = idBuscado;
         end $$
@@ -355,7 +355,7 @@ DELIMITER ;
 #inserts obligatorios
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
 insert into  estadoPedido(estadoPedidoDesc) values("En Revisión"),("Pendiente"),("Entregado");
-
+insert into formapago(formaPagoDesc) values("PENDIENTE"),("EFECTIVO"),("Tarjeta Debito/Credito");
 
 #PROCEDURE EXTRA
 DELIMITER $$
@@ -388,6 +388,7 @@ DELIMITER $$
 	create procedure Sp_LLenarTipoUsuario()
 		begin
 			select
+				tu.tipoUsuarioId,
 				tu.tipoUsuarioDesc
 					from
 						tipousuario as tu
@@ -470,6 +471,7 @@ DELIMITER $$
 	create procedure Sp_ListarMensajero()
 		begin
 			select 
+				u.usuarioId,
 				u.userName
 					from usuario as u
 							inner join tipousuario as tu
@@ -526,12 +528,10 @@ DELIMITER $$
 																					pedidoEstadoId = estadoPedidoId
 																						where p.pedidoId = idBuscado;
         end $$
-<<<<<<< HEAD
-DELIMITER ;
-=======
+
+
 DELIMITER ;
 
-call Sp_BuscarPedido(4);
 
 
 DELIMITER $$
@@ -613,4 +613,3 @@ DELIMITER $$
 																						where p.pedidoFecha = fechaBusqueda;
         end $$
 DELIMITER ;
->>>>>>> Diego-Gonzalez

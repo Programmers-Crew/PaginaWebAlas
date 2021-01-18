@@ -24,8 +24,8 @@
 
     </head>
     <body>
-    <div style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
-            <section class="col-lg-12   col-xs-12  todo h-100">
+    <section style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
+            <div class="col-lg-12   col-xs-12  todo h-100">
                 <div class="imagen_derecha">
                     <img src="assets/images/nube derecha.png" class="img-fluid" >
                 </div>
@@ -107,9 +107,9 @@
                         </div>
                     </div>
                 
-            </section>
+            </div>
             
-        </div>
+    </section>
         <footer class="w-100"  style="display: flex; justify-content:center">
             <div class="col-lg-12   col-xs-12 footer-background">
                 <p class="footerText">Si necesitas más información de nuestros servicios<br>

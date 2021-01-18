@@ -8,8 +8,13 @@ html{
 body{
     height: 100%;
     width: 100%;
+   
+    
+}
+section{
     background-image: url(../assets/images/fondo.png) ;
-    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: cover !important;
 }
 
 .menu{
@@ -105,6 +110,18 @@ a{
     background-color: #45349D !important;
     color: white;
 }
+
+.drop-content-black {
+    background-color: black !important;
+}
+.drop-content-black a{
+    background-color: black !important;
+}
+.dropdown-content-black a:hover {
+    background-color: #424242 !important;
+    color: white;
+}
+
 
 .options{
     background-color: #432A90;

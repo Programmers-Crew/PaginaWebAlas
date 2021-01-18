@@ -13,7 +13,7 @@
 
     if(isset($_SESSION['usuario'])){
         $usuario -> setUsuario($usuarioSesion->getUsuarioActual());
-            
+        $pedidos = new Pedidos();
         if(isset($_GET['a'])){
             switch($_GET['a']){
                 case 'agregarUsuario':
@@ -24,6 +24,26 @@
                     break;
                 case 'editarCuenta':
                     include_once 'views/editarCuenta.php';
+                    break;
+                case 'confirmar':
+                    include_once 'views/confirmarPedido.php';
+                    break;
+                case 'guardarUsuarioAdmin':
+                    if($usuario->guardarUsuarioAdmin()){
+                        $errorRegistrar = "Usuario Duplicado, Por favor Intente de nuevo";
+                    }else{
+                        $registrarExito = "Su Usuario se ha agregado con exito";
+                    }
+                    include_once 'views/AgregarUsuario.php';
+                    break;
+                case 'confirmarPedido':
+                    if($pedidos->confirmarPedido()){
+                        $errorRegistrar = "No se ha podido Confirmar su pedido Intente de nuevo";
+                    }else{
+                        $registrarExito = "Se ha Confirmado su pedido";
+                    }
+                    include_once 'views/inicioAdministrador.php';
+                    
                     break;
             }
         }else{
