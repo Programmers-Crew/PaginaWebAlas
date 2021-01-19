@@ -42,7 +42,6 @@ DELIMITER ;
 
 
 #EstadoPedido
-
 DELIMITER $$
 	create procedure Sp_ListarEstadoPedido()
 		begin
@@ -50,7 +49,7 @@ DELIMITER $$
 				ep.estadoPedidoId,
                 ep.estadoPedidoDesc
 					from 
-						estadpPedido as ep;
+						estadoPedido as ep;
         end $$
 DELIMITER ;
 
@@ -75,7 +74,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_EliminarEstadpPedido (idBuscado tinyint)
+	create procedure Sp_EliminarEstadoPedido (idBuscado tinyint)
 		begin
 			delete from estadoPedido
 				where estadoPedidoId = idBuscado;
@@ -124,6 +123,7 @@ DELIMITER $$
 					u.userName,
 					u.usuarioNombre,
 					u.usuarioApellido,
+                    u.usuarioCorreo,
 					u.usuarioContrasena,
                     tu.tipoUsuarioDesc
 					from
@@ -137,15 +137,15 @@ DELIMITER ;
 call Sp_ListarUsuario();
 
 DELIMITER $$
-	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), tipoUsuario tinyint)
+	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), correo varchar(30),tipoUsuario tinyint)
 		begin
-			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,tipoUsuarioId)
-				values(nombre, apellido, username, contrasena, tipoUsuario);
+			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,usuarioCorreo,tipoUsuarioId)
+				values(nombre, apellido, username, contrasena, correo,tipoUsuario);
         end $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20))
+	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20), correoNuevo varchar(30))
 		begin
 			update 
 				usuario as u
@@ -153,7 +153,8 @@ DELIMITER $$
 						u.usuarioNombre = nombre,
                         u.usuarioApellido = apellido,
                         u.userName = nuevoUsername,
-                        u.usuarioContrasena = nuevaContrasena
+                        u.usuarioContrasena = nuevaContrasena,
+                        u.usuarioCorreo = correoNuevo
 							where 
 								usuarioId = idBuscado;
         end $$
@@ -207,7 +208,7 @@ DELIMITER $$
 																					pedidoEstadoId = estadoPedidoId;
         end $$
 DELIMITER ;
-
+call Sp_ListarPedido();
 
 DELIMITER $$
 	create procedure Sp_AgregarPedido(fecha date, direccion varchar(50), usuario int, telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
@@ -367,6 +368,7 @@ DELIMITER $$
                 u.usuarioApellido,
                 u.userName,
                 u.usuarioContrasena,
+                u.usuarioCorreo,
                 tu.tipoUsuarioDesc
 					from
 						usuario as u
@@ -405,6 +407,7 @@ DELIMITER $$
                 u.usuarioApellido,
                 u.userName,
                 u.usuarioContrasena,
+                u.usuarioCorreo,
                 tu.tipoUsuarioDesc
 					from
 						usuario as u
@@ -427,7 +430,7 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_ActualizarPorNombre(username varchar(20),nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20))
+	create procedure Sp_ActualizarPorNombre(username varchar(20),nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20), nuevoCorreo varchar(30))
 		begin
 			update 
 				usuario as u
@@ -435,7 +438,8 @@ DELIMITER $$
 						u.usuarioNombre = nombre,
                         u.usuarioApellido = apellido,
                         u.userName = nuevoUsername,
-                        u.usuarioContrasena = nuevaContrasena
+                        u.usuarioContrasena = nuevaContrasena,
+                        u.usuarioCorreo = nuevoCorreo
 							where 
 								u.userName = username;
         end $$
@@ -450,7 +454,8 @@ DELIMITER $$
                 u.usuarioNombre,
                 u.usuarioApellido,
                 u.userName,
-                u.usuarioContrasena
+                u.usuarioContrasena,
+                u.usuarioCorreo
 					from
 						usuario as u
 							inner join 
@@ -608,5 +613,28 @@ DELIMITER $$
 																				on 
 																					pedidoEstadoId = estadoPedidoId
 																						where p.pedidoFecha = fechaBusqueda;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarEstadoPorNombre(estadoPedido varchar(25))
+		begin
+			select 
+				ep.estadoPedidoId
+					from 
+						estadoPedido as ep
+							where estadoPedidoDesc = estadoPedido;
+        end $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure Sp_BuscarCodigoUsuario(username varchar(25))
+		begin
+			select 
+				u.usuarioId
+					from 
+						usuario as u
+							where u.userName = username;
         end $$
 DELIMITER ;
