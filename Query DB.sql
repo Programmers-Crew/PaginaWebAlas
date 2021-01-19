@@ -24,12 +24,13 @@ create table Usuario(
     userName varchar(25) unique not null,
 	usuarioNombre varchar(50) not null,
     usuarioApellido varchar(25) not null,
-    usuarioCorreo varchar(30) not null,
+    usuarioCorreo varchar(30) not null unique,
     usuarioContrasena varchar(200) not null,
     tipoUsuarioId tinyint not null,
     primary key PK_usuario (usuarioId),
 	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId)
 );
+
 
 create table pedido(
 	pedidoId int auto_increment not null,

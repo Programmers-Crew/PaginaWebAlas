@@ -421,6 +421,7 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+
 DELIMITER $$
 	create procedure Sp_EliminarUsuarioPorNombre(username varchar(25))
 		begin
@@ -470,6 +471,8 @@ DELIMITER $$
 												
         end $$
 DELIMITER ;
+
+
 
 DELIMITER $$
 	create procedure Sp_ListarMensajero()
@@ -638,3 +641,61 @@ DELIMITER $$
 							where u.userName = username;
         end $$
 DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarCorreo(correo varchar(25))
+		begin
+			select 
+				usuarioCorreo
+					from 
+						usuario
+							where usuarioCorreo = correo;
+        end $$
+DELIMITER ;
+
+#REPORTES
+DELIMITER $$
+	create procedure Sp_TotalesReporteVentas(fechaCorte date)
+		begin
+			select distinct p.pedidoId, 
+            pedidoFecha, 
+            sum(distinct pedidoMonto) as "Total a pagar",
+            sum(distinct pedidoCosto) as "Total a cobrar",
+            (sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total",
+            count(distinct pedidoId)
+				from pedido as p
+					where pedidoFecha = fechaCorte and pedidoEstadoId = 3 and pedidoFormaPagoId = 1;
+        end $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure Sp_SubReporteVentas(pedidoId int)
+		begin 
+			select 
+				mensajero.userName as mensajero,
+				cliente.userName as cliente,
+                p.pedidoTelefonoReceptor,
+                P.pedidoMonto,
+                p.pedidoCosto,
+                fp.formaPagoDesc
+				from
+					Pedido as p
+						 inner JOIN	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		where p.pedidoId = pedidoId;
+        end $$
+DELIMITER ;
+
+
