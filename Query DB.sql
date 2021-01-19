@@ -24,6 +24,7 @@ create table Usuario(
     userName varchar(25) unique not null,
 	usuarioNombre varchar(50) not null,
     usuarioApellido varchar(25) not null,
+    usuarioCorreo varchar(30) not null,
     usuarioContrasena varchar(200) not null,
     tipoUsuarioId tinyint not null,
     primary key PK_usuario (usuarioId),
