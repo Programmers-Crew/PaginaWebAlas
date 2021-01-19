@@ -664,7 +664,7 @@ DELIMITER $$
             (sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total",
             count(distinct pedidoId)
 				from pedido as p
-					where pedidoFecha = fechaCorte and pedidoEstadoId = 3 and pedidoFormaPagoId = 1;
+					where pedidoFecha = fechaCorte and pedidoEstadoId = 3;
         end $$
 DELIMITER ;
 
@@ -698,4 +698,44 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+DELIMITER $$
+	create procedure Sp_SubReporteCierreDeCaja(fechaCorte date)
+		begin
+			select
+            count(distinct pedidoId) as "Pedidos total Entregados",
+            sum(distinct pedidoMonto) as "Total a pagar",
+            sum(distinct pedidoCosto) as "Total a cobrar"
+				from 
+					pedidos
+						where pedidoFecha = fechaCorte and pedidoFormaPagoId = 1;
+		end $$
+DELIMITER ;
 
+
+DELIMITER $$
+	create procedure Sp_ReporteCierreDeCaja(pedidoId int)
+		begin
+			select
+				mensajero.userName as mensajero,
+				cliente.userName as cliente,
+				fp.formaPagoDesc,
+				(sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total Efectivo",
+				(sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total Tranferencia"
+					from pedidos as p
+						inner join 	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		where p.pedidoId = pedidoId;
+
+                
+        end $$
+DELIMITER ;
