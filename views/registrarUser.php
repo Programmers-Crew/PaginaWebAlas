@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 
-<html lang="es">
+<html lang="es" style="min-height: 100%;">
     <head>
         <title>AlasGT - Registrar Usuario</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
@@ -23,9 +23,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
-    <body>
+    <body style="min-height: 100%;">
     <section style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
-            <div class="col-lg-12   col-xs-12  todo h-100">
+            <div class="col-lg-12   col-xs-12  todo" style="min-height: 100%; margin-top:25px; margin-bottom:15px;">
                 <div class="imagen_derecha">
                     <img src="assets/images/nube derecha.png" class="img-fluid" >
                 </div>
@@ -70,13 +70,20 @@
                                         
                                     </div>
                                 </div>
-                                
                                 <div class="col-lg-12 row" style="margin:0">
                                     <div class="col-lg-12" style="display: flex; padding:0">
                                         <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuarioAgregar"  id="usuarioAgregar" type="text" required>
                                     </div>
                                     <div class="col-lg-12">
                                         <span id="alerta_usuarioAgregar" class="error grupo-correcto">El Usuario no puede llevar espacios y/o signos<br>debe llevar por lo menos 4 caracteres</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex; padding:0">
+                                        <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese su correo" name="correo"  id="correo" type="email" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin:0">

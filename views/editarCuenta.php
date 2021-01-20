@@ -57,7 +57,8 @@
             <div class="inicio_sesion">
                         <div class="caja col-lg-5 col-md-9 col-xs-9">
                             <h2 class="titulos">Editar Cuenta</h2>
-                            <form action="index.php?a=guardarUsuarioAdmin" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
+                            <form action="index.php?a=actualizarCuenta" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $usuario->getId(); ?>">
                                 <?php
                                     if(isset($errorRegistrar)){
                                         echo "<p  class='error'>".$errorRegistrar."</p>";
@@ -89,8 +90,21 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_nombre">El campo nombre no puede llevar signos ni espacios</span>
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_apellido">El campo apellido no puede llevar signos ni espacios</span>
                                         </div>
+                                </div>
+                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
+                                    <div class="col-lg-12 row">
+                                        <div class="col-lg-3" style="display: flex; align-items:center">
+                                            <p class="fuentes" style="color:#432A90; margin:0">Correo:</p>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input class="form-control form-texto" value="<?php echo $usuario->getCorreo();?>" name="correo"  id="correo" type="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
+                                    </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
                                         <div class="col-lg-12 row" >

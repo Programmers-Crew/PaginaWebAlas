@@ -125,6 +125,7 @@ DELIMITER $$
 					u.usuarioApellido,
                     u.usuarioCorreo,
 					u.usuarioContrasena,
+                    u.estadoUsuarioId,
                     tu.tipoUsuarioDesc
 					from
 						Usuario as u
@@ -134,7 +135,6 @@ DELIMITER $$
 
         end $$
 DELIMITER ;
-call Sp_ListarUsuario();
 
 DELIMITER $$
 	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), correo varchar(30),tipoUsuario tinyint)
@@ -145,7 +145,7 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(20), correoNuevo varchar(30))
+	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(200), correoNuevo varchar(30))
 		begin
 			update 
 				usuario as u
@@ -155,6 +155,18 @@ DELIMITER $$
                         u.userName = nuevoUsername,
                         u.usuarioContrasena = nuevaContrasena,
                         u.usuarioCorreo = correoNuevo
+							where 
+								usuarioId = idBuscado;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ConfirmarUsuario(idBuscado int, estadoUsuarioId tinyint)
+		begin
+			update 
+				usuario as u
+					set 
+						u.estadoUsuarioId = estadoUsuarioId
 							where 
 								usuarioId = idBuscado;
         end $$
@@ -259,6 +271,18 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
+	create procedure Sp_ConfirmarCorreo(correo varchar(30), estado int)
+		begin
+			update Usuario as U
+				set
+					U.estadoUsuarioId = estado
+						where u.usuarioCorreo = correo;
+        end $$
+DELIMITER ;
+
+
+
+DELIMITER $$
 	create procedure Sp_ActualizarTelefonoPedido(idBuscado int, telefono varchar(8))
 		begin
 			update Pedido
@@ -335,10 +359,10 @@ DELIMITER $$
 	create procedure Sp_ValidarLogin(nombreUsuario varchar(25), contra varchar(200))
 		begin
 			select 
-				u.userName, u.usuarioContrasena, u.usuarioNombre, u.usuarioApellido, u.tipoUsuarioId
+				u.usuarioId, u.userName, u.usuarioContrasena, u.usuarioNombre, u.usuarioApellido, u.tipoUsuarioId, u.usuarioCorreo
 					from 
 						usuario as u
-							where userName = nombreUsuario and usuarioContrasena = contra;
+							where userName = nombreUsuario and usuarioContrasena = contra and estadoUsuarioId = 2;
         end $$
 DELIMITER ;
 #PROCEDURE EXTRA
@@ -356,8 +380,9 @@ DELIMITER ;
 #inserts obligatorios
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
 insert into  estadoPedido(estadoPedidoDesc) values("En Revisión"),("Pendiente"),("Entregado");
+insert into  estadoUsuario(estadoUsuarioDesc) values("En Revisión"),("Confirmado");
 insert into formapago(formaPagoDesc) values("PENDIENTE"),("EFECTIVO"),("Tarjeta Debito/Credito");
-
+insert into usuario(userName,usuarioNombre,UsuarioApellido,usuarioCorreo,usuarioContrasena,tipoUsuarioId) values('Pendiente','Pendiente','Pendiente','_','4zWp2pbd','1');
 #PROCEDURE EXTRA
 DELIMITER $$
 	create procedure Sp_ListarMesajeros()

@@ -3,7 +3,7 @@
 
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-100">
     <head>
         <title>AlasGT</title>
         
@@ -23,7 +23,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
-    <body>     
+    <body class="h-100">     
         <div style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
             <section class="col-lg-12   col-xs-12  todo h-100">
                 <div class="imagen_derecha">
@@ -42,7 +42,7 @@
                     <div class="inicio_sesion">
                         <div class="caja col-lg-4 col-md-6 col-xs-6">
                             <h2 class="titulos">Iniciar Sesión</h2>
-                            <form action="" method="POST">
+                            <form action="index.php" method="POST">
                                 <?php
                                     if(isset($registrarExito)){
                                         echo "<p style='color:#0FE642; font-family: Berlin Sans FB'>".$registrarExito."</p>";

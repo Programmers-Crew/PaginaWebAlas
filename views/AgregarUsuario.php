@@ -90,7 +90,14 @@
                                         
                                     </div>
                                 </div>
-                                
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex; padding:0">
+                                        <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese su correo" name="correo"  id="correo" type="email" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 row" style="margin:0">
                                     <div class="col-lg-12" style="display: flex; padding:0">
                                         <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuarioAgregar"  id="usuarioAgregar" type="text" required>

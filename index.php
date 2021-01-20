@@ -32,7 +32,7 @@
                     if($usuario->guardarUsuarioAdmin()){
                         $errorRegistrar = "Usuario Duplicado, Por favor Intente de nuevo";
                     }else{
-                        $registrarExito = "Su Usuario se ha agregado con exito";
+                        $registrarExito = "Su Usuario se ha agregado con exito, pidale al usuario que confirme su correo";
                     }
                     include_once 'views/AgregarUsuario.php';
                     break;
@@ -44,6 +44,14 @@
                     }
                     include_once 'views/inicioAdministrador.php';
                     
+                    break;
+                case 'actualizarCuenta':
+                    if($usuario->editarCuenta()){
+                        $registrarExito = "Se ha editado su Cuenta actualice la página";
+                    }else{
+                        $errorRegistrar = "No se ha podido Editar su cuenta Intente de nuevo";
+                    }
+                    include_once 'views/inicioAdministrador.php';
                     break;
             }
         }else{
@@ -98,16 +106,26 @@
             if(isset($_GET['c'])){
                 $controller = cargarControlador($_GET['c']);
                 if(isset($_GET['a'])){
-                    if($_GET['a']== 'guardarUsuario'){
-                        if($usuario->guardarUsuario()){
-                            $registrarExito = "Se ha agregado con Exito tu Usuario. ¡Ingresa ya!";
+                    if(isset($_GET['correo'])){
+                        if($usuario->confirmarCorreo($_GET['correo'])){
+                            $registrarExito = "Su cuenta se ha confirmado Correctamente";
                             include_once "views/Login.php";
                         }else{
-                            $errorRegistrar = "Ha ocurrido un error al momento de agregar el usuario, (USUARIO DUPLICADO)";
-                            include_once "views/registrarUser.php";
+                            $errorRegistrar = "Ha ocurrido un error al confirmar su cuenta, intentelo de nuevo";
+                            include_once "views/Login.php";
                         }
                     }else{
-                        cargarAccion($controller,$_GET['a']);    
+                        if($_GET['a']== 'guardarUsuario'){
+                            if($usuario->guardarUsuario()){
+                                $registrarExito = "Por Favor revise y confirme su correo Eléctronico (REVISE CARPETA DE SPAM)";
+                                include_once "views/Login.php";
+                            }else{
+                                $errorRegistrar = "Ha ocurrido un error al momento de agregar el usuario, (USUARIO DUPLICADO)";
+                                include_once "views/registrarUser.php";
+                            }
+                        }else{
+                            cargarAccion($controller,$_GET['a']);    
+                        }
                     }
                     
                 }else{
