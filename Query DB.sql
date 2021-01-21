@@ -95,7 +95,6 @@ create table pedido(
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
     pedidoCosto int not null,
-    pedidoFormaPagoId tinyint,
     pedidoFormaPagoId tinyint default "1",
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),

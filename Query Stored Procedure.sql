@@ -220,7 +220,6 @@ DELIMITER $$
 																					pedidoEstadoId = estadoPedidoId order by p.pedidoFecha DESC;
         end $$
 DELIMITER ;
-call Sp_ListarPedido();
 
 DELIMITER $$
 	create procedure Sp_AgregarPedido(fecha date, direccionInicio varchar(150), direccionFinal varchar(150),  usuario int, telefono varchar(8), descripcion varchar(150), monto decimal, nombreReceptor varchar(50))
@@ -380,10 +379,9 @@ DELIMITER ;
 #inserts obligatorios
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
 insert into  estadoPedido(estadoPedidoDesc) values("En Revisión"),("Pendiente"),("Entregado");
-<<<<<<< HEAD
 
 	-- puntoInicio
-insert into puntoInicio(puntopuntoInicioDesc) values("Ciudad Capital"),("Carretera al Salvador"),("Villa Nueva"),("Mixco"),("San Miguel Petapa");
+insert into puntoInicio(puntoInicioDesc) values("Ciudad Capital"),("Carretera al Salvador"),("Villa Nueva"),("Mixco"),("San Miguel Petapa");
 
 	-- nombreLugar
 insert into nombreLugar(nombreLugarDesc) values("Zona 1"),("Zona 2"),("Zona 3"),("Zona 4"),("Zona 5"),("Zona 6"),("Zona 7"),("Zona 8"),("Zona 9"),("Zona 10"),("Zona 11"),("Zona 12"),("Zona 13");
@@ -397,6 +395,7 @@ insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital", 1),(
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Mixco",1),("Mixco",2),("Mixco",3),("Mixco",4),("Mixco",5),("Mixco",6),("Mixco",7),("Mixco",8),("Mixco",11),("Mixco",19),("Mixco",9),("Mixco",29);
 
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",1),("Villa Nueva",2),("Villa Nueva",3),("Villa Nueva",4),("Villa Nueva",5);
+
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",23),("Villa Nueva",45),("Villa Nueva",30),("Villa Nueva",46);
 
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Carretera al Salvador",24),("Carretera al Salvador",25),("Carretera al Salvador",32),("Carretera al Salvador",33),("Carretera al Salvador",34),("Carretera al Salvador",35),("Carretera al Salvador",26),("Carretera al Salvador",27);
@@ -435,12 +434,10 @@ insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(4,25,4),(
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,12,2),(5,19,2),(5,20,2),(5,18,2),(5,33,2),(5,43,2);
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,1,3),(5,2,3),(5,3,3),(5,4,3),(5,5,3),(5,6,3),(5,7,3),(5,8,3),(5,9,3),(5,10,3),(5,11,3),(5,13,3),(5,14,3),(5,15,3),(5,16,3),(5,17,3);
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,56,4),(5,47,4),(5,48,4),(5,49,4),(5,53,4),(5,50,4),(5,51,4),(5,52,4);
-		
-=======
 insert into  estadoUsuario(estadoUsuarioDesc) values("En Revisión"),("Confirmado");
 insert into formapago(formaPagoDesc) values("PENDIENTE"),("EFECTIVO"),("Tarjeta Debito/Credito");
 insert into usuario(userName,usuarioNombre,UsuarioApellido,usuarioCorreo,usuarioContrasena,tipoUsuarioId) values('Pendiente','Pendiente','Pendiente','_','4zWp2pbd','1');
->>>>>>> Davis-Roldan
+
 #PROCEDURE EXTRA
 DELIMITER $$
 	create procedure Sp_ListarMesajeros()
