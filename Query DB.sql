@@ -7,6 +7,12 @@ create table tipoUsuario(
     primary key PK_tipoUsuario (tipoUsuarioId)
 );
 
+create table estadoUsuario( 
+	estadoUsuarioId tinyint auto_increment not null,
+    estadoUsuarioDesc varchar(25) not null,
+    primary key PK_estadoUsuario (estadoUsuarioId)
+);
+
 create table estadoPedido( 
 	estadoPedidoId tinyint auto_increment not null,
     estadoPedidoDesc varchar(25) not null,
@@ -28,8 +34,10 @@ create table Usuario(
     usuarioCorreo varchar(30) not null unique,
     usuarioContrasena varchar(200) not null,
     tipoUsuarioId tinyint not null,
+    estadoUsuarioId tinyint not null default '1',
     primary key PK_usuario (usuarioId),
-	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId)
+	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId),
+    Constraint FK_Usuario_EstadoUsuario foreign key (estadoUsuarioId) references estadoUsuario(estadoUsuarioId)
 );
 
 
@@ -86,8 +94,13 @@ create table pedido(
     pedidoUsuarioId int not null,
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
+<<<<<<< HEAD
     pedidoCosto int not null,
     pedidoFormaPagoId tinyint,
+=======
+    pedidoCosto decimal default "00",
+    pedidoFormaPagoId tinyint default "1",
+>>>>>>> Davis-Roldan
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
     constraint FK_Pedido_Mensajero foreign key (pedidoMensajeroId) references Usuario(UsuarioId),

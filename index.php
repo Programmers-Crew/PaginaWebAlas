@@ -2,6 +2,7 @@
     require_once "config/config.php";
     require_once "config/databases.php";
     require_once "controllers/UsuariosController.php";
+    require_once "controllers/PedidosController.php";
     require_once "core/Routes.php";
 
     require_once "config/user_session.php";
@@ -13,23 +14,25 @@
     if(isset($_SESSION['usuario'])){
         $usuario -> setUsuario($usuarioSesion->getUsuarioActual());
         
-        if($usuario->getTipo() == '1'){
-            require_once "views/InicioAdministrador.php";
-        }else{
-            if($usuario->getTipo()=='2'){
-                require_once "views/InicioMensajero.php";
+        
+            if($usuario->getTipo() == '1'){
+                require_once "Administrador/index.php";
+                
             }else{
-                if($usuario->getTipo() == '3'){
-                    require_once "views/InicioCliente.php";
-                }else{
-                    $errorLogin = "El Usuario y/o  contraseña  no existen";    
-                    require_once "config/cerrarSesion.php";
-                    require_once "views/login.php";
+                if($usuario->getTipo()=='2'){
+                    require_once "Mensajero/index.php";
                     
+                }else{
+                    if($usuario->getTipo() == '3'){
+                        require_once "Cliente/index.php";
+                    }else{
+                        $errorLogin = "El Usuario y/o  contraseña  no existen";    
+                        require_once "config/cerrarSesion.php";
+                        require_once "views/login.php";
+                        
+                    }
                 }
-            }
-            
-        }
+            } 
     }else{
         if(isset($_POST['usuario']) && isset($_POST['contraseña'])){
             $usuarioForm =$_POST['usuario'];
@@ -37,13 +40,13 @@
             if($usuario->validarLogin($usuarioForm,$contraseñaForm)){ 
                 $usuarioSesion ->setUsuarioActual($usuarioForm);
                 if($usuario->getTipo() == '1'){
-                    require_once "views/InicioAdministrador.php";
+                    require_once "Administrador/index.php";
                 }else{
                     if($usuario->getTipo()=='2'){
-                        require_once "views/InicioMensajero.php";
+                        require_once "Mensajero/index.php";
                     }else{
                         if($usuario->getTipo() == '3'){
-                            require_once "views/InicioCliente.php";
+                            require_once "Cliente/index.php";
                         }else{
                             $errorLogin = "El Usuario y/o  contraseña  no existen";    
                             require_once "views/login.php";
@@ -62,16 +65,26 @@
             if(isset($_GET['c'])){
                 $controller = cargarControlador($_GET['c']);
                 if(isset($_GET['a'])){
-                    if($_GET['a']== 'guardarUsuario'){
-                        if($usuario->guardarUsuario()){
-                            $registrarExito = "Se ha agregado con Exito tu Usuario. ¡Ingresa ya!";
+                    if(isset($_GET['correo'])){
+                        if($usuario->confirmarCorreo($_GET['correo'])){
+                            $registrarExito = "Su cuenta se ha confirmado Correctamente";
                             include_once "views/Login.php";
                         }else{
-                            $errorRegistrar = "Ha ocurrido un error al momento de agregar el usuario, (USUARIO DUPLICADO)";
-                            include_once "views/registrarUser.php";
+                            $errorRegistrar = "Ha ocurrido un error al confirmar su cuenta, intentelo de nuevo";
+                            include_once "views/Login.php";
                         }
                     }else{
-                        cargarAccion($controller,$_GET['a']);    
+                        if($_GET['a']== 'guardarUsuario'){
+                            if($usuario->guardarUsuario()){
+                                $registrarExito = "Por Favor revise y confirme su correo Eléctronico (REVISE CARPETA DE SPAM)";
+                                include_once "views/Login.php";
+                            }else{
+                                $errorRegistrar = "Ha ocurrido un error al momento de agregar el usuario, (USUARIO DUPLICADO)";
+                                include_once "views/registrarUser.php";
+                            }
+                        }else{
+                            cargarAccion($controller,$_GET['a']);    
+                        }
                     }
                     
                 }else{

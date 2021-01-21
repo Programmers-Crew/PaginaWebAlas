@@ -1,12 +1,11 @@
 <?php
+
 ?>
 
-
 <!DOCTYPE html>
-
-<html lang="es" style="min-height: 100%;">
+<html lang="es">
     <head>
-        <title>AlasGT - Registrar Usuario</title>
+        <title>AlasGT-Agregar Usuario</title>        
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" type="text/css">
@@ -20,32 +19,53 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css.map" type="text/css">
         <link rel="stylesheet" href="css/Login.css" type="text/css">
+        <link rel="stylesheet" href="css/inicio.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
-    <body style="min-height: 100%;">
-    <section style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
-            <div class="col-lg-12   col-xs-12  todo" style="min-height: 100%; margin-top:25px; margin-bottom:15px;">
-                <div class="imagen_derecha">
-                    <img src="assets/images/nube derecha.png" class="img-fluid" >
-                </div>
-                <div class="logo">
-                   <a href="index.php"><img style="position: absolute;" src="assets/images/Logotipo sin fondo.png" class="img-fluid" ></a>
-                </div>
-
-                <div class="imagen_izquierda">
+    <body>    
+        <div class="imagen_derecha-inicio">
+                <img src="assets/images/nube derecha.png" class="img-fluid" >
+        </div> 
+        <div class="imagen_izquierda-inicio">
                     <img src="assets/images/nube izquierda.png" class="img-fluid" >
+        </div>
+        <header style="padding: 0;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
+                <a class="" style="padding-left: 10px;" href="#">
+                    <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
+                </a>
+                <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content:flex-end;">
+                    <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php?a=agregarUsuario">Agregar Usuario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
+                    </li>
+                    </ul>
+                    
                 </div>
-                <div class="moto col-lg-2 col-md-3 col-xs-6">
-                    <img src="assets/images/moto.png" class="img-fluid" >
-                </div>
-                    <div class="inicio_sesion">
+            </nav>
+        </header>
+        <section style="min-height: 100%;">
+            <div class="inicio_sesion" style="padding-top: 15px; padding-bottom:15px">
                         <div class="caja col-lg-5 col-md-9 col-xs-9">
                             <h2 class="titulos">Registrar Usuario</h2>
-                            <form action="index.php?c=Usuarios&a=guardarUsuario" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
+                            <form action="index.php?a=guardarUsuarioAdmin" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
                                 <?php
                                     if(isset($errorRegistrar)){
                                         echo "<p  class='error'>".$errorRegistrar."</p>";
+                                    }
+                                    if(isset($registrarExito)){
+                                        echo "<p  style='color:#0FE642; font-family: Berlin Sans FB'>".$registrarExito."</p>";
                                     }
                                 ?>
                                 <div class="col-lg-12 row" style="margin:0">    
@@ -72,18 +92,18 @@
                                 </div>
                                 <div class="col-lg-12 row" style="margin:0">
                                     <div class="col-lg-12" style="display: flex; padding:0">
-                                        <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuarioAgregar"  id="usuarioAgregar" type="text" required>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <span id="alerta_usuarioAgregar" class="error grupo-correcto">El Usuario no puede llevar espacios y/o signos<br>debe llevar por lo menos 4 caracteres</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 row" style="margin:0">
-                                    <div class="col-lg-12" style="display: flex; padding:0">
                                         <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese su correo" name="correo"  id="correo" type="email" required>
                                     </div>
                                     <div class="col-lg-12">
                                         <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex; padding:0">
+                                        <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuarioAgregar"  id="usuarioAgregar" type="text" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_usuarioAgregar" class="error grupo-correcto">El Usuario no puede llevar espacios y/o signos<br>debe llevar por lo menos 4 caracteres</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin:0">
@@ -105,18 +125,35 @@
                                     <div class="col-lg-12">
                                         <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
                                     </div>
+                                </div> 
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex;padding:0;">
+                                        <p class="iconoSolid"> </p>
+                                        <select class="form-control form-texto" form="formRegistrarUsuario" placeholder="Ingrese el tipo de Usuario" name="tipoUsuario" id="tipoUsuario" required>
+                                            <?php
+                                                $pedidos1 = new Pedidos();
+                                                $resultado = $pedidos1->listarTipoUsuario();
+
+                                                foreach($resultado as $resultadoActual){
+                                                    echo "
+                                                        <option value='".$resultadoActual['tipoUsuarioId']."'>".$resultadoActual['tipoUsuarioDesc']."</option>
+                                                    ";
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
+                                    </div>
                                 </div>    
                                 <div>
                                     <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
-                                </div>                            
+                                </div>                           
                                 <input class="boton btn-lg" type="submit" id="boton" value="¡Registrarme!">
                             </form>
                         </div>
                     </div>
-                
-            </div>
-            
-    </section>
+        </section>
         <footer class="w-100"  style="display: flex; justify-content:center">
             <div class="col-lg-12   col-xs-12 footer-background">
                 <p class="footerText">Si necesitas más información de nuestros servicios<br>
@@ -156,19 +193,6 @@
             
         </footer>
     </body>
-    <script>
-       $(".moto").bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
-            $(this).removeClass("animationx")  
-            
-            
-        })
-
-        $(".moto").hover(function(){
-            $(this).addClass("animationx");        
-            
-        })
-        
-    </script>
     <script src="scripts/Formulario.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
