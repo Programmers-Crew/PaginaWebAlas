@@ -79,19 +79,24 @@ create table pedido(
 	pedidoDesc varchar(150) not null,
     nombreReceptor varchar(50) not null,
     pedidoTelefonoReceptor varchar(8) not null,
+    pedidoPuntoInicio int not null,
     pedidoDireccionInicio varchar(150) not null,
+    pedidoPuntoFinal int not null,
     pedidoDireccionFinal varchar(150) not null,
     pedidoUsuarioId int not null,
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
-    pedidoCosto decimal,
+    pedidoCosto int not null,
     pedidoFormaPagoId tinyint,
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
     constraint FK_Pedido_Mensajero foreign key (pedidoMensajeroId) references Usuario(UsuarioId),
     constraint FK_Pedido_Usuario foreign key (pedidoUsuarioId) references Usuario(UsuarioId),
     constraint FK_Pedido_PedidoEstado foreign key (pedidoEstadoId) references estadoPedido(estadoPedidoId),
-    constraint FK_Pedido_FormaPago foreign key (pedidoFormaPagoId) references formaPago(formaPagoId)
+    constraint FK_Pedido_FormaPago foreign key (pedidoFormaPagoId) references formaPago(formaPagoId),
+    constraint FK_Pedido_PuntoInicial foreign key (pedidoPuntoInicio) references puntoInicio(puntoInicioCodigo),
+    constraint FK_PedidoPuntoFinal foreign key (pedidoPuntoFinal) references puntoFinal(puntoFinalCodigo),
+    constraint FK_PedidoCosto foreign key (pedidoCosto) references costoPedido(costoPedidoId)
 );
 
 
