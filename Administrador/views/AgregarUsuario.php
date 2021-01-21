@@ -55,8 +55,8 @@
                 </div>
             </nav>
         </header>
-        <section class="h-100">
-            <div class="inicio_sesion">
+        <section style="min-height: 100%;">
+            <div class="inicio_sesion" style="padding-top: 15px; padding-bottom:15px">
                         <div class="caja col-lg-5 col-md-9 col-xs-9">
                             <h2 class="titulos">Registrar Usuario</h2>
                             <form action="index.php?a=guardarUsuarioAdmin" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">

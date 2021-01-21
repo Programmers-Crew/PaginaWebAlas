@@ -13,57 +13,18 @@
 
     if(isset($_SESSION['usuario'])){
         $usuario -> setUsuario($usuarioSesion->getUsuarioActual());
-        $pedidos = new Pedidos();
-        if(isset($_GET['a'])){
-            switch($_GET['a']){
-                case 'agregarUsuario':
-                    include_once 'views/AgregarUsuario.php';
-                    break;
-                case 'chat':
-                    include_once 'views/chat.php';
-                    break;
-                case 'editarCuenta':
-                    include_once 'views/editarCuenta.php';
-                    break;
-                case 'confirmar':
-                    include_once 'views/confirmarPedido.php';
-                    break;
-                case 'guardarUsuarioAdmin':
-                    if($usuario->guardarUsuarioAdmin()){
-                        $errorRegistrar = "Usuario Duplicado, Por favor Intente de nuevo";
-                    }else{
-                        $registrarExito = "Su Usuario se ha agregado con exito, pidale al usuario que confirme su correo";
-                    }
-                    include_once 'views/AgregarUsuario.php';
-                    break;
-                case 'confirmarPedido':
-                    if($pedidos->confirmarPedido()){
-                        $errorRegistrar = "No se ha podido Confirmar su pedido Intente de nuevo";
-                    }else{
-                        $registrarExito = "Se ha Confirmado su pedido";
-                    }
-                    include_once 'views/inicioAdministrador.php';
-                    
-                    break;
-                case 'actualizarCuenta':
-                    if($usuario->editarCuenta()){
-                        $registrarExito = "Se ha editado su Cuenta actualice la página";
-                    }else{
-                        $errorRegistrar = "No se ha podido Editar su cuenta Intente de nuevo";
-                    }
-                    include_once 'views/inicioAdministrador.php';
-                    break;
-            }
-        }else{
+        
         
             if($usuario->getTipo() == '1'){
-                require_once "views/InicioAdministrador.php";
+                require_once "Administrador/index.php";
+                
             }else{
                 if($usuario->getTipo()=='2'){
-                    require_once "views/InicioMensajero.php";
+                    require_once "Mensajero/index.php";
+                    
                 }else{
                     if($usuario->getTipo() == '3'){
-                        require_once "views/InicioCliente.php";
+                        require_once "Cliente/index.php";
                     }else{
                         $errorLogin = "El Usuario y/o  contraseña  no existen";    
                         require_once "config/cerrarSesion.php";
@@ -72,8 +33,6 @@
                     }
                 }
             } 
-        } 
-
     }else{
         if(isset($_POST['usuario']) && isset($_POST['contraseña'])){
             $usuarioForm =$_POST['usuario'];
@@ -81,13 +40,13 @@
             if($usuario->validarLogin($usuarioForm,$contraseñaForm)){ 
                 $usuarioSesion ->setUsuarioActual($usuarioForm);
                 if($usuario->getTipo() == '1'){
-                    require_once "views/InicioAdministrador.php";
+                    require_once "Administrador/index.php";
                 }else{
                     if($usuario->getTipo()=='2'){
-                        require_once "views/InicioMensajero.php";
+                        require_once "Mensajero/index.php";
                     }else{
                         if($usuario->getTipo() == '3'){
-                            require_once "views/InicioCliente.php";
+                            require_once "Cliente/index.php";
                         }else{
                             $errorLogin = "El Usuario y/o  contraseña  no existen";    
                             require_once "views/login.php";

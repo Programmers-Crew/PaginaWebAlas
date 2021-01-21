@@ -45,11 +45,13 @@ html{
 body{
     min-height: 100%;
     width: 100%;
+}
+
+section{
     background-image: url(../assets/images/fondo.png);
     
     background-repeat: no-repeat !important;
     background-size: cover;
-    
 }
 .todo{
     
