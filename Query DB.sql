@@ -94,13 +94,9 @@ create table pedido(
     pedidoUsuarioId int not null,
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
-<<<<<<< HEAD
     pedidoCosto int not null,
     pedidoFormaPagoId tinyint,
-=======
-    pedidoCosto decimal default "00",
     pedidoFormaPagoId tinyint default "1",
->>>>>>> Davis-Roldan
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
     constraint FK_Pedido_Mensajero foreign key (pedidoMensajeroId) references Usuario(UsuarioId),
