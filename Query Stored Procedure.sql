@@ -380,9 +380,67 @@ DELIMITER ;
 #inserts obligatorios
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
 insert into  estadoPedido(estadoPedidoDesc) values("En Revisión"),("Pendiente"),("Entregado");
+<<<<<<< HEAD
+
+	-- puntoInicio
+insert into puntoInicio(puntopuntoInicioDesc) values("Ciudad Capital"),("Carretera al Salvador"),("Villa Nueva"),("Mixco"),("San Miguel Petapa");
+
+	-- nombreLugar
+insert into nombreLugar(nombreLugarDesc) values("Zona 1"),("Zona 2"),("Zona 3"),("Zona 4"),("Zona 5"),("Zona 6"),("Zona 7"),("Zona 8"),("Zona 9"),("Zona 10"),("Zona 11"),("Zona 12"),("Zona 13");
+insert into nombreLugar(nombreLugarDesc) values("Zona 14"),("Zona 15"),("Zona 16"),("Zona 17"),("Zona 18"),("Zona 19"),("Zona 21"),("San Rafael"),("Pilares del Norte"),("Villa Hermosa"),("Muxbal"),("San José Pinula");
+insert into nombreLugar(nombreLugarDesc) values("Pavón"),("Fraijanes"),("Carretera al Atlántico km 10"),("Ciudad Satelite"),("San Miguel Petapa"),("Atanasio Tzul"),("Santa Catarina Pinula"),("Don Justo"),("Las Lomas"),("San Antonio");
+insert into nombreLugar(nombreLugarDesc) values("Boca del Monte"),("Rivera del Rio"),("Zona 24");
+
+	-- puntoFinal
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital", 1),("Ciudad Capital", 2),("Ciudad Capital",3),("Ciudad Capital",4),("Ciudad Capital",5),("Ciudad Capital",6),("Ciudad Capital",7),("Ciudad Capital",8),("Ciudad Capital",9),("Ciudad Capital",10),("Ciudad Capital",11),("Ciudad Capital",12),("Ciudad Capital",13),("Ciudad Capital",14),("Ciudad Capital",15),("Ciudad Capital",16),("Ciudad Capital",17),("Ciudad Capital",20),("Ciudad Capital",48),("Ciudad Capital",31),("Ciudad Capital",18),("Ciudad Capital",19),("Ciudad Capital",31),("Ciudad Capital",21),("Ciudad Capital",28);
+
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Mixco",1),("Mixco",2),("Mixco",3),("Mixco",4),("Mixco",5),("Mixco",6),("Mixco",7),("Mixco",8),("Mixco",11),("Mixco",19),("Mixco",9),("Mixco",29);
+
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",1),("Villa Nueva",2),("Villa Nueva",3),("Villa Nueva",4),("Villa Nueva",5);
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",23),("Villa Nueva",45),("Villa Nueva",30),("Villa Nueva",46);
+
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Carretera al Salvador",24),("Carretera al Salvador",25),("Carretera al Salvador",32),("Carretera al Salvador",33),("Carretera al Salvador",34),("Carretera al Salvador",35),("Carretera al Salvador",26),("Carretera al Salvador",27);
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital",22);
+
+	-- CostoAsignado
+insert into costoAsignado(costoPedidoDesc) values (25.00),(30.00),(35.00),(40.00);
+
+	-- CostoPedido
+		-- Ciudad Capital
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(1,1,1),(1,2,1),(1,3,1),(1,4,1),(1,5,1),(1,6,1),(1,7,1),(1,8,1),(1,9,1),(1,10,1),(1,11,1),(1,12,1),(1,13,1),(1,14,1),(1,15,1);
+insert into costoPedido(puntoInicio, puntoFinal, costoAsignado) values(1,16,2),(1,17,2),(1,18,2);
+insert into costoPedido(puntoInicio, puntoFinal, costoAsignado) values(1,26,2),(1,27,2),(1,28,2),(1,29,2),(1,30,2),(1,31,2),(1,32,2),(1,33,2),(1,34,2),(1,35,2);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(1,21,3),(1,24,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(1,38,3),(1,39,3),(1,40,3),(1,41,3),(1,42,3),(1,43,3),(1,44,3),(1,45,3),(1,46,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(1,25,4),(1,47,4),(1,48,4),(1,50,4),(1,51,4),(1,52,4),(1,53,4);
+        -- Carretera Al Salvador
+        insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(2,47,1),(2,48,1),(2,53,1),(2,54,1);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(2,16,2),(2,17,2);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(2,1,3),(2,2,3),(2,3,3),(2,4,3),(2,5,3),(2,6,3),(2,7,3),(2,8,3),(2,9,3),(2,10,3),(2,11,3),(2,12,3),(2,13,3),(2,14,3),(2,15,3),(2,21,3),(2,22,3),(2,18,3),(2,19,3),(2,20,3),(2,24,3),(2,55,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(2,38,3),(2,39,3),(2,40,3),(2,41,3),(2,42,3),(2,43,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(2,25,4),(2,26,4),(2,27,4),(2,28,4),(2,29,4),(2,30,4),(2,31,4),(2,32,4),(2,33,4),(2,34,4),(2,36,4),(2,37,4);
+		-- Villa Nueva
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(3,38,1),(2,39,1),(2,40,1),(2,41,1),(2,42,1),(2,43,1);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(3,18,2);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(3,1,3),(3,2,3),(3,3,3),(3,4,3),(3,5,3),(3,6,3),(3,7,3),(3,8,3),(3,9,3),(3,10,3),(3,11,3),(3,12,3),(3,19,3),(3,20,3),(3,13,3),(3,14,3),(3,15,3),(3,16,3),(3,17,3),(3,21,3),(3,24,3),(3,55,3),(3,22,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(3,26,3),(3,27,3),(3,28,3),(3,29,3),(3,31,3),(3,32,3),(3,33,3),(3,34,3),(3,35,3),(3,36,3),(3,37,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(3,25,4),(3,47,4),(3,48,4),(3,49,4),(3,53,4),(3,50,4),(3,51,4),(3,52,4);
+	-- Mixco
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(4,1,2),(4,2,2),(4,3,2),(4,4,2),(4,5,2),(4,6,2),(4,7,2),(4,8,2),(4,9,2),(4,10,2),(4,11,2),(4,12,2),(4,19,2),(4,20,2),(4,13,2),(4,14,2),(4,15,2),(4,16,2),(4,17,2),(4,22,2),(4,18,2);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(4,26,2),(4,27,2),(4,28,2),(4,29,2),(4,30,2),(4,31,2),(4,32,2),(4,33,2),(4,34,2),(4,35,2);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(4,38,3),(4,39,3),(4,40,3),(4,41,3),(4,42,3),(4,43,3),(4,44,3),(4,45,3),(4,36,3),(4,37,3),(4,21,3),(4,24,3),(4,55,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(4,25,4),(4,47,4),(4,48,4),(4,53,4),(4,50,4),(4,51,4),(4,52,4);
+	-- San Miguel Petapa
+    insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,38,1),(5,39,1),(5,40,1),(5,41,1),(5,42,1);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,12,2),(5,19,2),(5,20,2),(5,18,2),(5,33,2),(5,43,2);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,1,3),(5,2,3),(5,3,3),(5,4,3),(5,5,3),(5,6,3),(5,7,3),(5,8,3),(5,9,3),(5,10,3),(5,11,3),(5,13,3),(5,14,3),(5,15,3),(5,16,3),(5,17,3);
+insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,56,4),(5,47,4),(5,48,4),(5,49,4),(5,53,4),(5,50,4),(5,51,4),(5,52,4);
+		
+=======
 insert into  estadoUsuario(estadoUsuarioDesc) values("En Revisión"),("Confirmado");
 insert into formapago(formaPagoDesc) values("PENDIENTE"),("EFECTIVO"),("Tarjeta Debito/Credito");
 insert into usuario(userName,usuarioNombre,UsuarioApellido,usuarioCorreo,usuarioContrasena,tipoUsuarioId) values('Pendiente','Pendiente','Pendiente','_','4zWp2pbd','1');
+>>>>>>> Davis-Roldan
 #PROCEDURE EXTRA
 DELIMITER $$
 	create procedure Sp_ListarMesajeros()
@@ -447,6 +505,7 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+
 DELIMITER $$
 	create procedure Sp_EliminarUsuarioPorNombre(username varchar(25))
 		begin
@@ -496,6 +555,8 @@ DELIMITER $$
 												
         end $$
 DELIMITER ;
+
+
 
 DELIMITER $$
 	create procedure Sp_ListarMensajero()
@@ -665,4 +726,142 @@ DELIMITER $$
 						usuario as u
 							where u.userName = username;
         end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarCorreo(correo varchar(25))
+		begin
+			select 
+				usuarioCorreo
+					from 
+						usuario
+							where usuarioCorreo = correo;
+        end $$
+DELIMITER ;
+
+#REPORTES
+DELIMITER $$
+	create procedure Sp_TotalesReporteVentas(fechaCorte date)
+		begin
+			select distinct p.pedidoId, 
+            pedidoFecha, 
+            sum(distinct pedidoMonto) as "Total a pagar",
+            sum(distinct pedidoCosto) as "Total a cobrar",
+            (sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total",
+            count(distinct pedidoId)
+				from pedido as p
+					where pedidoFecha = fechaCorte and pedidoEstadoId = 3;
+        end $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+	create procedure Sp_SubReporteVentas(pedidoId int)
+		begin 
+			select 
+				mensajero.userName as mensajero,
+				cliente.userName as cliente,
+                p.pedidoTelefonoReceptor,
+                P.pedidoMonto,
+                p.pedidoCosto,
+                fp.formaPagoDesc
+				from
+					Pedido as p
+						 inner JOIN	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		where p.pedidoId = pedidoId;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_SubReporteCierreDeCaja(fechaCorte date)
+		begin
+			select
+            count(distinct pedidoId) as "Pedidos total Entregados",
+            sum(distinct pedidoMonto) as "Total a pagar",
+            sum(distinct pedidoCosto) as "Total a cobrar"
+				from 
+					pedidos
+						where pedidoFecha = fechaCorte and pedidoFormaPagoId = 1;
+		end $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure Sp_ReporteCierreDeCaja(pedidoId int)
+		begin
+			select
+				mensajero.userName as mensajero,
+				cliente.userName as cliente,
+				fp.formaPagoDesc,
+				(sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total Efectivo",
+				(sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total Tranferencia"
+					from pedidos as p
+						inner join 	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		where p.pedidoId = pedidoId;
+
+                
+        end $$
+DELIMITER ;
+
+
+DELIMITER $$ 
+	create procedure Sp_BuscarPuntoFinal(puntoDesc varchar(40), lugar varchar(40))
+		begin
+			SELECT 
+				pf.puntoFinalCodigo,
+				pf.puntoFinalDesc,
+				nl.nombreLugarDesc
+				FROM puntofinal as pf
+					inner join nombrelugar as nl
+						on pf.nombreLugar = nl.nombreLugarId
+								where pf.puntoFinalDesc = puntoDesc and nl.nombreLugarDesc = lugar
+								order by puntoFinalCodigo asc;
+		end $$
+DELIMITER ;
+
+
+DELIMITER $$
+	create procedure SP_BuscarCostoPedido(puntoInicio varchar(40), puntoFinal varchar(40),lugar varchar(40))
+		begin 
+			select
+				cp.costoPedidoId,
+				pi.puntoInicioDesc,
+				pf.puntoFinalDesc,
+				nl.nombreLugarDesc,
+				ca.costoPedidoDesc
+					from costopedido as cp
+						inner join puntoinicio as pi
+							on cp.puntoInicio = pi.puntoInicioCodigo
+								inner join puntoFinal as pf
+										on cp.puntoFinal = pf.puntoFinalCodigo
+											inner join nombrelugar as nl
+												on pf.nombreLugar = nl.nombreLugarId
+													inner join costoasignado as ca
+														on cp.costoAsignado = ca.costoPedidoId
+															where pi.puntoInicioDesc = puntoInicio  and pf.puntoFinalDesc = puntoFinal and nl.nombreLugarDesc = lugar
+																order by costoPedidoId asc;
+	end $$
 DELIMITER ;

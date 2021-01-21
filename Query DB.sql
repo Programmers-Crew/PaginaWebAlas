@@ -25,6 +25,7 @@ create table formaPago(
     primary key PK_formaPago (formaPagoId)
 );
 
+
 create table Usuario(
 	usuarioId int auto_increment not null,
     userName varchar(25) unique not null,
@@ -39,25 +40,72 @@ create table Usuario(
     Constraint FK_Usuario_EstadoUsuario foreign key (estadoUsuarioId) references estadoUsuario(estadoUsuarioId)
 );
 
+
+create table puntoInicio(
+	puntoInicioCodigo int auto_increment not null,
+    puntoInicioDesc varchar(40) not null unique,
+    primary key PK_puntoInicio(puntoInicioCodigo)
+);
+
+
+create table nombreLugar(
+	nombreLugarId int auto_increment not null,
+    nombreLugarDesc varchar(40) not null unique,
+    primary key PK_nombreLugar(nombreLugarId)
+);
+
+
+create table puntoFinal(
+	puntoFinalCodigo int auto_increment not null,
+    puntoFinalDesc varchar(40) not null,
+    nombreLugar int not null,
+    primary key PK_puntoFinal(puntoFinalCodigo),
+    constraint FK_PuntoFinal_NombreLugar foreign key (nombreLugar) references nombreLugar(nombreLugarId)
+);
+
+create table costoAsignado(
+	costoPedidoId int auto_increment not null,
+    costoPedidoDesc double not null unique,
+    primary key PK_costoPedido(costoPedidoId)
+);
+
+
+create table costoPedido(
+	 costoPedidoId int auto_increment not null,
+     puntoInicio int not null,
+     puntoFinal int not null,
+     costoAsignado int not null,
+     primary key PK_costoPedido(costoPedidoId),
+     constraint FK_CostoPedido_PuntoInicial foreign key (puntoInicio) references puntoInicio(puntoInicioCodigo),
+     constraint FK_CostoPedido_PutoFinal foreign key (puntoFinal) references puntoFinal(puntoFinalCodigo),
+     constraint FK_CostoPedido_CostoAsignado foreign key (costoASignado) references costoAsignado(costoPedidoId)
+     );
+     
 create table pedido(
 	pedidoId int auto_increment not null,
     pedidoFecha date not null,
 	pedidoDesc varchar(150) not null,
     nombreReceptor varchar(50) not null,
     pedidoTelefonoReceptor varchar(8) not null,
+    pedidoPuntoInicio int not null,
     pedidoDireccionInicio varchar(150) not null,
+    pedidoPuntoFinal int not null,
     pedidoDireccionFinal varchar(150) not null,
     pedidoUsuarioId int not null,
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
-    pedidoCosto decimal default "00",
+    pedidoCosto int not null,
+    pedidoFormaPagoId tinyint,
     pedidoFormaPagoId tinyint default "1",
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
     constraint FK_Pedido_Mensajero foreign key (pedidoMensajeroId) references Usuario(UsuarioId),
     constraint FK_Pedido_Usuario foreign key (pedidoUsuarioId) references Usuario(UsuarioId),
     constraint FK_Pedido_PedidoEstado foreign key (pedidoEstadoId) references estadoPedido(estadoPedidoId),
-    constraint FK_Pedido_FormaPago foreign key (pedidoFormaPagoId) references formaPago(formaPagoId)
+    constraint FK_Pedido_FormaPago foreign key (pedidoFormaPagoId) references formaPago(formaPagoId),
+    constraint FK_Pedido_PuntoInicial foreign key (pedidoPuntoInicio) references puntoInicio(puntoInicioCodigo),
+    constraint FK_PedidoPuntoFinal foreign key (pedidoPuntoFinal) references puntoFinal(puntoFinalCodigo),
+    constraint FK_PedidoCosto foreign key (pedidoCosto) references costoPedido(costoPedidoId)
 );
 
 
