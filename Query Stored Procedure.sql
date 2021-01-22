@@ -190,43 +190,43 @@ DELIMITER $$
 				p.pedidoId,
                 p.pedidoFecha,
                 p.nombreReceptor,
+                pi.puntoInicioDesc,
                 p.pedidoDireccionInicio,
+                pf.puntoFinalDesc,
                 p.pedidoDireccionFinal,
 				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
                 p.pedidoDesc,
                 mensajero.userName as mensajero,
                 P.pedidoMonto,
-                p.pedidoCosto,
+                cp.costoAsignado,
                 fp.formaPagoDesc,
                 ep.estadoPedidoDesc
 				from
 					Pedido as p
-						 inner JOIN	
-							usuario as cliente
-								on 
-									p.pedidoUsuarioId = cliente.usuarioId
-										inner join 
-											usuario as mensajero
-												on 
-													p.pedidoMensajeroId = mensajero.usuarioId
-														inner join 
-															formapago as fp
-																on 
-																	pedidoFormaPagoId = formaPagoId
-																		inner join 
-																			estadopedido as ep
-																				on 
-																					pedidoEstadoId = estadoPedidoId order by p.pedidoFecha DESC;
+						inner JOIN usuario as cliente
+							on p.pedidoUsuarioId = cliente.usuarioId
+								inner join usuario as mensajeroon p.pedidoMensajeroId = mensajero.usuarioId
+									inner join formapago as fp
+										on pedidoFormaPagoId = formaPagoId
+											inner join estadopedido as ep
+												on pedidoEstadoId = estadoPedidoId 
+													inner join costopedido as cp
+														on  p.pedidoCosto= cp.costoPedidoId
+															inner join puntoinicio as pi
+																on cp.puntoInicio = pi.puntoInicioCodigo
+																	inner join puntofinal as pf
+																		on puntoFinal = pf.puntoFinalCodigo
+																			order by p.pedidoFecha DESC;
         end $$
 DELIMITER ;
 call Sp_ListarPedido();
 
 DELIMITER $$
-	create procedure Sp_AgregarPedido(fecha date, direccionInicio varchar(150), direccionFinal varchar(150),  usuario int, telefono varchar(8), descripcion varchar(150), monto decimal, nombreReceptor varchar(50))
+	create procedure Sp_AgregarPedido(fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), descripcion varchar(150), costo int,monto decimal, nombreReceptor varchar(50))
 		begin
-			insert into Pedido(pedidoFecha,pedidoDireccionInicio,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoDesc,pedidoMonto,nombreReceptor)
-				values(fecha, direccionInicio,direccionFinal, usuario, telefono, descripcion, monto, nombreReceptor);
+			insert into Pedido(pedidoFecha,pedidoPuntoInicio,pedidoDireccionInicio,pedidoPuntoFinal,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoDesc,pedidoCosto,pedidoMonto,nombreReceptor)
+				values(fecha,puntoInicio ,direccionInicio,puntoFinal,direccionFinal, usuario, telefono, descripcion, costo,monto, nombreReceptor);
         end $$
 DELIMITER ;
 
@@ -247,7 +247,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ConfirmarPedido(idBuscado int, mensajero int, costo decimal,estado int)
+	create procedure Sp_ConfirmarPedido(idBuscado int, mensajero int, costo int,estado int)
 		begin
 			update Pedido as p
 				set 
@@ -259,13 +259,13 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_ConfirmarPago(idBuscado int, costo decimal, mensajero int, estado int)
+	create procedure Sp_ConfirmarPago(idBuscado int, costo decimal, mensajero int, estado int,formaPago int)
 		begin
 			update Pedido as p
 				set
-					p.pedidoCosto = costo, 
                     p.pedidoMensajeroId = mensajero,
-                    p.pedidoEstadoId = estado
+                    p.pedidoEstadoId = estado,
+                    p.pedidoFormaPagoId = formaPago
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
