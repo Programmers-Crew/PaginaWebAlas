@@ -206,7 +206,8 @@ DELIMITER $$
 					Pedido as p
 						inner JOIN usuario as cliente
 							on p.pedidoUsuarioId = cliente.usuarioId
-								inner join usuario as mensajeroon p.pedidoMensajeroId = mensajero.usuarioId
+								inner join usuario as mensajero
+									on p.pedidoMensajeroId = mensajero.usuarioId
 									inner join formapago as fp
 										on pedidoFormaPagoId = formaPagoId
 											inner join estadopedido as ep
@@ -395,16 +396,14 @@ insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital", 1),(
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Mixco",1),("Mixco",2),("Mixco",3),("Mixco",4),("Mixco",5),("Mixco",6),("Mixco",7),("Mixco",8),("Mixco",11),("Mixco",19),("Mixco",9),("Mixco",29);
 
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",1),("Villa Nueva",2),("Villa Nueva",3),("Villa Nueva",4),("Villa Nueva",5);
-<<<<<<< HEAD
 
-insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",23),("Villa Nueva",45),("Villa Nueva",30),("Villa Nueva",46);
-=======
+
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",23),("Villa Nueva",36),("Villa Nueva",37),("Villa Nueva",30);
->>>>>>> Diego-Gonzalez
+
 
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Carretera al Salvador",24),("Carretera al Salvador",25),("Carretera al Salvador",32),("Carretera al Salvador",33),("Carretera al Salvador",34),("Carretera al Salvador",35),("Carretera al Salvador",26),("Carretera al Salvador",27);
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital",22);
-
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital",38);
 	-- CostoAsignado
 insert into costoAsignado(costoPedidoDesc) values (25.00),(30.00),(35.00),(40.00);
 
@@ -437,12 +436,10 @@ insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(4,25,4),(
     insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,38,1),(5,39,1),(5,40,1),(5,41,1),(5,42,1);
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,12,2),(5,19,2),(5,20,2),(5,18,2),(5,33,2),(5,43,2);
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,1,3),(5,2,3),(5,3,3),(5,4,3),(5,5,3),(5,6,3),(5,7,3),(5,8,3),(5,9,3),(5,10,3),(5,11,3),(5,13,3),(5,14,3),(5,15,3),(5,16,3),(5,17,3);
-<<<<<<< HEAD
-insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,56,4),(5,47,4),(5,48,4),(5,49,4),(5,53,4),(5,50,4),(5,51,4),(5,52,4);
-=======
+
+
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,55,4),(5,47,4),(5,48,4),(5,49,4),(5,53,4),(5,50,4),(5,51,4),(5,52,4);
 		
->>>>>>> Diego-Gonzalez
 insert into  estadoUsuario(estadoUsuarioDesc) values("En Revisión"),("Confirmado");
 insert into formapago(formaPagoDesc) values("PENDIENTE"),("EFECTIVO"),("Tarjeta Debito/Credito");
 insert into usuario(userName,usuarioNombre,UsuarioApellido,usuarioCorreo,usuarioContrasena,tipoUsuarioId) values('Pendiente','Pendiente','Pendiente','_','4zWp2pbd','1');
