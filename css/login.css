@@ -90,6 +90,14 @@ section{
     left: 10px;
 }
 
+
+.animationxs{
+    cursor: pointer;
+    animation-name: moto;
+    animation-duration: 4s;
+    animation-iteration-count: 1;
+}
+
 .moto.animationx{
     cursor: pointer;
     animation-name: moto;

@@ -66,12 +66,50 @@
                 </div>
             </nav>
         </header>
-        <div class="moto col-lg-2 col-md-3 col-xs-6">
-                <img src="assets/images/moto.png" class="img-fluid" >
-        </div>
         <section style="min-height: 100%;">
             <div class="titulos centrado">
                 <h1 style="color: white; font-size:7vw"><span style="font-family: berlin sans FB; font-size:5vw">¡</span>Conoce Nuestras Tarifas<span style="font-family: berlin sans FB; font-size:5vw;">!</span></h1>
+            </div>
+            <div class="col-xl-12 col-md-12 col-xs-12 row centrado" style="margin-right: 0;">
+                <div class="col-xl-9 col-md-9 col-xs-9 galeria row">
+                    <?php
+                        $folder_path = 'assets/images/tarifas/'; 
+
+                        $num_files = glob($folder_path . "*.{JPG,jpg,gif,png,bmp,jpeg}", GLOB_BRACE);
+
+                        $folder = opendir($folder_path);
+                        
+                        if($num_files > 0){
+                            while(false !== ($file = readdir($folder))) {
+
+                                $file_path = $folder_path.$file;
+                                $extension = strtolower(pathinfo($file ,PATHINFO_EXTENSION));
+                                $nombre = basename($file_path,'.'.$extension);
+                                if($extension=='jpg' || $extension =='png' || $extension == 'gif' || $extension == 'bmp' || $extension == 'jpeg') {
+                                    ?>  
+                                        <div class="columna col-xl-4 col-md-12 col-xs-12 centrado" id="columna" onclick="galeria('<?php echo $nombre.'.'.$extension; ?>');">
+                                            <div class="contenedor">
+                                                
+                                                <img class="img-fluid imagen-activado" id="imagenTarifa" name="imagenTarifa" src="<?php echo $file_path; ?>">
+                                                <div class="texto-imagen-activado">
+                                                    <span class="fuentes text">¡Toca para Ver!</span>
+                                                </div>
+                                                <div style="text-align: center;">
+                                                    <span class="fuentes texto"><?php  echo $nombre;  ?></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                }
+                            }
+                        }else{
+                            echo "the folder was empty !";
+                        }
+                        closedir($folder);
+                    ?>
+                    
+                    
+                </div>
             </div>
         </section>
     </body>
@@ -113,18 +151,21 @@
             </div>
             
         </footer>
-    <script>
-       $(".moto").bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
-            $(this).removeClass("animationx")  
-            
-            
-        })
+        <div onclick="preview();" class="desactivado" id="preview">
 
-        $(".moto").hover(function(){
-            $(this).addClass("animationx");        
-            
-        })
-        
+        </div>
+    <script>
+       function galeria(url){
+            console.log(url);
+            document.getElementById('preview').classList.remove('desactivado');
+            document.getElementById('preview').classList.add('activado');
+            document.getElementById('preview').innerHTML = '<img class="img-fluid" style="height:100%;margin: auto; display:flex" src="assets/images/tarifas/'+url+'">';
+        }
+
+        function preview(){
+            document.getElementById('preview').classList.remove('activado');
+            document.getElementById('preview').classList.add('desactivado');
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
