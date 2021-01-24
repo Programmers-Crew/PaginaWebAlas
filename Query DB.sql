@@ -25,6 +25,14 @@ create table formaPago(
     primary key PK_formaPago (formaPagoId)
 );
 
+create table Empresa(
+	empresaId int auto_increment not null,
+    empresaDesc varchar(25) not null, #Aqui ira el nombre de la empresa
+    empresaNuemeroCuenta varchar(25) not null, # Aqui ira el numero de cuenta
+    empresaCuentaTipo varchar(25) not null, # Aqui ira si es monetario o ahorro
+    empresaNombreCuenta varchar(25) not null, # Aqui ira el nombre del propetario de la cuenta
+    primary key PK_Empresa (empresaId)
+);
 
 create table Usuario(
 	usuarioId int auto_increment not null,
@@ -35,9 +43,11 @@ create table Usuario(
     usuarioContrasena varchar(200) not null,
     tipoUsuarioId tinyint not null,
     estadoUsuarioId tinyint not null default '1',
+    empresaId int not null,
     primary key PK_usuario (usuarioId),
 	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId),
-    Constraint FK_Usuario_EstadoUsuario foreign key (estadoUsuarioId) references estadoUsuario(estadoUsuarioId)
+    Constraint FK_Usuario_EstadoUsuario foreign key (estadoUsuarioId) references estadoUsuario(estadoUsuarioId),
+	Constraint FK_Usuario_Empresa foreign key (empresaId) references Empresa(empresaId)
 );
 
 
@@ -46,7 +56,6 @@ create table puntoInicio(
     puntoInicioDesc varchar(40) not null unique,
     primary key PK_puntoInicio(puntoInicioCodigo)
 );
-
 
 create table nombreLugar(
 	nombreLugarId int auto_increment not null,
@@ -95,7 +104,6 @@ create table pedido(
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
     pedidoCosto int not null,
-    pedidoFormaPagoId tinyint,
     pedidoFormaPagoId tinyint default "1",
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
@@ -116,6 +124,7 @@ create table Sala(
 );
 
 create table Mensaje(
+
 	mensajeId int auto_increment not null,
     mensajeSalaId int not null, 
     mensajeUsuarioId int not null,

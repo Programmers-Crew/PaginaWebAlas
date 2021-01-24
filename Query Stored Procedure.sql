@@ -790,7 +790,7 @@ DELIMITER $$
             sum(distinct pedidoMonto) as "Total a pagar",
             sum(distinct pedidoCosto) as "Total a cobrar"
 				from 
-					pedidos
+					pedido
 						where pedidoFecha = fechaCorte and pedidoFormaPagoId = 1;
 		end $$
 DELIMITER ;
