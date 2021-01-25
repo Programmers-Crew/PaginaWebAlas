@@ -59,7 +59,7 @@ create table Usuario(
     usuarioContrasena varchar(200) not null,
     tipoUsuarioId tinyint not null,
     estadoUsuarioId tinyint not null default '1',
-    empresaId int not null,
+    empresaId int,
     primary key PK_usuario (usuarioId),
 	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId),
     Constraint FK_Usuario_EstadoUsuario foreign key (estadoUsuarioId) references estadoUsuario(estadoUsuarioId),
@@ -118,11 +118,7 @@ create table pedido(
     pedidoUsuarioId int not null,
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
-<<<<<<< HEAD
     pedidoCosto decimal not null,
-=======
-    pedidoCosto int not null,
->>>>>>> Diego-Gonzalez
     pedidoFormaPagoId tinyint default "1",
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
