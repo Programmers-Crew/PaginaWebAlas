@@ -1,4 +1,7 @@
-<?php?>
+<?php
+    require_once 'controllers/puntosDireccionesController.php';
+    $puntos = new PuntosDirecciones();
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -54,8 +57,9 @@
             <div class="inicio_sesion col-xl-12">
                         <div class="caja col-lg-9 col-md-10 col-xs-10">
                             <h2 class="titulos">Solicitar Pedido</h2>
-                            <form action="index.php?a=actualizarCuenta" id="formSolicitarPedido" class="formSolicitarPedido" method="POST">
+                            <form action="index.php?a=solicitarPedidoDB" id="formSolicitarPedido" class="formSolicitarPedido" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $usuario->getId(); ?>">
+                                <input type="hidden" name="correoUsuario" value="<?php echo $usuario->getCorreo(); ?>">
                                 <?php
                                     if(isset($errorRegistrar)){
                                         echo "<p  class='error'>".$errorRegistrar."</p>";
@@ -97,11 +101,23 @@
                                             <p class="fuentes" style="color:#432A90; margin:0">El Pedido Sale de:</p>
                                         </div>
                                         <div class="col-lg-9">
-                                            <select class="form-control form-texto" form="formSolicitarPedido" name="puntoInicio" required>
-                                                <option disabled selected>Eliga el lugar donde se recogerá el paquete</option>
-                                                <option> holi</option>
+                                            <select onchange="cambio()" class="form-control form-texto required" form="formSolicitarPedido" name="puntoInicio" id="puntoInicio" required>
+                                                <option disabled selected value="0">Eliga el lugar donde se recogerá el paquete</option>
+                                                <?php
+                                                    $resultado = $puntos->listarPuntoInicio();
+                                                    if($resultado->fetch_row()){
+                                                        foreach($resultado as $resultadoActual){
+                                                            ?>
+                                                            <option value="<?php echo $resultadoActual['puntoInicioCodigo']; ?>"><?php echo $resultadoActual['puntoInicioDesc']; ?></option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                ?>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_puntoInicio">Debe seleccionar un Lugar</span>
                                     </div>
                                 </div>
 
@@ -111,11 +127,11 @@
                                                 <p class="fuentes" style="color: #432A90; margin:0;text-align:initial">Descripción de Dirección Inicial:</p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <textarea  style="max-height: 200px;"  class="form-control form-control textarea1"  required placeholder="Breve descripción de donde se recojerá el paquete" name="direccionInicio" form="formSolicitarPedido"></textarea>
+                                                <textarea  style="max-height: 200px;" oninput="descInicio()" id="descripcionInicial"  class="form-control form-control textarea1"  required placeholder="Breve descripción de donde se recojerá el paquete" name="descripcionInicial" form="formSolicitarPedido"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_DireccionInicio">Solo se permiten 150 caracteres</span>
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_descripcionInicial">Solo se permiten 150 caracteres</span>
                                         </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
@@ -124,11 +140,14 @@
                                             <p class="fuentes" style="color:#432A90; margin:0; text-align:initial">El Pedido se entregará en:</p>
                                         </div>
                                         <div class="col-lg-9">
-                                            <select class="form-control form-texto" form="formSolicitarPedido" name="puntoFinal" required>
-                                                <option disabled selected>Eliga el lugar donde se entregará el paquete</option>
-                                                <option> holi</option>
+                                            <select onchange="cambioFinal()" class="form-control form-texto required" form="formSolicitarPedido" name="puntoFinal" id="puntoFinal" required>
+                                                <option selected value="0">Eliga el lugar donde se entregará el paquete</option>
+                                                
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_puntoFinal">Debe seleccionar un Lugar</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">    
@@ -137,11 +156,11 @@
                                                 <p class="fuentes" style="color: #432A90; margin:0; text-align:initial">Descripción de Dirección Final:</p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <textarea  style="max-height: 200px;"  class="form-control textarea1"  required placeholder="Breve descripción de donde se entregará el paquete" name="direccionFinal" form="formSolicitarPedido"></textarea>
+                                                <textarea  style="max-height: 200px;" id="descripcionFinal" oninput="descFinal()" class="form-control textarea1"  required placeholder="Breve descripción de donde se entregará el paquete" name="descripcionFinal" form="formSolicitarPedido"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_direccionFinal">Solo se permiten 150 caracteres</span>
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_descripcionFinal">Solo se permiten 150 caracteres</span>
                                         </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
@@ -157,7 +176,15 @@
                                         <span id="alerta_monto" class="error grupo-correcto">El monto no puede llevar letras y/o signos</span>
                                     </div>
                                 </div>
-
+                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
+                                        <div class="col-lg-12 row" >
+                                            <div class="col-lg-3" style="display: flex; align-items:center">
+                                                <p class="fuentes" style="color: #432A90; margin:0">Precio de Envío: (Precio sujeto a cambios)</p>
+                                            </div>
+                                            <div class="col-lg-9" id="precio">
+                                            </div>
+                                        </div>
+                                </div>                            
                                 <div>
                                     <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
                                 </div>                           
@@ -208,20 +235,10 @@
             
         </footer>
     </body>
-    <script>
-       $(".motoVistas").bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
-            $(this).removeClass("animationxs")  
-            
-            
-        })
-
-        $(".motoVistas").hover(function(){
-            $(this).addClass("animationxs");        
-            
-        })
-        
-    </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="scripts/funciones.js"></script>
+        <script src="scripts/solicitar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </html>
