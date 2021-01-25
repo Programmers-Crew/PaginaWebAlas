@@ -25,14 +25,30 @@ create table formaPago(
     primary key PK_formaPago (formaPagoId)
 );
 
+create table Banco(
+	bancoId int auto_increment not null,
+	bancoDesc varchar(30) unique not null,
+    primary key PK_banco (bancoId)
+);
+
+create table TipoCuenta(
+	tipoCuentaId int auto_increment not null,
+    tipoCuentaDesc varchar(30) unique not null,
+    primary key PK_TipoCuenta (tipoCuentaId)
+);
+
 create table Empresa(
 	empresaId int auto_increment not null,
     empresaDesc varchar(25) not null, #Aqui ira el nombre de la empresa
-    empresaNuemeroCuenta varchar(25) not null, # Aqui ira el numero de cuenta
-    empresaCuentaTipo varchar(25) not null, # Aqui ira si es monetario o ahorro
+    empresaNumeroCuenta varchar(25) not null, # Aqui ira el numero de cuenta
     empresaNombreCuenta varchar(25) not null, # Aqui ira el nombre del propetario de la cuenta
-    primary key PK_Empresa (empresaId)
+    empresaCuentaTipo int not null, # Aqui ira si es monetario o ahorro
+    empresaBanco int not null, #Aqui iria el nombre del banco
+    primary key PK_Empresa (empresaId),
+    constraint FK_Empresa_Tipocuenta foreign key (empresaCuentaTipo) references TipoCuenta(tipoCuentaId),
+    constraint FK_Empresa_Banco foreign key (empresaBanco) references Banco(bancoId)
 );
+
 
 create table Usuario(
 	usuarioId int auto_increment not null,

@@ -113,7 +113,158 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+#tipo cuenta
 
+DELIMITER $$
+	create procedure Sp_ListarTipoCuenta()
+		begin
+			select
+				tc.tipoCuentaId,
+				tc.tipoCuentaDesc
+					from tipocuenta as tc;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_AgregarTipoCuenta(descripcion varchar(30))
+		begin
+			insert into tipocuenta(tipoCuentaDesc)
+				values(descripcion);
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ActualizarTipoCuenta(idBuscado int,descripcionNueva varchar(30))
+		begin
+			update tipocuenta
+				set 
+					tipoCuentaDesc = descripcionNueva
+						where tipoCuentaId = idBuscado;
+		end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_EliminarTipocuenta(idBuscado int)
+		begin
+			delete from tipocuenta
+				where tipoCuentaId = idBuscado;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarTipoCuenta(idBuscado int)
+		begin
+			select
+					tc.tipoCuentaId,
+					tc.tipoCuentaDesc
+						from tipocuenta as tc
+							where tipoCuentaId = idBuscado;
+        end $$
+DELIMITER ;
+
+#Banco
+
+DELIMITER $$
+	create procedure Sp_ListarBanco()
+		begin
+			select 
+				b.bancoId,
+                b.bancoDesc
+					from banco as b;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_AgregarBanco(nombreBanco varchar(30))
+		begin 
+			insert into Banco(bancoDesc)
+				values(nombreBanco);
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ActualizarBanco(idBuscado int,nombreBancoNuevo varchar(30))
+		begin
+			update Banco as b
+				set 
+					b.bancoDesc = nombreBancoNuevo
+						where bancoId = idBuscado;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BorrarBanco(idbuscado int)
+		begin
+			delete from Banco 
+				where bancoId = idBuscado;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarBanco(idBuscado int)
+		begin
+			select 
+				b.bancoDesc
+					from Bancos as b
+						where b.bancoId = idBuscado;
+        end $$
+DELIMITER ;
+
+#Empresa
+DELIMITER $$
+	create procedure Sp_ListarEmpresa()
+		begin
+			select 
+				e.empresaDesc,
+                e.empresaNuemeroCuenta ,
+                e.empresaNombreCuenta ,
+                tp.tipoCuentaDesc,
+                b.bancoDesc
+					from Empresa as e
+						inner join tipocuenta as tp
+							on e.empresaCuentaTipo = tp.tipoCuentaId
+								inner join Banco as b
+									on  e.empresaBanco = b.bancoId;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ActualizarEmpresa(IdBuscado int,empresaDec varchar(25),empresaNuemeroCuenta varchar(25),empresaNombreCuenta varchar(25))
+		begin
+			update Empresa
+				set 
+					e.empresaDesc = empresaDec,
+                    e.empresaNuemeroCuenta = empresaNuemeroCuenta,
+                    e.empresaNombreCuenta = empresaNombreCuenta
+						where e.empresaId = IdBuscado;
+		end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BorrarEmpresa(idBuscado int)
+		begin
+			delete from Empresa
+				where e.empresaId = IdBuscado;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure SP_BuscarEmpresa(idBuscado int)
+		begin
+			select 
+				e.empresaDesc,
+                e.empresaNuemeroCuenta ,
+                e.empresaNombreCuenta ,
+                tp.tipoCuentaDesc,
+                b.bancoDesc
+					from Empresa as e
+						inner join tipocuenta as tp
+							on e.empresaCuentaTipo = tp.tipoCuentaId
+								inner join Banco as b
+									on  e.empresaBanco = b.bancoId
+										where e.empresaId = IdBuscado;
+        end $$
+DELIMITER ;
 #Usuario
 
 DELIMITER $$
@@ -126,21 +277,35 @@ DELIMITER $$
                     u.usuarioCorreo,
 					u.usuarioContrasena,
                     u.estadoUsuarioId,
-                    tu.tipoUsuarioDesc
+                    tu.tipoUsuarioDesc,
+                    e.empresaDesc,
+                    e.empresaNumeroCuenta,
+                    e.empresaNombreCuenta,
+                    tp.empresaCuentaTipo,
+                    b.empresaBanco
 					from
 						Usuario as u
-							inner join 
-								tipoUsuario  as tu
-									on u.tipoUsuarioId = tu.tipoUsuarioId;
-
+							inner join tipoUsuario  as tu
+									on u.tipoUsuarioId = tu.tipoUsuarioId
+										inner join Empresa as e
+											on u.empresaId = e.empresaId
+												inner join tipocuenta as tp
+													on e.empresaCuentaTipo = tp.tipoCuentaId
+														inner join Banco as b
+															on  e.empresaBanco = b.bancoId;
         end $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), correo varchar(30),tipoUsuario tinyint)
+	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), correo varchar(30),tipoUsuario tinyint, empresaId int,nombreEmppresa varchar(25),numeroCuenta varchar(25),nombreCuenta varchar(25),cuentaTipo int, bancoNombre int)
 		begin
-			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,usuarioCorreo,tipoUsuarioId)
-				values(nombre, apellido, username, contrasena, correo,tipoUsuario);
+			insert into Empresa(empresaDesc,empresaNumeroCuenta,empresaNombreCuenta,empresaCuentaTipo,empresaBanco)
+				values(nombreEmppresa,numeroCuenta,nombreCuenta,cuentaTipo,bancoNombre);
+        
+			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,usuarioCorreo,tipoUsuarioId,empresaId)
+				values(nombre, apellido, username, contrasena, correo,tipoUsuario,empresaId);
+			
+
         end $$
 DELIMITER ;
 
