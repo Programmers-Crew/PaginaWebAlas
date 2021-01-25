@@ -604,6 +604,12 @@ insert into  estadoUsuario(estadoUsuarioDesc) values("En Revisión"),("Confirmad
 insert into formapago(formaPagoDesc) values("PENDIENTE"),("EFECTIVO"),("Tarjeta Debito/Credito");
 insert into usuario(userName,usuarioNombre,UsuarioApellido,usuarioCorreo,usuarioContrasena,tipoUsuarioId) values('Pendiente','Pendiente','Pendiente','_','4zWp2pbd','1');
 
+	-- Tipo cuenta
+insert into tipoCuenta(tipoCuentaId,tipoCuentaDesc) values(1, "Ahorro"),(2, "Monetaria");
+
+	-- Banco
+insert into banco(bancoId,bancoDesc) values(1, "Banco BAC"),(2, "Banco Citi"),(3, "Banco Industrial"),(4, "Banco Bantrab"),(5, "Banco G&T Continental"),(6, "Agromercantil"),(7, "Banco Azteca"),(8, "Banco Credito Hipotecario"),(9, "Banco Vivibanco");
+
 #PROCEDURE EXTRA
 DELIMITER $$
 	create procedure Sp_ListarMesajeros()
