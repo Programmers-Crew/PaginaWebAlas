@@ -57,4 +57,4 @@ $(document).ready(function(){
   $(".motoVistas").hover(function(){
       $(this).addClass("animationxs");        
       
-  })
+  });

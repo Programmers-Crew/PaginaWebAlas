@@ -42,7 +42,7 @@
                     <div class="inicio_sesion">
                         <div class="caja col-lg-4 col-md-6 col-xs-6">
                             <h2 class="titulos">Iniciar Sesión</h2>
-                            <form action="index.php" method="POST">
+                            <form action="index.php" method="POST" id="formLogin" name="formLogin">
                                 <?php
                                     if(isset($registrarExito)){
                                         echo "<p style='color:#0FE642; font-family: Berlin Sans FB'>".$registrarExito."</p>";
@@ -54,7 +54,7 @@
                                 <div style="display: flex;">
                                 <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseña" required  type="password">
                                 </div>
-                                <input class="boton btn-lg" type="submit" value="INGRESAR">
+                                <button type="submit" form="formLogin" class="custom-btn btn-3"><span>Ingresar</span></button>
                                 <?php
                                     if(isset($errorLogin)){
                                         echo "<p class='error'>".$errorLogin."</p>";

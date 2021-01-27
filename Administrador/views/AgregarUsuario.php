@@ -1,5 +1,7 @@
 <?php
-
+    include_once 'controllers/UsuariosController.php';
+    $usuarios2 = new Usuarios();
+    $resultado = $usuarios2->getTiposDeCuenta();
 ?>
 
 <!DOCTYPE html>
@@ -55,78 +57,77 @@
                 </div>
             </nav>
         </header>
-        <section style="min-height: 100%;">
-            <div class="inicio_sesion" style="padding-top: 15px; padding-bottom:15px">
-                        <div class="caja col-lg-5 col-md-9 col-xs-9">
-                            <h2 class="titulos">Registrar Usuario</h2>
-                            <form action="index.php?a=guardarUsuarioAdmin" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
-                                <?php
-                                    if(isset($errorRegistrar)){
-                                        echo "<p  class='error'>".$errorRegistrar."</p>";
-                                    }
-                                    if(isset($registrarExito)){
-                                        echo "<p  style='color:#0FE642; font-family: Berlin Sans FB'>".$registrarExito."</p>";
-                                    }
-                                ?>
-                                <div class="col-lg-12 row" style="margin:0">    
-                                    <div class="col-lg-6 row"  style="padding:0; margin:0 !important">
-                                        <div class="col-lg-12" style="display: flex; padding:0">
-                                            <p class="iconoSolid" style="color: #432A90;"> </p> 
-                                            <input class="form-control form-texto col-lg-9" style="margin-right: 2.5px;" placeholder="Ingrese su nombre" name="nombre" id="nombre" required  type="text">
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_nombre">El campo nombre no puede llevar signos ni espacios</span>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="col-lg-6" style="padding:0;">
-                                        <div class="col-lg-12" style="padding:0; display:flex">
-                                            <p class="iconoSolid" style="color: #432A90;"> </p> 
-                                            <input class="form-control form-texto" placeholder="Ingrese su Apellido" id="apellido" name="apellido"  type="text" style="margin-left: 2.5px;" required>
-                                        </div>
-                                        <div class="col-lg-12" style="padding:0;">
-                                            <span  class=" error grupo-correcto" id="alerta_apellido">El campo apellido no puede llevar signos ni espacios</span>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 row" style="margin:0">
+        <section style="justify-content: center; align-items:center; margin:0;min-height:100%" id="data" class="w-100 row">
+            <div class="col-lg-12 col-md-12   col-xs-12" style="margin-top:25px; margin-bottom:15px; padding-left:0">
+                
+                <div class="inicio_sesion">
+                    <div class="caja col-lg-7 col-md-9 col-xs-9">
+                        <h2 class="titulos">Agregar Usuario</h2>
+                        <form action="index.php?a=guardarUsuarioAdmin" id="formRegistrarUsuario"class="formRegistrarUsuario" method="POST">
+                            <?php
+                                if(isset($errorRegistrar)){
+                                    echo "<p  class='error'>".$errorRegistrar."</p>";
+                                }
+                            ?>
+                            <div class="col-lg-12 row" style="margin:0">    
+                                <div class="col-lg-6 row"  style="padding:0; margin:0 !important">
                                     <div class="col-lg-12" style="display: flex; padding:0">
-                                        <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese su correo" name="correo"  id="correo" type="email" required>
+                                        <p class="iconoSolid" style="color: #432A90;"> </p> 
+                                        <input class="form-control form-texto col-lg-9" style="margin-right: 2.5px;" placeholder="Ingrese su nombre" name="nombre" id="nombre" required  type="text">
                                     </div>
                                     <div class="col-lg-12">
-                                        <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
+                                        <span style="float: left;" class=" error grupo-correcto" id="alerta_nombre">El campo nombre no puede llevar signos ni espacios</span>
                                     </div>
+                                    
                                 </div>
-                                <div class="col-lg-12 row" style="margin:0">
-                                    <div class="col-lg-12" style="display: flex; padding:0">
-                                        <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuarioAgregar"  id="usuarioAgregar" type="text" required>
+                                <div class="col-lg-6" style="padding:0;">
+                                    <div class="col-lg-12" style="padding:0; display:flex">
+                                        <p class="iconoSolid" style="color: #432A90;"> </p> 
+                                        <input class="form-control form-texto" placeholder="Ingrese su Apellido" id="apellido" name="apellido"  type="text" style="margin-left: 2.5px;" required>
                                     </div>
-                                    <div class="col-lg-12">
-                                        <span id="alerta_usuarioAgregar" class="error grupo-correcto">El Usuario no puede llevar espacios y/o signos<br>debe llevar por lo menos 4 caracteres</span>
+                                    <div class="col-lg-12" style="padding:0;">
+                                        <span  class=" error grupo-correcto" id="alerta_apellido">El campo apellido no puede llevar signos ni espacios</span>
                                     </div>
+                                    
                                 </div>
-                                <div class="col-lg-12 row" style="margin:0">
-                                    <div class="col-lg-12" style="display: flex; padding:0">
-                                        <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseñaAgregar" id="contraseñaAgregar" type="password" required>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <span id="alerta_mayusculas" class="error grupo-correcto">Debe de tener por lo menos una mayuscula</span>    
-                                        <span id="alerta_minuscula" class="error grupo-correcto">Debe de tener por lo menos una minuscula</span>
-                                        <span id="alerta_rango" class="error grupo-correcto">Debe de tener de 5 a 15 caracteres.</span>
-                                        <span id="alerta_numero" class="error grupo-correcto">Debe de tener por lo menos un número</span>
-                                        <span id="alerta_signos" class="error grupo-correcto">La contraseña no puede llevar espacios ni signos</span>
-                                    </div>
+                            </div>
+                            <div class="col-lg-12 row" style="margin:0">
+                                <div class="col-lg-12" style="display: flex; padding:0">
+                                    <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuarioAgregar"  id="usuarioAgregar" type="text" required>
                                 </div>
-                                <div class="col-lg-12 row" style="margin:0">
-                                    <div class="col-lg-12" style="display: flex;padding:0;">
-                                        <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Confirme su Contraseña" name="contraseña1" id="contraseña1" type="password" required>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
-                                    </div>
-                                </div> 
-                                <div class="col-lg-12 row" style="margin:0">
+                                <div class="col-lg-12">
+                                    <span id="alerta_usuarioAgregar" class="error grupo-correcto">El Usuario no puede llevar espacios y/o signos<br>debe llevar por lo menos 4 caracteres</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 row" style="margin:0">
+                                <div class="col-lg-12" style="display: flex; padding:0">
+                                    <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese su correo" name="correo"  id="correo" type="email" required>
+                                </div>
+                                <div class="col-lg-12">
+                                    <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 row" style="margin:0">
+                                <div class="col-lg-12" style="display: flex; padding:0">
+                                    <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseñaAgregar" id="contraseñaAgregar" type="password" required>
+                                </div>
+                                <div class="col-lg-12">
+                                    <span id="alerta_mayusculas" class="error grupo-correcto">Debe de tener por lo menos una mayuscula</span>    
+                                    <span id="alerta_minuscula" class="error grupo-correcto">Debe de tener por lo menos una minuscula</span>
+                                    <span id="alerta_rango" class="error grupo-correcto">Debe de tener de 5 a 15 caracteres.</span>
+                                    <span id="alerta_numero" class="error grupo-correcto">Debe de tener por lo menos un número</span>
+                                    <span id="alerta_signos" class="error grupo-correcto">La contraseña no puede llevar espacios ni signos</span>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 row" style="margin:0">
+                                <div class="col-lg-12" style="display: flex;padding:0;">
+                                    <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Confirme su Contraseña" name="contraseña1" id="contraseña1" type="password" required>
+                                </div>
+                                <div class="col-lg-12">
+                                    <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
+                                </div>
+                            </div>    
+                            <div class="col-lg-12 row" style="margin:0">
                                     <div class="col-lg-12" style="display: flex;padding:0;">
                                         <p class="iconoSolid"> </p>
                                         <select class="form-control form-texto" form="formRegistrarUsuario" placeholder="Ingrese el tipo de Usuario" name="tipoUsuario" id="tipoUsuario" required>
@@ -146,13 +147,15 @@
                                         <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
                                     </div>
                                 </div>    
-                                <div>
-                                    <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
-                                </div>                           
-                                <input class="boton btn-lg" type="submit" id="boton" value="¡Registrarme!">
-                            </form>
-                        </div>
+                            <div>
+                                <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
+                            </div>         
+                            <button type="submit" form="formRegistrarUsuario" class="custom-btn btn-3"><span>Agregar</span></button>
+                        </form>
                     </div>
+
+                </div>
+            </div>
         </section>
         <footer class="w-100"  style="display: flex; justify-content:center">
             <div class="col-lg-12   col-xs-12 footer-background">
@@ -193,7 +196,7 @@
             
         </footer>
     </body>
-    <script src="scripts/Formulario.js"></script>
+    <script src="scripts/AgregarUsuarioAdmin.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

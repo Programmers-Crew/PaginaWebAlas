@@ -205,7 +205,7 @@ DELIMITER $$
 		begin
 			select 
 				b.bancoDesc
-					from Bancos as b
+					from Banco as b
 						where b.bancoId = idBuscado;
         end $$
 DELIMITER ;
@@ -297,20 +297,25 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), correo varchar(30),tipoUsuario tinyint, empresaId int,nombreEmppresa varchar(25),numeroCuenta varchar(25),nombreCuenta varchar(25),cuentaTipo int, bancoNombre int)
+	create procedure Sp_AgregarUsuario(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), correo varchar(30),tipoUsuario tinyint, nombreEmpresa varchar(25),numeroCuenta varchar(25),cuentaTipo int, bancoNombre int)
 		begin
-			insert into Empresa(empresaDesc,empresaNumeroCuenta,empresaNombreCuenta,empresaCuentaTipo,empresaBanco)
-				values(nombreEmppresa,numeroCuenta,nombreCuenta,cuentaTipo,bancoNombre);
-        
-			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,usuarioCorreo,tipoUsuarioId,empresaId)
-				values(nombre, apellido, username, contrasena, correo,tipoUsuario,empresaId);
+			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,usuarioCorreo,tipoUsuarioId,empresaDesc,empresaNumeroCuenta,empresaCuentaTipo,empresaBanco)
+				values(nombre, apellido, username, contrasena, correo,tipoUsuario,nombreEmpresa,numeroCuenta,cuentaTipo,bancoNombre);
 			
 
         end $$
 DELIMITER ;
-
 DELIMITER $$
-	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(200), correoNuevo varchar(30))
+	create procedure Sp_AgregarUsuarioAdmin(nombre varchar(50), apellido varchar(50), username varchar(25), contrasena varchar(200), correo varchar(30),tipoUsuario tinyint)
+		begin
+			insert into Usuario(usuarioNombre,usuarioApellido,userName,usuarioContrasena,usuarioCorreo,tipoUsuarioId)
+				values(nombre, apellido, username, contrasena, correo,tipoUsuario);
+			
+
+        end $$
+DELIMITER ;
+DELIMITER $$
+	create procedure Sp_ActualizarUsuario(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(200), correoNuevo varchar(30),nombreEmpresa varchar(25),numeroCuenta varchar(25),cuentaTipo int, bancoNombre int)
 		begin
 			update 
 				usuario as u
@@ -319,7 +324,11 @@ DELIMITER $$
                         u.usuarioApellido = apellido,
                         u.userName = nuevoUsername,
                         u.usuarioContrasena = nuevaContrasena,
-                        u.usuarioCorreo = correoNuevo
+                        u.usuarioCorreo = correoNuevo, 
+                        u.empresaDesc = nombreEmpresa,
+                        u.empresaNumeroCuenta = numeroCuenta,
+                        u.empresaCuentaTipo = cuentaTipo,
+                        u.empresaBanco = bancoNombre
 							where 
 								usuarioId = idBuscado;
         end $$
@@ -351,81 +360,31 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ListarPedido()
 		begin
-			select 
-				p.pedidoId,
-                p.pedidoFecha,
-                p.nombreReceptor,
-                pi.puntoInicioDesc,
-                p.pedidoDireccionInicio,
-                pf.puntoFinalDesc,
-                p.pedidoDireccionFinal,
-				cliente.userName as cliente,
-                p.pedidoTelefonoReceptor,
-                mensajero.userName as mensajero,
-                P.pedidoMonto,
-                cp.costoAsignado,
-                fp.formaPagoDesc,
-                ep.estadoPedidoDesc
-				from
-					Pedido as p
-						inner JOIN usuario as cliente
-							on p.pedidoUsuarioId = cliente.usuarioId
-								inner join usuario as mensajero
-									on p.pedidoMensajeroId = mensajero.usuarioId
-									inner join formapago as fp
-										on pedidoFormaPagoId = formaPagoId
-											inner join estadopedido as ep
-												on pedidoEstadoId = estadoPedidoId 
-													inner join costopedido as cp
-														on  p.pedidoCosto= cp.costoPedidoId
-															inner join puntoinicio as pi
-																on cp.puntoInicio = pi.puntoInicioCodigo
-																	inner join puntofinal as pf
-																		on puntoFinal = pf.puntoFinalCodigo
-																			order by p.pedidoFecha DESC;
+	select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
+			p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc
+	from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+		usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+	where  p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+		and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+		and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+		and mensajero.usuarioId = p.pedidomensajeroId group by pedidoId
+	order by p.pedidoFecha ASC ;
         end $$
 DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ListarPedidosCliente(usuario1 int)
 		begin
-		select 
-				p.pedidoId,
-                p.pedidoFecha,
-                p.nombreReceptor,
-                pi.puntoInicioDesc,
-                p.pedidoDireccionInicio,
-                pf.puntoFinalDesc,
-                nl.nombreLugarDesc,
-                p.pedidoDireccionFinal,
-				cliente.userName as cliente,
-                p.pedidoTelefonoReceptor,
-                mensajero.userName as mensajero,
-                P.pedidoMonto,
-                ca.costoPedidoDesc,
-                fp.formaPagoDesc,
-                ep.estadoPedidoDesc
-				from
-					Pedido as p
-						inner JOIN usuario as cliente
-							on p.pedidoUsuarioId = cliente.usuarioId
-								inner join usuario as mensajero
-									on p.pedidoMensajeroId = mensajero.usuarioId
-									inner join formapago as fp
-										on pedidoFormaPagoId = formaPagoId
-											inner join estadopedido as ep
-												on pedidoEstadoId = estadoPedidoId 
-													inner join costopedido as cp
-														on  p.pedidoCosto= cp.costoPedidoId
-															inner join puntoinicio as pi
-																on cp.puntoInicio = pi.puntoInicioCodigo
-																	inner join puntofinal as pf
-																		on puntoFinal = pf.puntoFinalCodigo
-																			inner join nombrelugar as nl
-                                                                            on nombreLugar = nombreLugarId
-                                                                            inner join costoasignado as ca
-                                                                            on costoAsignado = ca.costoPedidoId
-                                                                        where cliente.usuarioId = usuario1
-																			order by p.pedidoFecha DESC;
+			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
+			p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc
+	from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+		usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+	where cliente.usuarioId = usuario1  and p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+    and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+    and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+    and mensajero.usuarioId = p.pedidomensajeroId group by pedidoId
+	order by p.pedidoFecha ASC ;
         end $$
 DELIMITER ;
 
@@ -652,7 +611,7 @@ insert into formapago(formaPagoDesc) values("PENDIENTE"),("EFECTIVO"),("Tarjeta 
 insert into usuario(userName,usuarioNombre,UsuarioApellido,usuarioCorreo,usuarioContrasena,tipoUsuarioId) values('Pendiente','Pendiente','Pendiente','_','4zWp2pbd','1');
 
 	-- Tipo cuenta
-insert into tipoCuenta(tipoCuentaId,tipoCuentaDesc) values(1, "Ahorro"),(2, "Monetaria");
+insert into tipoCuenta(tipoCuentaId,tipoCuentaDesc) values(1, "Ahorro"),(2, "Monetaria"),(3,"Inversión");
 
 	-- Banco
 insert into banco(bancoId,bancoDesc) values(1, "Banco BAC"),(2, "Banco Citi"),(3, "Banco Industrial"),(4, "Banco Bantrab"),(5, "Banco G&T Continental"),(6, "Agromercantil"),(7, "Banco Azteca"),(8, "Banco Credito Hipotecario"),(9, "Banco Vivibanco");
@@ -801,44 +760,16 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_BuscarPedido(idBuscado int)
 		begin 
-        select
-				p.pedidoId,
-                p.pedidoFecha,
-                p.nombreReceptor,
-                pi.puntoInicioDesc,
-                p.pedidoDireccionInicio,
-                pf.puntoFinalDesc,
-                nl.nombreLugarDesc,
-                p.pedidoDireccionFinal,
-				cliente.userName as cliente,
-                p.pedidoTelefonoReceptor,
-                mensajero.userName as mensajero,
-                P.pedidoMonto,
-                ca.costoPedidoDesc,
-                fp.formaPagoDesc,
-                ep.estadoPedidoDesc
-				from
-					Pedido as p
-						inner JOIN usuario as cliente
-							on p.pedidoUsuarioId = cliente.usuarioId
-								inner join usuario as mensajero
-									on p.pedidoMensajeroId = mensajero.usuarioId
-									inner join formapago as fp
-										on pedidoFormaPagoId = formaPagoId
-											inner join estadopedido as ep
-												on pedidoEstadoId = estadoPedidoId 
-													inner join costopedido as cp
-														on  p.pedidoCosto= cp.costoPedidoId
-															inner join puntoinicio as pi
-																on cp.puntoInicio = pi.puntoInicioCodigo
-																	inner join puntofinal as pf
-																		on puntoFinal = pf.puntoFinalCodigo
-																			inner join nombrelugar as nl
-                                                                            on nombreLugar = nombreLugarId
-                                                                            inner join costoasignado as ca
-                                                                            on costoAsignado = ca.costoPedidoId
-                                                                        where pedidoId = idBuscado
-																			order by p.pedidoFecha DESC;
+			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
+				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc
+			from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+				usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+			where p.pedidoId = idBuscado  and p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+			and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+			and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+			and mensajero.usuarioId = p.pedidomensajeroId group by pedidoId
+			order by p.pedidoFecha ASC ;
         end $$
 DELIMITER ;
 DELIMITER $$

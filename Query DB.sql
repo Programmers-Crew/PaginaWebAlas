@@ -37,17 +37,6 @@ create table TipoCuenta(
     primary key PK_TipoCuenta (tipoCuentaId)
 );
 
-create table Empresa(
-	empresaId int auto_increment not null,
-    empresaDesc varchar(25) not null, #Aqui ira el nombre de la empresa
-    empresaNumeroCuenta varchar(25) not null, # Aqui ira el numero de cuenta
-    empresaNombreCuenta varchar(25) not null, # Aqui ira el nombre del propetario de la cuenta
-    empresaCuentaTipo int not null, # Aqui ira si es monetario o ahorro
-    empresaBanco int not null, #Aqui iria el nombre del banco
-    primary key PK_Empresa (empresaId),
-    constraint FK_Empresa_Tipocuenta foreign key (empresaCuentaTipo) references TipoCuenta(tipoCuentaId),
-    constraint FK_Empresa_Banco foreign key (empresaBanco) references Banco(bancoId)
-);
 
 
 create table Usuario(
@@ -57,13 +46,17 @@ create table Usuario(
     usuarioApellido varchar(25) not null,
     usuarioCorreo varchar(30) not null unique,
     usuarioContrasena varchar(200) not null,
+	empresaDesc varchar(25), 
+    empresaNumeroCuenta varchar(25), 
     tipoUsuarioId tinyint not null,
-    estadoUsuarioId tinyint not null default '1',
-    empresaId int,
+    estadoUsuarioId tinyint not null default '1', 
+    empresaCuentaTipo int, 
+    empresaBanco int,
     primary key PK_usuario (usuarioId),
 	Constraint FK_Usuario_TipoUsuario foreign key (tipoUsuarioId) references tipoUsuario(tipoUsuarioId),
     Constraint FK_Usuario_EstadoUsuario foreign key (estadoUsuarioId) references estadoUsuario(estadoUsuarioId),
-	Constraint FK_Usuario_Empresa foreign key (empresaId) references Empresa(empresaId)
+	constraint FK_Empresa_Tipocuenta foreign key (empresaCuentaTipo) references TipoCuenta(tipoCuentaId),
+    constraint FK_Empresa_Banco foreign key (empresaBanco) references Banco(bancoId)
 );
 
 

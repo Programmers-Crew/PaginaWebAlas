@@ -188,7 +188,8 @@
                                 <div>
                                     <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
                                 </div>                           
-                                <input class="boton btn-lg" type="submit" id="boton" value="Solicitar">
+                                
+                                <button type="submit" form="formSolicitarPedido" class="custom-btn btn-3"><span>Solicitar</span></button>
                             </form>
                         </div>
                     </div>
