@@ -361,7 +361,6 @@ DELIMITER $$
                 p.pedidoDireccionFinal,
 				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
-                p.pedidoDesc,
                 mensajero.userName as mensajero,
                 P.pedidoMonto,
                 cp.costoAsignado,
@@ -371,7 +370,8 @@ DELIMITER $$
 					Pedido as p
 						inner JOIN usuario as cliente
 							on p.pedidoUsuarioId = cliente.usuarioId
-								inner join usuario as mensajeroon p.pedidoMensajeroId = mensajero.usuarioId
+								inner join usuario as mensajero
+									on p.pedidoMensajeroId = mensajero.usuarioId
 									inner join formapago as fp
 										on pedidoFormaPagoId = formaPagoId
 											inner join estadopedido as ep
@@ -385,13 +385,55 @@ DELIMITER $$
 																			order by p.pedidoFecha DESC;
         end $$
 DELIMITER ;
-call Sp_ListarPedido();
+DELIMITER $$
+	create procedure Sp_ListarPedidosCliente(usuario1 int)
+		begin
+		select 
+				p.pedidoId,
+                p.pedidoFecha,
+                p.nombreReceptor,
+                pi.puntoInicioDesc,
+                p.pedidoDireccionInicio,
+                pf.puntoFinalDesc,
+                nl.nombreLugarDesc,
+                p.pedidoDireccionFinal,
+				cliente.userName as cliente,
+                p.pedidoTelefonoReceptor,
+                mensajero.userName as mensajero,
+                P.pedidoMonto,
+                ca.costoPedidoDesc,
+                fp.formaPagoDesc,
+                ep.estadoPedidoDesc
+				from
+					Pedido as p
+						inner JOIN usuario as cliente
+							on p.pedidoUsuarioId = cliente.usuarioId
+								inner join usuario as mensajero
+									on p.pedidoMensajeroId = mensajero.usuarioId
+									inner join formapago as fp
+										on pedidoFormaPagoId = formaPagoId
+											inner join estadopedido as ep
+												on pedidoEstadoId = estadoPedidoId 
+													inner join costopedido as cp
+														on  p.pedidoCosto= cp.costoPedidoId
+															inner join puntoinicio as pi
+																on cp.puntoInicio = pi.puntoInicioCodigo
+																	inner join puntofinal as pf
+																		on puntoFinal = pf.puntoFinalCodigo
+																			inner join nombrelugar as nl
+                                                                            on nombreLugar = nombreLugarId
+                                                                            inner join costoasignado as ca
+                                                                            on costoAsignado = ca.costoPedidoId
+                                                                        where cliente.usuarioId = usuario1
+																			order by p.pedidoFecha DESC;
+        end $$
+DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_AgregarPedido(fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), descripcion varchar(150), costo int,monto decimal, nombreReceptor varchar(50))
+	create procedure Sp_AgregarPedido(fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), costo decimal,monto decimal, nombreReceptor varchar(50))
 		begin
-			insert into Pedido(pedidoFecha,pedidoPuntoInicio,pedidoDireccionInicio,pedidoPuntoFinal,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoDesc,pedidoCosto,pedidoMonto,nombreReceptor)
-				values(fecha,puntoInicio ,direccionInicio,puntoFinal,direccionFinal, usuario, telefono, descripcion, costo,monto, nombreReceptor);
+			insert into Pedido(pedidoFecha,pedidoPuntoInicio,pedidoDireccionInicio,pedidoPuntoFinal,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoCosto,pedidoMonto,nombreReceptor)
+				values(fecha,puntoInicio ,direccionInicio,puntoFinal,direccionFinal, usuario, telefono, costo,monto, nombreReceptor);
         end $$
 DELIMITER ;
 
@@ -561,11 +603,14 @@ insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital", 1),(
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Mixco",1),("Mixco",2),("Mixco",3),("Mixco",4),("Mixco",5),("Mixco",6),("Mixco",7),("Mixco",8),("Mixco",11),("Mixco",19),("Mixco",9),("Mixco",29);
 
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",1),("Villa Nueva",2),("Villa Nueva",3),("Villa Nueva",4),("Villa Nueva",5);
+
+
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Villa Nueva",23),("Villa Nueva",36),("Villa Nueva",37),("Villa Nueva",30);
+
 
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Carretera al Salvador",24),("Carretera al Salvador",25),("Carretera al Salvador",32),("Carretera al Salvador",33),("Carretera al Salvador",34),("Carretera al Salvador",35),("Carretera al Salvador",26),("Carretera al Salvador",27);
 insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital",22);
-
+insert into puntoFinal(puntoFinalDesc,nombreLugar) values("Ciudad Capital",38);
 	-- CostoAsignado
 insert into costoAsignado(costoPedidoDesc) values (25.00),(30.00),(35.00),(40.00);
 
@@ -598,6 +643,8 @@ insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(4,25,4),(
     insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,38,1),(5,39,1),(5,40,1),(5,41,1),(5,42,1);
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,12,2),(5,19,2),(5,20,2),(5,18,2),(5,33,2),(5,43,2);
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,1,3),(5,2,3),(5,3,3),(5,4,3),(5,5,3),(5,6,3),(5,7,3),(5,8,3),(5,9,3),(5,10,3),(5,11,3),(5,13,3),(5,14,3),(5,15,3),(5,16,3),(5,17,3);
+
+
 insert into costopedido(puntoInicio, puntoFinal, costoAsignado) values(5,55,4),(5,47,4),(5,48,4),(5,49,4),(5,53,4),(5,50,4),(5,51,4),(5,52,4);
 		
 insert into  estadoUsuario(estadoUsuarioDesc) values("En Revisión"),("Confirmado");
@@ -754,45 +801,89 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_BuscarPedido(idBuscado int)
 		begin 
-			select 
+        select
 				p.pedidoId,
                 p.pedidoFecha,
                 p.nombreReceptor,
+                pi.puntoInicioDesc,
                 p.pedidoDireccionInicio,
+                pf.puntoFinalDesc,
+                nl.nombreLugarDesc,
                 p.pedidoDireccionFinal,
 				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
-                p.pedidoDesc,
                 mensajero.userName as mensajero,
                 P.pedidoMonto,
-                p.pedidoCosto,
+                ca.costoPedidoDesc,
                 fp.formaPagoDesc,
                 ep.estadoPedidoDesc
 				from
 					Pedido as p
-						 inner JOIN	
-							usuario as cliente
-								on 
-									p.pedidoUsuarioId = cliente.usuarioId
-										inner join 
-											usuario as mensajero
-												on 
-													p.pedidoMensajeroId = mensajero.usuarioId
-														inner join 
-															formapago as fp
-																on 
-																	pedidoFormaPagoId = formaPagoId
-																		inner join 
-																			estadopedido as ep
-																				on 
-																					pedidoEstadoId = estadoPedidoId
-																						where p.pedidoId = idBuscado;
+						inner JOIN usuario as cliente
+							on p.pedidoUsuarioId = cliente.usuarioId
+								inner join usuario as mensajero
+									on p.pedidoMensajeroId = mensajero.usuarioId
+									inner join formapago as fp
+										on pedidoFormaPagoId = formaPagoId
+											inner join estadopedido as ep
+												on pedidoEstadoId = estadoPedidoId 
+													inner join costopedido as cp
+														on  p.pedidoCosto= cp.costoPedidoId
+															inner join puntoinicio as pi
+																on cp.puntoInicio = pi.puntoInicioCodigo
+																	inner join puntofinal as pf
+																		on puntoFinal = pf.puntoFinalCodigo
+																			inner join nombrelugar as nl
+                                                                            on nombreLugar = nombreLugarId
+                                                                            inner join costoasignado as ca
+                                                                            on costoAsignado = ca.costoPedidoId
+                                                                        where pedidoId = idBuscado
+																			order by p.pedidoFecha DESC;
         end $$
-
-
 DELIMITER ;
-
-
+DELIMITER $$
+	create procedure Sp_BuscarPedidoCliente(idBuscado int, idUsuario int)
+	begin 
+        select
+				p.pedidoId,
+                p.pedidoFecha,
+                p.nombreReceptor,
+                pi.puntoInicioDesc,
+                p.pedidoDireccionInicio,
+                pf.puntoFinalDesc,
+                nl.nombreLugarDesc,
+                p.pedidoDireccionFinal,
+				cliente.userName as cliente,
+                p.pedidoTelefonoReceptor,
+                mensajero.userName as mensajero,
+                P.pedidoMonto,
+                ca.costoPedidoDesc,
+                fp.formaPagoDesc,
+                ep.estadoPedidoDesc
+				from
+					Pedido as p
+						inner JOIN usuario as cliente
+							on p.pedidoUsuarioId = cliente.usuarioId
+								inner join usuario as mensajero
+									on p.pedidoMensajeroId = mensajero.usuarioId
+									inner join formapago as fp
+										on pedidoFormaPagoId = formaPagoId
+											inner join estadopedido as ep
+												on pedidoEstadoId = estadoPedidoId 
+													inner join costopedido as cp
+														on  p.pedidoCosto= cp.costoPedidoId
+															inner join puntoinicio as pi
+																on cp.puntoInicio = pi.puntoInicioCodigo
+																	inner join puntofinal as pf
+																		on puntoFinal = pf.puntoFinalCodigo
+																			inner join nombrelugar as nl
+                                                                            on nombreLugar = nombreLugarId
+                                                                            inner join costoasignado as ca
+                                                                            on costoAsignado = ca.costoPedidoId
+                                                                        where pedidoId = idBuscado and pedidoUsuarioId =idUsuario
+																			order by p.pedidoFecha DESC;
+        end $$
+DELIMITER ;
 
 DELIMITER $$
 	create procedure Sp_ListarPedidoPorEstado(estadoPedido varchar(25))
@@ -1013,7 +1104,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure SP_BuscarCostoPedido(puntoInicio varchar(40), puntoFinal varchar(40),lugar varchar(40))
+	create procedure SP_BuscarCostoPedido(puntoInicio int, puntoFinal int)
 		begin 
 			select
 				cp.costoPedidoId,
@@ -1030,7 +1121,30 @@ DELIMITER $$
 												on pf.nombreLugar = nl.nombreLugarId
 													inner join costoasignado as ca
 														on cp.costoAsignado = ca.costoPedidoId
-															where pi.puntoInicioDesc = puntoInicio  and pf.puntoFinalDesc = puntoFinal and nl.nombreLugarDesc = lugar
+															where pi.puntoInicioCodigo = puntoInicio  and pf.puntoFinalCodigo = puntoFinal
 																order by costoPedidoId asc;
 	end $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE Sp_ListarPuntoInicio()
+BEGIN
+	SELECT  puntoinicio.puntoInicioCodigo, puntoinicio.puntoInicioDesc FROM puntoinicio;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$ 
+CREATE PROCEDURE Sp_ListarPuntoFinal(punto int)
+BEGIN
+	SELECT 
+		pf.puntoFinalCodigo,
+		pf.puntoFinalDesc,
+		nl.nombreLugarDesc
+	FROM costopedido as cp, puntofinal as pf, nombreLugar as nl, puntoInicio as pi
+	where cp.puntoInicio = punto and cp.puntoFinal = pf.puntoFinalCodigo and nl.nombreLugarId = pf.nombreLugar and cp.puntoInicio = pi.puntoInicioCodigo;
+
+END $$
 DELIMITER ;

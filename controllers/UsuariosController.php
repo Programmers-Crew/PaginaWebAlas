@@ -101,7 +101,6 @@
             $validar = false;
             $sql = "call Sp_AgregarUsuario('$usuarioNombre','$usuarioApellido','$userName','$md5Contraseña','$correo',$tipoUsuarioId)";
             $resultado = $this->db->query($sql);
-
             if(!$resultado){
                 $validar = false;
             }else{

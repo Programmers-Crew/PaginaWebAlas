@@ -1,13 +1,19 @@
 <?php
 
     
-    $sDestino = $_POST['correo'];
-    $sAsunto = 'CONFIRMACIÓN DE CUENTA- ALASGT';
-    $sMensaje = '¡DA CLIC AL BOTÓN PARA CONFIRMAR TU CUENTA!';
-    include('PHPMailer/src/PHPMailer.php');
-    include('PHPMailer/src/Exception.php');
-    include('PHPMailer/src/SMTP.php');
-    $mail = new PHPMailer\PHPMailer\PHPMailer();
+      $sDestino = $_POST['correoUsuario'];
+      $telefono = $_POST['telefono'];
+      $costo = $_POST['costo'];
+      $monto = $_POST['monto'];
+      $descInicio = $_POST['descripcionInicial'];
+      $descFinal = $_POST['descripcionFinal'];
+      $nombreReceptor = $_POST['nombre'];
+      $sAsunto = 'PEDIDO SOLICITADO- ALASGT';
+      $sMensaje = 'PEDIDO SOLICITADO';
+      include('PHPMailer/src/PHPMailer.php');
+      include('PHPMailer/src/Exception.php');
+      include('PHPMailer/src/SMTP.php');
+      $mail = new PHPMailer\PHPMailer\PHPMailer();
 
         $mail->isSMTP(); //Indicar que se usará SMTP
         $mail->CharSet = 'UTF-8';//permitir envío de caracteres especiales (tildes y ñ)
@@ -38,22 +44,29 @@
             $scss = fread ($fcss, filesize ($rcss));//leer contenido de css
             fclose ($fcss);//cerrar archivo css
         //Cargar archivo html   
-            $shtml = file_get_contents('config/Plantilla/mensaje.php');
+            $shtml = file_get_contents('config/Plantilla/pedidosolicitado.php');
         //reemplazar sección de plantilla html con el css cargado y mensaje creado
             $incss  = str_replace('<style id="estilo"></style>',"<style>$scss</style>",$shtml);
-            $botonReemplazar = " <a style='margin: 10px;
-             padding: 5px;
-             height:fit-content;
-            background-color: #432A90;
-            text-decoration:none;
-            border-radius: 10px;
-            font-family: Berlin Sans FB;
-            font-size:17px;
-            color: white;' class='boton' href='localhost/paginawebalas/index.php?c=Usuarios&a=confirmarUsuarios&correo=".$sDestino."'>¡CONFIRMAR!</a>";
-            $cuerpo = str_replace('<a id="boton"></a>',$botonReemplazar,$incss);
+            $mensajeEnvio = " 
+                  <p>
+                  Tu pedido se ha solicitado exitosamente y 
+                  está en proceso de revisión. <br>
+                  Esto puede tardar cierto tiempo así
+                  que nosotros te enviaremos un correo cuando
+                  se haya confirmado tu pedido.<br>
+                  Estos son los datos que recibimos de tu pedido:<br>
+                  Nombre de receptor: ".$nombreReceptor."<br>
+                  Dirección de recolección: ".$descInicio."<br>
+                  dirección de entrega: ".$descFinal."<br>
+                  monto a cobrar: ".$monto."<br>
+                  precio del envío: ".$costo."<br>
+                  (precio sujeto a cambios)
+                  </p>
+            ";
+            $cuerpo = str_replace(' <p id="solicitudmensaje"></p>',$mensajeEnvio,$incss);
             
-        $mail->Body = $cuerpo; //cuerpo del mensaje
-        $mail->AltBody = '---';//Mensaje de sólo texto si el receptor no acepta HTML
+        $mail->Body = $cuerpo; 
+        $mail->AltBody = '---';
 
 
     //ENVIAR MENSAJE

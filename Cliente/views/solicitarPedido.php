@@ -1,4 +1,7 @@
-<?php?>
+<?php
+    require_once 'controllers/puntosDireccionesController.php';
+    $puntos = new PuntosDirecciones();
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -50,12 +53,13 @@
                 </div>
             </nav>
         </header>
-        <section class="h-100">
-            <div class="inicio_sesion">
-                        <div class="caja col-lg-5 col-md-9 col-xs-9">
+        <section style="min-height: 100%;padding-top:15px; padding-bottom:15px; margin:0" class="row">
+            <div class="inicio_sesion col-xl-12">
+                        <div class="caja col-lg-9 col-md-10 col-xs-10">
                             <h2 class="titulos">Solicitar Pedido</h2>
-                            <form action="index.php?a=actualizarCuenta" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
+                            <form action="index.php?a=solicitarPedidoDB" id="formSolicitarPedido" class="formSolicitarPedido" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $usuario->getId(); ?>">
+                                <input type="hidden" name="correoUsuario" value="<?php echo $usuario->getCorreo(); ?>">
                                 <?php
                                     if(isset($errorRegistrar)){
                                         echo "<p  class='error'>".$errorRegistrar."</p>";
@@ -67,92 +71,130 @@
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">    
                                         <div class="col-lg-12 row">
                                             <div class="col-lg-3"  style="display: flex; align-items:center">
-                                                <p class="fuentes" style="color: #432A90; margin:0">Nombre: </p>
+                                                <p class="fuentes" style="color: #432A90; margin:0">Nombre de Receptor:</p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <input class="form-control form-texto"  value="<?php echo $usuario->getNombre(); ?>" name="nombre" id="nombre" required  type="text">
+                                                <input class="form-control form-texto" name="nombre" id="nombre" required  type="text" placeholder="Ingrese el nombre de la persona quien recibe el paquete">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_nombre">El campo nombre no puede llevar signos ni espacios</span>
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_nombre">El campo nombre debe de llevar un apellido</span>
                                         </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">    
                                         <div class="col-lg-12 row" >
                                             <div class="col-lg-3" style="display: flex; align-items:center">
-                                                <p class="fuentes" style="color: #432A90; margin:0">Apellido: </p>
+                                                <p class="fuentes" style="color: #432A90; margin:0">Teléfono de Receptor: </p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <input class="form-control form-texto"  value="<?php echo $usuario->getApellido(); ?>" name="apellido" id="apellido" required  type="text">
+                                                <input class="form-control form-texto"  name="telefono" id="telefono" required placeholder="Ingrese el Teléfono de la persona quien recibe el paquete"  type="number">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
-                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_apellido">El campo apellido no puede llevar signos ni espacios</span>
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_telefono">el campo Teléfono debe llevar 8 dígitos</span>
+                                        </div>
+                                </div>
+
+                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
+                                    <div class="col-lg-12 row">
+                                        <div class="col-lg-3" style="display: flex; align-items:center">
+                                            <p class="fuentes" style="color:#432A90; margin:0">El Pedido Sale de:</p>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <select onchange="cambio()" class="form-control form-texto required" form="formSolicitarPedido" name="puntoInicio" id="puntoInicio" required>
+                                                <option disabled selected value="0">Eliga el lugar donde se recogerá el paquete</option>
+                                                <?php
+                                                    $resultado = $puntos->listarPuntoInicio();
+                                                    if($resultado->fetch_row()){
+                                                        foreach($resultado as $resultadoActual){
+                                                            ?>
+                                                            <option value="<?php echo $resultadoActual['puntoInicioCodigo']; ?>"><?php echo $resultadoActual['puntoInicioDesc']; ?></option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_puntoInicio">Debe seleccionar un Lugar</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">    
+                                        <div class="col-lg-12 row" >
+                                            <div class="col-lg-3" style="display: flex; align-items:center">
+                                                <p class="fuentes" style="color: #432A90; margin:0;text-align:initial">Descripción de Dirección Inicial:</p>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <textarea  style="max-height: 200px;" oninput="descInicio()" id="descripcionInicial"  class="form-control form-control textarea1"  required placeholder="Breve descripción de donde se recojerá el paquete" name="descripcionInicial" form="formSolicitarPedido"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_descripcionInicial">Solo se permiten 150 caracteres</span>
                                         </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
                                     <div class="col-lg-12 row">
                                         <div class="col-lg-3" style="display: flex; align-items:center">
-                                            <p class="fuentes" style="color:#432A90; margin:0">Correo:</p>
+                                            <p class="fuentes" style="color:#432A90; margin:0; text-align:initial">El Pedido se entregará en:</p>
                                         </div>
                                         <div class="col-lg-9">
-                                            <input class="form-control form-texto" value="<?php echo $usuario->getCorreo();?>" name="correo"  id="correo" type="email" required>
+                                            <select onchange="cambioFinal()" class="form-control form-texto required" form="formSolicitarPedido" name="puntoFinal" id="puntoFinal" required>
+                                                <option selected value="0">Eliga el lugar donde se entregará el paquete</option>
+                                                
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_puntoFinal">Debe seleccionar un Lugar</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">    
+                                        <div class="col-lg-12 row" >
+                                            <div class="col-lg-3" style="display: flex; align-items:center">
+                                                <p class="fuentes" style="color: #432A90; margin:0; text-align:initial">Descripción de Dirección Final:</p>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <textarea  style="max-height: 200px;" id="descripcionFinal" oninput="descFinal()" class="form-control textarea1"  required placeholder="Breve descripción de donde se entregará el paquete" name="descripcionFinal" form="formSolicitarPedido"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_descripcionFinal">Solo se permiten 150 caracteres</span>
+                                        </div>
+                                </div>
+                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
+                                        <div class="col-lg-12 row" >
+                                            <div class="col-lg-3" style="display: flex; align-items:center">
+                                                <p class="fuentes" style="color: #432A90; margin:0">Monto: </p>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <input class="form-control form-texto"   name="monto" id="monto" required  type="number" step=".01" placeholder="Ingrese el monto que pagará el receptor">
+                                            </div>
+                                        </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_monto" class="error grupo-correcto">El monto no puede llevar letras y/o signos</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
                                         <div class="col-lg-12 row" >
                                             <div class="col-lg-3" style="display: flex; align-items:center">
-                                                <p class="fuentes" style="color: #432A90; margin:0">Usuario: </p>
+                                                <p class="fuentes" style="color: #432A90; margin:0">Precio de Envío: (Precio sujeto a cambios)</p>
                                             </div>
-                                            <div class="col-lg-9">
-                                                <input class="form-control form-texto"  value="<?php echo $usuario->getUsuario(); ?>" name="usuarioAgregar" id="usuarioAgregar" required  type="text">
-                                            </div>
-                                        </div>
-                                    <div class="col-lg-12">
-                                        <span id="alerta_usuarioAgregar" class="error grupo-correcto">El Usuario no puede llevar espacios y/o signos<br>debe llevar por lo menos 4 caracteres</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0">
-                                <div class="col-lg-12 row" >
-                                            <div class="col-lg-3" style="display: flex; align-items:center">
-                                                <p class="fuentes" style="color: #432A90; margin:0">Contraseña: </p>
-                                            </div>
-                                            <div class="col-lg-9">
-                                                <input class="form-control form-texto"  placeholder="Contraseña" name="contraseñaAgregar" id="contraseñaAgregar" required  type="password">
+                                            <div class="col-lg-9" id="precio">
                                             </div>
                                         </div>
-                                    <div class="col-lg-12">
-                                        <span id="alerta_mayusculas" class="error grupo-correcto">Debe de tener por lo menos una mayuscula</span>    
-                                        <span id="alerta_minuscula" class="error grupo-correcto">Debe de tener por lo menos una minuscula</span>
-                                        <span id="alerta_rango" class="error grupo-correcto">Debe de tener de 5 a 15 caracteres.</span>
-                                        <span id="alerta_numero" class="error grupo-correcto">Debe de tener por lo menos un número</span>
-                                        <span id="alerta_signos" class="error grupo-correcto">La contraseña no puede llevar espacios ni signos</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 row" style="margin-top:10px; margin-bottom:10px; margin-right:0; margin-left:0">
-                                        <div class="col-lg-12 row" >
-                                            <div class="col-lg-3" style="display: flex; align-items:center">
-                                                <p class="fuentes" style="color: #432A90; margin:0">Confirmación: </p>
-                                            </div>
-                                            <div class="col-lg-9">
-                                                <input class="form-control form-texto"  placeholder="Confirmación de Contraseña" name="contraseña1" id="contraseña1" required  type="password">
-                                            </div>
-                                        </div>
-                                    <div class="col-lg-12">
-                                        <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
-                                    </div>
-                                </div> 
+                                </div>                            
                                 <div>
                                     <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
                                 </div>                           
-                                <input class="boton btn-lg" type="submit" id="boton" value="Editar">
+                                <input class="boton btn-lg" type="submit" id="boton" value="Solicitar">
                             </form>
                         </div>
                     </div>
+            <div class="col-lg-12 col-md-12 col-xs-12" style="display: flex; align-items:flex-end">
+                <img class="motoVistas col-lg-2 col-md-5 col-xs-5" src="assets/images/moto.png" class="img-fluid" >
+            </div>
         </section>
         <footer class="w-100"  style="display: flex; justify-content:center">
             <div class="col-lg-12   col-xs-12 footer-background">
@@ -193,8 +235,10 @@
             
         </footer>
     </body>
-    <script src="scripts/Formulario.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="scripts/funciones.js"></script>
+        <script src="scripts/solicitar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </html>

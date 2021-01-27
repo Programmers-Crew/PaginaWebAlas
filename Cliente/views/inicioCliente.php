@@ -71,7 +71,17 @@
         </div>
         <section style="min-height: 100%;">
             <div class="titulos centrado">
-                <h1 style="color: white; font-size:7vw"><span style="font-family: berlin sans FB; font-size:5vw">¡</span>Bienvenido de nuevo<span style="font-family: berlin sans FB; font-size:5vw;">!</span></h1>
+                <?php
+                    if(isset($errorRegistrar)){
+                        echo "<p  class='centrado fuentes h-100' style='font-size:2vw; color:white;'>".$errorRegistrar."</p>";
+                    }else{
+                        if(isset($registrarExito)){
+                            echo "<p  class='centrado fuentes h-100' style='font-size:2vw; color:white;'>".$registrarExito."</p>";
+                        }else{
+                            ?>  <h1 style="color: white; font-size:7vw"><span style="font-family: berlin sans FB; font-size:5vw">¡</span>Bienvenido de nuevo<span style="font-family: berlin sans FB; font-size:5vw;">!</span></h1>      <?php
+                        }
+                    }
+                ?>
             </div>
             <div class="col-xl-12 col-md-12 col-xs-12 row centrado">
                 <a class="col-xl-3 col-md-9 col-xs-9 panel" style="text-align:center;text-decoration:none" href="index.php?a=solicitarPedido">
