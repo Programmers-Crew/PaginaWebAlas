@@ -18,8 +18,9 @@
                             $errorRegistrar = "Usuario Duplicado, Por favor Intente de nuevo";
                         }else{
                             $registrarExito = "Su Usuario se ha agregado con exito, pidale al usuario que confirme su correo";
+                            
                         }
-                        include_once 'views/AgregarUsuario.php';
+                        require_once "views/InicioAdministrador.php";
                         break;
                     case 'confirmarPedido':
                         if($pedidos->confirmarPedido()){

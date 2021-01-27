@@ -1,10 +1,13 @@
 <?php
+    include_once 'controllers/UsuariosController.php';
+    $usuarios2 = new Usuarios();
+    $resultado = $usuarios2->getTiposDeCuenta();
 ?>
 
 
 <!DOCTYPE html>
 
-<html lang="es" style="min-height: 100%;">
+<html lang="es">
     <head>
         <title>AlasGT - Registrar Usuario</title>
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
@@ -20,27 +23,23 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css.map" type="text/css">
         <link rel="stylesheet" href="css/Login.css" type="text/css">
+        <link rel="stylesheet" href="css/inicio.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
-    <body style="min-height: 100%;">
-    <section style="display: flex;justify-content: center;" id="data" class="w-100 h-100">
-            <div class="col-lg-12   col-xs-12  todo" style="min-height: 100%; margin-top:25px; margin-bottom:15px;">
-                <div class="imagen_derecha">
-                    <img src="assets/images/nube derecha.png" class="img-fluid" >
-                </div>
-                <div class="logo">
-                   <a href="index.php"><img style="position: absolute;" src="assets/images/Logotipo sin fondo.png" class="img-fluid" ></a>
-                </div>
-
-                <div class="imagen_izquierda">
-                    <img src="assets/images/nube izquierda.png" class="img-fluid" >
-                </div>
-                <div class="moto col-lg-2 col-md-3 col-xs-6">
-                    <img src="assets/images/moto.png" class="img-fluid" >
-                </div>
+    <body>
+        <div class="imagen_derecha">
+            <img src="assets/images/nube derecha.png" class="img-fluid" >
+        </div>        
+        <div class="imagen_izquierda">
+            <img src="assets/images/nube izquierda.png" class="img-fluid" >
+        </div>
+       
+        <section style="justify-content: center; align-items:center; margin:0;min-height:100%" id="data" class="w-100 row">
+            <div class="col-lg-12 col-md-12   col-xs-12" style="margin-top:25px; margin-bottom:15px; padding-left:0">
+                
                     <div class="inicio_sesion">
-                        <div class="caja col-lg-5 col-md-9 col-xs-9">
+                        <div class="caja col-lg-7 col-md-9 col-xs-9">
                             <h2 class="titulos">Registrar Usuario</h2>
                             <form action="index.php?c=Usuarios&a=guardarUsuario" id="formRegistrarUsuario" class="formRegistrarUsuario" method="POST">
                                 <?php
@@ -106,17 +105,75 @@
                                         <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
                                     </div>
                                 </div>    
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex;padding:0;">
+                                        <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Nombre de la empresa que desea el servicio" name="nombreEmpresa" id="nombreEmpresa" type="text" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_nombreEmpresa" class="error grupo-correcto">El nombre de empresa debe llevar de 4 a 20 caracteres y no debe de llevar signos</span>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex;padding:0;">
+                                        <p class="iconoSolid"></p><input class="form-control form-texto" placeholder="No. de cuenta para depositar el monto de sus envios" name="numeroCuenta" id="numeroCuenta" type="number" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_numeroCuenta" class="error grupo-correcto">el número de cuenta no puede llevar signos,letras y/o espacios</span>
+                                    </div>
+                                </div> 
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex;padding:0;">
+                                        <p class="iconoSolid"></p>
+                                        <select class="form-control form-texto" onchange="cambioTipoCuenta()" id="tipoCuenta" name="tipoCuenta" form="formRegistrarUsuario">
+                                            <option selected disabled value="0">Seleccione el tipo de cuenta</option>
+                                            <?php
+                                                if($resultado->fetch_row()){
+                                                    foreach($resultado as $resultadoActual){
+                                                        ?> <option value="<?php echo $resultadoActual['tipoCuentaId']?>"><?php echo $resultadoActual['tipoCuentaDesc'] ?></option>
+                                            <?php        
+                                                    }
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_tipoCuenta" class="error grupo-correcto">Debe seleccionar el tipo de cuenta</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 row" style="margin:0">
+                                    <div class="col-lg-12" style="display: flex;padding:0;">
+                                        <p class="iconoSolid"></p>
+                                        <select class="form-control form-texto" id="banco" name="banco" form="formRegistrarUsuario" onchange="cambiobanco()">
+                                            <option selected disabled value="0">Seleccione el banco de su cuenta</option>
+                                            <?php
+                                                $usuarios3 = new Usuarios();
+                                                $resultado2 = $usuarios3->getbancos();
+                                                if($resultado2->fetch_row()){
+                                                    foreach($resultado2 as $resultadoActual){
+                                                        ?> <option value="<?php echo $resultadoActual['bancoId']?>"><?php echo $resultadoActual['bancoDesc'] ?></option>
+                                            <?php        
+                                                    }
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <span id="alerta_banco" class="error grupo-correcto">Debe seleccionar el banco de su cuenta</span>
+                                    </div>
+                                </div> 
                                 <div>
                                     <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
-                                </div>                            
-                                <input class="boton btn-lg" type="submit" id="boton" value="¡Registrarme!">
+                                </div>         
+                                <button type="submit" form="formRegistrarUsuario" class="custom-btn btn-3"><span>¡Registrarme!</span></button>
                             </form>
                         </div>
+
                     </div>
-                
             </div>
-            
-    </section>
+        </section>
+        <div class="logo" style="position: absolute; right:0; top:0">
+           <a style="display:flex;justify-content:flex-end" href="index.php"><img style="width:70%; " src="assets/images/Logotipo sin fondo.png" class="img-fluid" ></a>
+        </div>
         <footer class="w-100"  style="display: flex; justify-content:center">
             <div class="col-lg-12   col-xs-12 footer-background">
                 <p class="footerText">Si necesitas más información de nuestros servicios<br>
@@ -156,19 +213,7 @@
             
         </footer>
     </body>
-    <script>
-       $(".moto").bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
-            $(this).removeClass("animationx")  
-            
-            
-        })
 
-        $(".moto").hover(function(){
-            $(this).addClass("animationx");        
-            
-        })
-        
-    </script>
     <script src="scripts/Formulario.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

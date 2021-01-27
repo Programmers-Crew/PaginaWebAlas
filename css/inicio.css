@@ -127,7 +127,18 @@ a{
     background-color: white;
     margin: 15px;
     border-radius: 16px;
-    opacity: 90%;
+    opacity: 90%; 
+}
+
+.panel1{
+    animation: slide 3s 1;
+}
+.panel2{
+    animation: slide 4s 1;
+}
+
+.panel3{
+    animation: slide 5s 1;
 }
 
 .panel:hover{
@@ -146,6 +157,7 @@ a{
     color: #432A90;
     font-size: 18px;
     font-family: Berlin sans FB;
+    
 }
 
 .pedidos{
@@ -153,6 +165,7 @@ a{
     margin: 15px;
     border-radius: 16px;
     opacity: 90%;   
+    animation: slide 3s 1;
 }
 
 
@@ -220,6 +233,10 @@ a{
 
 .contenedor{
     position: relative;
+    animation-name: slide;
+    animation-duration: 3s, 5s;
+    
+    animation-iteration-count: 1;
 }
 
 .contenedor:hover .texto-imagen-activado{

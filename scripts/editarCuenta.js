@@ -1,7 +1,7 @@
 
-const formulario = document.getElementById('formRegistrarUsuario');
-const inputs = document.querySelectorAll('#formRegistrarUsuario input');
-const selects = document.querySelectorAll('#formRegistrarUsuario select');
+const formulario = document.getElementById('formEditarCuenta');
+const inputs = document.querySelectorAll('#formEditarCuenta input');
+const selects = document.querySelectorAll('#formEditarCuenta select');
 
 
 const expresiones  ={
@@ -48,6 +48,7 @@ const validarFormularioAlPrincipio = (inputs) =>{
             break;
         case "contraseñaAgregar":
     
+            console.log(inputs.name);
             validarContraseña(inputs,'contraseñaAgregar');
             validarContraseña1();
             break;
@@ -64,6 +65,13 @@ const validarFormularioAlPrincipio = (inputs) =>{
             break;
         case "banco":
             validarSelect(inputs,"banco");
+            break;
+        case "nombreEmpresa":
+            validarCampo(expresiones.nombreEmpresa,inputs,'nombreEmpresa');
+            break;
+            
+        case "numeroCuenta":
+            validarCampo(expresiones.numeroCuenta,inputs,'numeroCuenta');
             break;
         }
 
@@ -105,7 +113,7 @@ const validarFormulario = (e) =>{
         
         case "numeroCuenta":
             validarCampo(expresiones.numeroCuenta,e.target,'numeroCuenta');
-            break
+            break;
         }
 
 
@@ -242,6 +250,7 @@ const validarSelect=(input,campo)=>{
 }
 
 inputs.forEach((input)=>{
+    validarFormularioAlPrincipio(input);
     input.addEventListener('keyup', validarFormulario); 
     input.addEventListener('blur', validarFormulario); 
 });
@@ -251,7 +260,7 @@ selects.forEach((select)=>{
 });
 
 
-formRegistrarUsuario.addEventListener('submit', (e) =>{
+formEditarCuenta.addEventListener('submit', (e) =>{
     
     if(campos.contraseñaAgregar && campos.nombre  && campos.usuarioAgregar && campos.apellido && campos.correo && campos.nombreEmpresa && campos.numeroCuenta && campos.tipoCuenta && campos.banco){
 

@@ -26,10 +26,6 @@ const campos ={
     contraseñaAgregar:false,
     telefono: false,
     correo: false,
-    nombreEmpresa: false,
-    numeroCuenta: false,
-    tipoCuenta:false,
-    banco:false
 }
 
 const validarFormularioAlPrincipio = (inputs) =>{
@@ -59,12 +55,6 @@ const validarFormularioAlPrincipio = (inputs) =>{
         case "correo":
     
             validarCampo(expresiones.correo,inputs,'correo');
-        case "tipoCuenta":
-            validarSelect(inputs,"tipoCuenta");
-            break;
-        case "banco":
-            validarSelect(inputs,"banco");
-            break;
         }
 
 
@@ -99,13 +89,6 @@ const validarFormulario = (e) =>{
             
             validarCampo(expresiones.correo,e.target,'correo');
             break;
-        case "nombreEmpresa":
-            validarCampo(expresiones.nombreEmpresa,e.target,'nombreEmpresa');
-            break;
-        
-        case "numeroCuenta":
-            validarCampo(expresiones.numeroCuenta,e.target,'numeroCuenta');
-            break
         }
 
 
@@ -253,7 +236,7 @@ selects.forEach((select)=>{
 
 formRegistrarUsuario.addEventListener('submit', (e) =>{
     
-    if(campos.contraseñaAgregar && campos.nombre  && campos.usuarioAgregar && campos.apellido && campos.correo && campos.nombreEmpresa && campos.numeroCuenta && campos.tipoCuenta && campos.banco){
+    if(campos.contraseñaAgregar && campos.nombre  && campos.usuarioAgregar && campos.apellido && campos.correo){
 
     }else{
         e.preventDefault();

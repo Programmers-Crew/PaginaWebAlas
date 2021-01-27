@@ -66,10 +66,8 @@
                 </div>
             </nav>
         </header>
-        <div class="moto col-lg-2 col-md-3 col-xs-6">
-                <img src="assets/images/moto.png" class="img-fluid" >
-        </div>
-        <section style="min-height: 100%;">
+        
+        <section style="min-height: 100% !important;">
             <div class="titulos centrado">
                 <?php
                     if(isset($errorRegistrar)){
@@ -84,18 +82,21 @@
                 ?>
             </div>
             <div class="col-xl-12 col-md-12 col-xs-12 row centrado">
-                <a class="col-xl-3 col-md-9 col-xs-9 panel" style="text-align:center;text-decoration:none" href="index.php?a=solicitarPedido">
+                <a class="col-xl-3 col-md-9 col-xs-9 panel panel1" style="text-align:center;text-decoration:none" href="index.php?a=solicitarPedido">
                     <span class="icono inicio-cliente"></span>
                     <p class="letra">Solicitar Pedido</p>
                 </a>
-                <a class="col-xl-3 col-md-9 col-xs-9 panel" style="text-align:center;text-decoration:none" href="index.php?a=tarifas">
+                <a class="col-xl-3 col-md-9 col-xs-9 panel panel2" style="text-align:center;text-decoration:none" href="index.php?a=tarifas">
                     <span class="iconoSolid inicio-cliente"></span>
                     <p class="letra">Tarifas</p>
                 </a>
-                <a class="col-xl-3 col-md-9 col-xs-9 panel" style="text-align:center; text-decoration:none" href="index.php?a=misPedidos">
+                <a class="col-xl-3 col-md-9 col-xs-9 panel panel3" style="text-align:center; text-decoration:none" href="index.php?a=misPedidos">
                     <span class="iconoSolid inicio-cliente"></span>
                     <p class="letra">Mis Pedidos</p>
                 </a>
+            </div>
+            <div class="moto col-lg-2 col-md-3 col-xs-6" style="position:absolute !important;">
+                <img src="assets/images/moto.png" class="img-fluid" >
             </div>
         </section>
     </body>

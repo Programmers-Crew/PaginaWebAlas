@@ -25,7 +25,6 @@ const campos ={
 const validarFormularioAlPrincipio = (inputs) =>{
       switch(inputs.name){
         case "nombre":
-    
             validarCampo(expresiones.nombre,inputs,'nombre');
             break;
         case "telefono":
@@ -118,7 +117,7 @@ const validarCampo= (expresion,input,campo)=>{
     }
 }
 
-inputs.forEach((input)=>{
+inputs.forEach((input)=>{      
     input.addEventListener('keyup', validarFormulario); 
     input.addEventListener('blur', validarFormulario);
 });
