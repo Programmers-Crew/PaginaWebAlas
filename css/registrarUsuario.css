@@ -1,0 +1,397 @@
+
+@font-face{
+      font-family: Cream Cake;
+      src: url("../assets/fonts/Cream\ Cake.ttf");
+}
+  
+  @font-face{
+      font-family: fa-regular-400;
+      src: url("../assets/fonts/fa-regular-400.ttf");
+  }
+  
+  @font-face{
+      font-family: fa-brands-400;
+      src: url("../assets/fonts/fa-brands-400.ttf");
+  }
+  @font-face{
+      font-family: fa-solid-900;
+      src: url("../assets/fonts/fa-solid-900.ttf");
+  }
+  
+  @keyframes floating { 
+      0% { transform: translate(0,  0px); } 
+      50%  { transform: translate(0, 10px); } 
+      100%   { transform: translate(0, -0px); }     
+  } 
+  
+  @keyframes slide { 
+      0% { transform: translate(0,  -505px); } 
+      100%   { transform: translate(0, 0px); }     
+  }
+  
+  @keyframes moto { 
+      5% { transform: rotate(-45deg) }
+      97% { transform: translate(80vw,0px);}
+      98% {transform:translateX(0)}
+      99% {opacity: 0%;}
+      100% {opacity: 100%;}
+  } 
+  
+  
+  html{
+   
+  }
+  
+  body{
+    background-image: url("../assets/images/fondo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+  }
+  section{
+  }
+  .contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+  }
+
+
+
+.imagen_derecha{
+      z-index: 0;
+      width: 25%;
+      height: 15%;
+      position: absolute;
+      top: 30px;
+      animation-name: floating;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+  
+    
+  }
+  
+  .imagen_izquierda{
+      z-index: 0;
+      position: absolute;
+      bottom: 40px;
+      right: 0;
+      width: 25%;
+      animation-name: floating;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+  }
+  
+.moto.animationx{
+      cursor: pointer;
+      animation-name: moto;
+      animation-duration: 4s;
+      animation-iteration-count: 1;
+  }
+  
+  .logo{
+      width: 15%;
+      margin-left: auto;
+      position: relative;
+  
+  }
+  
+  .titulos{
+      font-family: Cream Cake;
+      font-size: 11vh;
+      color: #707070;
+  }
+  
+  .centrado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .imagen{
+    width: 100%;
+  }
+  .caja{
+    position: relative;
+      z-index: 1;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 4vh;
+      border-radius: 5px;
+      animation-name: slide;
+      animation-duration: 3s;
+      animation-iteration-count: 1;
+      height: 100%;
+      width: 100%;
+  }
+  .caja:hover{
+    transform: scale(1.05);    
+    -webkit-transition: transform 1.05s ease-in-out;
+    -webkit-box-shadow: 5px 5px 5px 6px  #4c3b7e;  
+    box-shadow:         5px 5px 5px 6px  #4c3b7e; 
+  }
+  .contenedorform{
+    padding-left: 1vh;
+  }
+  .formInput{
+    width: 100%;
+    height: 100%;
+  }
+  .inicio_sesion{
+    width: 60%;
+  }
+  .icono{
+      font-family: fa-regular-400;
+      padding-right: 7px;
+      color: #432A90;
+  }
+  .iconoBrands{
+      font-family: fa-brands-400;
+      color: #432A90;
+  }
+  .iconoSolid{
+      font-family: fa-solid-900;
+      padding-right: 7px;
+      color: #432A90;
+  }
+  .tamaño{
+      font-size: 4vh;
+  }
+  .form-texto{
+      margin-top: 2vh;
+      margin-bottom: 2vh;
+      border-top: 0 !important;
+      border-left: 0 !important;
+      border-right: 0 !important;
+      background-color: transparent !important;
+  
+  }
+
+/*boton*/
+.custom-btn {
+      width: 130px;
+      height: 40px;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px 25px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+       box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+       7px 7px 20px 0px rgba(0,0,0,.1),
+       4px 4px 5px 0px rgba(0,0,0,.1);
+      outline: none;
+    }
+    button {
+      margin: 20px;
+    }
+  
+  .btn-3 {
+      background: rgb(91, 62, 179);
+    background: linear-gradient(0deg, rgba(91,62,179,1) 0%, rgba(67, 42, 144, 1) 100%);
+      width: 130px;
+      height: 40px;
+      line-height: 42px;
+      padding: 0;
+      border: none;
+      
+    }
+    .btn-3 span {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .btn-3:before,
+    .btn-3:after {
+      position: absolute;
+      content: "";
+      right: 0;
+      top: 0;
+       background: rgba(91,62,179,1);
+      transition: all 0.3s ease;
+    }
+    .btn-3:before {
+      height: 0%;
+      width: 2px;
+    }
+    .btn-3:after {
+      width: 0%;
+      height: 2px;
+    }
+    .btn-3:hover{
+       background: transparent;
+      box-shadow: none;
+    }
+    .btn-3:hover:before {
+      height: 100%;
+    }
+    .btn-3:hover:after {
+      width: 100%;
+    }
+    .btn-3 span:hover{
+       color:rgba(91,62,179,1);
+    }
+    .btn-3 span:before,
+    .btn-3 span:after {
+      position: absolute;
+      content: "";
+      left: 0;
+      bottom: 0;
+       background: rgba(91,62,179,1);
+      transition: all 0.3s ease;
+    }
+    .btn-3 span:before {
+      width: 2px;
+      height: 0%;
+    }
+    .btn-3 span:after {
+      width: 0%;
+      height: 2px;
+    }
+    .btn-3 span:hover:before {
+      height: 100%;
+    }
+    .btn-3 span:hover:after {
+      width: 100%;
+    }
+    
+  
+    /*footer*/
+  .facebook{
+      color: rgb(197, 190, 190);
+  }
+  
+  
+  .footerText{
+    font-family: Berlin Sans FB;
+    color: white;
+    font-size: 3vh;
+  }
+  
+  .footer-background{
+    background-color: black;
+    text-align: center;
+  }
+  .facebook:hover{
+    color:white;
+    text-decoration: none;
+  }
+  .facebook{
+    font-size: 4vh;
+  }
+  
+  .form-correo{
+    margin: 10px !important;
+  }
+  
+  .form-texto:focus{
+    border-color: #432A90;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
+    outline: 0 none;
+  }
+  
+  .form-texto-correcto{
+    border-color: #0FE642;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #0FE642;
+    outline: 0 none;
+  }
+  
+  .form-texto-incorrecto{
+    border-color: #E60F33;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #E60F33;
+    outline: 0 none;
+  }
+  .textarea1{
+    resize: vertical; 
+    max-height: 200px !important;
+    min-height: 100px !important;
+  }
+  .textarea1:focus{
+    border-color: #432A90;
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
+    outline: 0 none;
+  }
+  .form-footer{
+    width: 60%;
+  }
+  
+  
+  
+  /*clases validación*/
+  
+  .error{
+    font-family:Berlin Sans FB ;
+    color: red;
+  }
+  
+  .grupo-correcto{
+    display: none !important;
+  }
+  
+  .grupo-incorrecto{
+    display: block;
+  }
+  
+
+
+  /*responsive*/
+  @media only screen and (max-width:600px){
+  .inicio_sesion{
+    width: 87% !important;
+  }
+  .d-flex{
+    display: block !important;
+  }
+  form{
+        width: 100%;
+  }
+  .caja{
+        padding: 5px;
+  }
+  .footerText{
+     font-size: 16px;
+  }
+  .facebook{
+    font-size: 5vh; 
+  }
+  .form-footer{
+    width: 84%;
+  }
+  .form-correo{
+    margin-left: 0 !important;
+    margin-right: 0;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .imagen_derecha{
+      width: 80%;
+      top: 18vh;;
+  }
+  .imagen_izquierda{
+      width: 60%;
+      bottom: 0;
+  }
+  .moto{
+    width: 40%;
+  }
+  .logo{
+        width: 76%;
+  }
+  .caja:hover{
+      transform: scale(1.02);    
+      -webkit-transition: transform 1.05s ease-in-out;
+      -webkit-box-shadow: 5px 5px 5px 6px  #4c3b7e;  
+      box-shadow:         5px 5px 5px 6px  #4c3b7e;   
+   }
+   p{
+      display: flex;
+      align-items: center;
+      margin: 0;
+      justify-content: center;
+   }
+}

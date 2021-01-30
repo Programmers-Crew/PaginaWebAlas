@@ -58,3 +58,13 @@ $(document).ready(function(){
       $(this).addClass("animationxs");        
       
   });
+  $(".moto").bind("webkitAnimationEnd mozAnimationEnd animationEnd", function(){
+    $(this).removeClass("animationx")  
+    
+    
+})
+
+$(".moto").hover(function(){
+    $(this).addClass("animationx");        
+    
+})

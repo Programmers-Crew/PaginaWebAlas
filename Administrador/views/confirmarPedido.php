@@ -80,6 +80,7 @@
                                     
                                 foreach($result as $resultadoActual){   
                                     $costoPedido = $resultadoActual['costoPedidoDesc'];
+                                    $clienteId = $resultadoActual['clienteId'];
                                 echo "
                                     <div class='col-xl-12 row centrado'>
                                         <div  class='col-xl-5 col-md-9 col-xs-9 pedidos'>
@@ -163,16 +164,26 @@
                         ?>
                         
                     </div>
+                   
                 <div class="col-xl-12 col-md-12 col-xs-12 centrado">
                     <div  class='col-xl-5 col-md-9 col-xs-9 pedidos'>
-                        <form class="col-xl-12 col-md-12 col-xs-12 fuentes" method="POST" action="index.php?a=confirmarPedido">
-                            <div> 
-                                <span>Costo: </span><input class="form-control" type="number" name="costo" value="<?php echo $costoPedido; ?>" required>
-                            </div>
-                            <?php $id = $_GET['id'];?>
-                            <input type="hidden" name="id" value="<?php echo $id;?>">
+                        <form class="col-xl-12 col-md-12 col-xs-12 fuentes" id="formConfirmar" method="POST" action="index.php?a=confirmarPedido">
+                        
+                            <?php 
+                                
+                                $usuarios2= new Usuarios();
+                                $resultado2 = $usuarios2->usuarioBuscar($clienteId);
+                                foreach($resultado2 as $resultadoActual){
+                                    echo "<input type='hidden' name='correo' value=".$resultadoActual['usuarioCorreo'].">";
+                                    echo "<input type='hidden' name='nombre' value=".$resultadoActual['usuarioNombre']." ".$resultadoActual['usuarioApellido']."";
+                                }
+                                
                             
-                            <div>
+                            ?>  
+                            
+                                <span>Costo: </span><input class="form-control" type="number" name="costo" value="<?php echo $costoPedido; ?>" required>
+                            
+                            
                                 Mensajero:
                                 <select class="form-control" name="mensajero">
                                     <?php
@@ -188,10 +199,14 @@
                                         }
                                     ?>
                                 </select>       
-                            </div>
+                            
+                                        
+                                <input value="<?php echo $_GET['id']?>" name="id" type="hidden">
+                            
                             <div class="col-xl-12 centrado" style="margin-bottom: 15px;">
                                 <button class='custom-btn btn-3' type='submit' form='formConfirmar'><span>Confirmar</span></button>
                             </div>
+                            
                         </form>
                     </div>
                 </div>

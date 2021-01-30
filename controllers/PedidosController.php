@@ -81,6 +81,7 @@
             if(!$resultado){
                 $validar = true;
             }else{
+                include "config/confirmarcionPedido.php";
                 $validar = false;
             }
 

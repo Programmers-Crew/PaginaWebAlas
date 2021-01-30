@@ -175,7 +175,7 @@
                                             <p class='campos fuentes'>Monto: ".$resultadoActual['pedidoMonto']."</p>
                                         </div>
                                         <div class='fecha col-xl-3 col-md-3 col-xs-3' style='float: right;'>
-                                            <p class='campos fuentes'>Precio del Envío: ".$resultadoActual['costoPedidoDesc']."</p>
+                                            <p class='campos fuentes'>Precio del Envío: ".$resultadoActual['pedidoCosto']."</p>
                                         </div>
                                         </div>
                                     </div>

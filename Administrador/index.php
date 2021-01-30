@@ -1,4 +1,5 @@
 <?php
+include_once "controllers/PedidosController.php";
             if(isset($_GET['a'])){
                 switch($_GET['a']){
                     case 'agregarUsuario':
@@ -23,6 +24,7 @@
                         require_once "views/InicioAdministrador.php";
                         break;
                     case 'confirmarPedido':
+                        $pedidos = new Pedidos();
                         if($pedidos->confirmarPedido()){
                             $errorRegistrar = "No se ha podido Confirmar su pedido Intente de nuevo";
                         }else{
@@ -31,8 +33,8 @@
                         include_once 'views/inicioAdministrador.php';
                         
                         break;
-                    case 'actualizarCuenta':
-                        if($usuario->editarCuenta()){
+                    case 'actualizarCuentaAdmin':
+                        if($usuario->editarCuentaAdmin()){
                             $registrarExito = "Se ha editado su Cuenta actualice la página";
                         }else{
                             $errorRegistrar = "No se ha podido Editar su cuenta Intente de nuevo";
