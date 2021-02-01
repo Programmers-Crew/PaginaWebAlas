@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <title>AlasGT-Editar Cuenta</title>        
+        <title>AlasGT-Editar Cuenta</title>  
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">      
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" type="text/css">
@@ -16,16 +17,15 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css.map" type="text/css">
-        <link rel="stylesheet" href="css/Login.css" type="text/css">
-        <link rel="stylesheet" href="css/inicio.css" type="text/css">
+        <link rel="stylesheet" href="css/agregarUsuario.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
     <body>    
-        <div class="imagen_derecha-inicio">
+        <div class="imagen_derecha">
                 <img src="assets/images/nube derecha.png" class="img-fluid" >
         </div> 
-        <div class="imagen_izquierda-inicio">
+        <div class="imagen_izquierda">
                     <img src="assets/images/nube izquierda.png" class="img-fluid" >
         </div>
         <header style="padding: 0;">
@@ -50,8 +50,8 @@
                 </div>
             </nav>
         </header>
-        <section style="min-height: 100%; display:flex">
-            <div class="col-lg-12 col-md-12   col-xs-12" style="padding-top:25px; padding-bottom:15px; padding-left:0">
+        <section>
+            <div class="col-lg-12 col-md-12   col-xs-12" style="padding-top:25px; padding-bottom:15px">
                 
                 <div class="inicio_sesion">
                     <div class="caja col-lg-7 col-md-9 col-xs-9">
@@ -66,8 +66,8 @@
                             <div class="col-lg-12 row" style="margin:0">    
                                 <div class="col-lg-6 row"  style="padding:0; margin:0 !important">
                                     <div class="col-lg-12" style="display: flex; padding:0">
-                                        <p class="iconoSolid" style="color: #432A90;"> </p> 
-                                        <input class="form-control form-texto col-lg-9" style="margin-right: 2.5px;" placeholder="Ingrese su nombre" name="nombre" id="nombre" required value="<?php echo $usuario->getNombre()?>" type="text">
+                                        <p class="iconoSolid tamaño" style="color: #432A90;"> </p> 
+                                        <input class="form-control form-texto col-lg-9 " style="margin-right: 2.5px;" placeholder="Ingrese su nombre" name="nombre" id="nombre" required value="<?php echo $usuario->getNombre()?>" type="text">
                                     </div>
                                     <div class="col-lg-12">
                                         <span style="float: left;" class=" error grupo-correcto" id="alerta_nombre">El campo nombre no puede llevar signos ni espacios</span>
@@ -76,8 +76,8 @@
                                 </div>
                                 <div class="col-lg-6" style="padding:0;">
                                     <div class="col-lg-12" style="padding:0; display:flex">
-                                        <p class="iconoSolid" style="color: #432A90;"> </p> 
-                                        <input class="form-control form-texto" placeholder="Ingrese su Apellido" id="apellido" name="apellido" value="<?php echo $usuario->getApellido()?>" type="text" style="margin-left: 2.5px;" required>
+                                        <p class="iconoSolid tamaño" style="color: #432A90;"> </p> 
+                                        <input class="form-control form-texto " placeholder="Ingrese su Apellido" id="apellido" name="apellido" value="<?php echo $usuario->getApellido()?>" type="text" style="margin-left: 2.5px;" required>
                                     </div>
                                     <div class="col-lg-12" style="padding:0;">
                                         <span  class=" error grupo-correcto" id="alerta_apellido">El campo apellido no puede llevar signos ni espacios</span>
@@ -87,7 +87,7 @@
                             </div>
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex; padding:0">
-                                    <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese Un Usuario" name="usuarioAgregar" value="<?php echo $usuario->getUsuario()?>" id="usuarioAgregar" type="text" required>
+                                    <p class="icono tamaño" style="color: #432A90;"></p><input class="form-control form-texto " placeholder="Ingrese Un Usuario" name="usuarioAgregar" value="<?php echo $usuario->getUsuario()?>" id="usuarioAgregar" type="text" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <span id="alerta_usuarioAgregar" class="error grupo-correcto">El Usuario no puede llevar espacios y/o signos<br>debe llevar por lo menos 4 caracteres</span>
@@ -95,7 +95,7 @@
                             </div>
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex; padding:0">
-                                    <p class="icono" style="color: #432A90;"></p><input class="form-control form-texto" placeholder="Ingrese su correo" name="correo" value="<?php echo $usuario->getCorreo()?>"  id="correo" type="email" required>
+                                    <p class="icono tamaño" style="color: #432A90;"></p><input class="form-control form-texto " placeholder="Ingrese su correo" name="correo" value="<?php echo $usuario->getCorreo()?>"  id="correo" type="email" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <span id="alerta_correo" class="error grupo-correcto">El Email debe de llevar: '@','.'</span>
@@ -103,7 +103,7 @@
                             </div>
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex; padding:0">
-                                    <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Ingrese su Contraseña" name="contraseñaAgregar"  id="contraseñaAgregar" type="password" required>
+                                    <p class="iconoSolid tamaño"> </p><input class="form-control form-texto " placeholder="Ingrese su Contraseña" name="contraseñaAgregar"  id="contraseñaAgregar" type="password" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <span id="alerta_mayusculas" class="error grupo-correcto">Debe de tener por lo menos una mayuscula</span>    
@@ -115,7 +115,7 @@
                             </div>
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex;padding:0;">
-                                    <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Confirme su Contraseña" name="contraseña1" id="contraseña1" type="password" required>
+                                    <p class="iconoSolid tamaño"> </p><input class="form-control form-texto " placeholder="Confirme su Contraseña" name="contraseña1" id="contraseña1" type="password" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <span id="alerta_contraseña1" class="error grupo-correcto">Las contraseñas deben de ser iguales</span>
@@ -123,7 +123,7 @@
                             </div>    
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex;padding:0;">
-                                    <p class="iconoSolid"> </p><input class="form-control form-texto" placeholder="Nombre de la empresa que desea el servicio" value="<?php echo $usuario->getNombreEmpresa()?>" name="nombreEmpresa" id="nombreEmpresa" type="text" required>
+                                    <p class="iconoSolid tamaño"> </p><input class="form-control form-texto " placeholder="Nombre de la empresa que desea el servicio" value="<?php echo $usuario->getNombreEmpresa()?>" name="nombreEmpresa" id="nombreEmpresa" type="text" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <span id="alerta_nombreEmpresa" class="error grupo-correcto">El nombre de empresa debe llevar de 4 a 20 caracteres y no debe de llevar signos</span>
@@ -131,7 +131,7 @@
                             </div> 
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex;padding:0;">
-                                    <p class="iconoSolid"></p><input class="form-control form-texto" value="<?php echo $usuario->getNumeroCuenta()?>" placeholder="No. de cuenta para depositar el monto de sus envios" name="numeroCuenta" id="numeroCuenta" type="number" required>
+                                    <p class="iconoSolid tamaño"></p><input class="form-control form-texto " value="<?php echo $usuario->getNumeroCuenta()?>" placeholder="No. de cuenta para depositar el monto de sus envios" name="numeroCuenta" id="numeroCuenta" type="number" required>
                                 </div>
                                 <div class="col-lg-12">
                                     <span id="alerta_numeroCuenta" class="error grupo-correcto">el número de cuenta no puede llevar signos,letras y/o espacios</span>
@@ -139,8 +139,8 @@
                             </div> 
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex;padding:0;">
-                                    <p class="iconoSolid"></p>
-                                    <select class="form-control form-texto" onchange="cambioTipoCuenta()" id="tipoCuenta" name="tipoCuenta" form="formEditarCuenta">
+                                    <p class="iconoSolid tamaño"></p>
+                                    <select class="form-control form-texto " onchange="cambioTipoCuenta()" id="tipoCuenta" name="tipoCuenta" form="formEditarCuenta">
                                         <option selected  value="<?php echo $usuario->getTipoCuenta()?>">
                                             <?php 
                                                 $usuarios2 = new Usuarios();
@@ -168,8 +168,8 @@
                             </div>
                             <div class="col-lg-12 row" style="margin:0">
                                 <div class="col-lg-12" style="display: flex;padding:0;">
-                                    <p class="iconoSolid"></p>
-                                    <select class="form-control form-texto" id="banco" name="banco" form="formEditarCuenta" onchange="cambiobanco()">
+                                    <p class="iconoSolid tamaño"></p>
+                                    <select class="form-control form-texto " id="banco" name="banco" form="formEditarCuenta" onchange="cambiobanco()">
                                         <option selected  value="<?php echo $usuario->getBanco()?>">
                                         <?php 
                                                 $usuarios4 = new Usuarios();
@@ -206,44 +206,43 @@
                 </div>
             </div>
         </section>
-        <footer class="w-100"  style="display: flex; justify-content:center">
-            <div class="col-lg-12   col-xs-12 footer-background">
-                <p class="footerText">Si necesitas más información de nuestros servicios<br>
-                    nos puedes escribir en nuestras redes sociales:</p>
-                <div>
-                    <div  style="display:flex; justify-content:center">
-                        <div style="padding-right: 5px;">
-                            <p class="iconoBrands facebook"> +502 4860 7638  +502 3596 2610</p>
+            <footer class="w-100"  style="display: flex; justify-content:center">
+                <div class="w-100 footer-background">
+                    <p class="footerText">Si necesitas más información de nuestros servicios<br>
+                        nos puedes escribir en nuestras redes sociales:</p>
+                    <div class="w-90 d-flex centrado">
+                        <div class="ancho-40 text-align-center">
+                            <p class="iconoBrands facebook"> +502 4860 7638 <br> +502 3596 2610</p>
                         </div>
-                        <div style="padding-right: 5px; padding-left:5px;">
-                            <a href="https://www.facebook.com/Alasgt-693341821107003" class="iconoBrands facebook"> AlasGT</a>
+                        <div class="ancho-40 text-align-center">
+                            <a href="https://www.facebook.com/Alasgt-693341821107003" class="iconoBrands facebook h-100 w-100 centrado"> AlasGT</a>
                         </div>
-                        <div style="padding-right: 5px; padding-left:5px;">
-                            <p class="icono facebook"> alasentregas@gmail.com</p>
+                        <div class="ancho-40 text-align-center">
+                            <p class="icono facebook centrado h-100 w-100"> alasentregas@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="w-100 centrado">
+                        <div class="form-footer">
+                            <form action="#" id="correo">
+                                <div class="d-flex">
+                                    <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
+                                    <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
+                                </div>
+                                <div class="d-flex">
+                                    <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
+                                </div>
+                                <div class="d-flex">
+                                    <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
+                                </div>
+                                <div class="centrado">
+                                    <button type="submit"  form="correo" class="custom-btn btn-3"><span>Enviar</span></button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div style="display: flex; justify-content:center">
-                    <form action="#" id="correo">
-                        
-                        <div style="display: flex;">
-                            <input type="text" class="form-control" style="margin:7px;" required placeholder="Nombre completo" name="nombre">
-                            <input type="email" class="form-control" style="margin:7px;" required placeholder="Email" name="email">
-                        </div>
-                        <div style="display: flex;">
-                            <input type="number" class="form-control" style="margin:7px;" required placeholder="Teléfono" name="nombre">
-                        </div>
-                        <div style="display: flex;">
-                            <textarea  class="form-control form-correo textarea1" style="margin:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
-                        </div>
-                        <div style="display: flex; justify-content:center">
-                            <input type="submit" class="boton-black  btn-lg" style="margin:7px;" required value="ENVIAR">
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-        </footer>
+                
+            </footer> 
     </body>
     <script src="scripts/editarCuenta.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
