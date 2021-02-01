@@ -1,6 +1,27 @@
 create database DBAlasGt;
 use DBAlasGt;
 
+create table EstadoCivil(
+	estadoCivilId int auto_increment not null,
+    estadoCivilDesc varchar(20) unique not null,
+    primary key PK_EstadoCivil(estadoCivilId)
+);
+
+create table Mensajero(
+	idMensajero int auto_increment not null,
+    primerNombreMensajero varchar(30) not null,
+    segundoNombreMensajero varchar(30) not null,
+    primerApellidoMensajero varchar(30) not null,
+	segundoApellidoMensajero varchar(30) not null,
+    dpiMensajero varchar(10) not null unique,
+    placasMensajero varchar(20) not null unique,
+    telefonoMensajero varchar(8) not null unique,
+    direccionMensajero varchar(30) not null,
+    estadoCivil int not null,
+    primary key PK_Mensajero(idMensajero),
+	Constraint FK_Mensajero_EstadoCivil foreign key (estadoCivil) references EstadoCivil(estadoCivilId)
+);
+
 create table tipoUsuario(
 	tipoUsuarioId tinyint auto_increment not null,
     tipoUsuarioDesc varchar(25) not null,
@@ -97,7 +118,7 @@ create table costoPedido(
      constraint FK_CostoPedido_PuntoInicial foreign key (puntoInicio) references puntoInicio(puntoInicioCodigo),
      constraint FK_CostoPedido_PutoFinal foreign key (puntoFinal) references puntoFinal(puntoFinalCodigo),
      constraint FK_CostoPedido_CostoAsignado foreign key (costoASignado) references costoAsignado(costoPedidoId)
-     );
+);
      
 create table pedido(
 	pedidoId int auto_increment not null,
