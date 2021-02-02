@@ -394,13 +394,13 @@ DELIMITER $$
             p.pedidoDireccionInicio, 
 			pf.puntoFinalDesc,
             nl.nombreLugarDesc,
-            
             p.pedidoDireccionFinal,
             cliente.userName as cliente,
 			p.pedidoTelefonoReceptor,
             mensajero.userName as mensajero,
             P.pedidoMonto,
             ca.costoPedidoDesc,
+            p.pedidoComentario,
             fp.formaPagoDesc,
             ep.estadoPedidoDesc
 				from Pedido as p,
@@ -442,6 +442,7 @@ DELIMITER $$
             mensajero.userName as mensajero,
             P.pedidoMonto,
             ca.costoPedidoDesc,
+            p.pedidoComentario,
             fp.formaPagoDesc,
             ep.estadoPedidoDesc
 				from Pedido as p,
@@ -470,16 +471,16 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_AgregarPedido(fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), costo decimal,monto decimal, nombreReceptor varchar(50))
+	create procedure Sp_AgregarPedido(fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), costo decimal,monto decimal, nombreReceptor varchar(50), comentario varchar(50))
 		begin
-			insert into Pedido(pedidoFecha,pedidoPuntoInicio,pedidoDireccionInicio,pedidoPuntoFinal,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoCosto,pedidoMonto,nombreReceptor)
-				values(fecha,puntoInicio ,direccionInicio,puntoFinal,direccionFinal, usuario, telefono, costo,monto, nombreReceptor);
+			insert into Pedido(pedidoFecha,pedidoPuntoInicio,pedidoDireccionInicio,pedidoPuntoFinal,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoCosto,pedidoMonto,nombreReceptor,pedidoComentario)
+				values(fecha,puntoInicio ,direccionInicio,puntoFinal,direccionFinal, usuario, telefono, costo,monto, nombreReceptor,comentario);
         end $$
 DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ActualizarPedido(idBuscado int,direccion varchar(50),telefono varchar(8), descripcion varchar(50), monto decimal, estado tinyint)
+	create procedure Sp_ActualizarPedido(idBuscado int,direccion varchar(50),telefono varchar(8), descripcion varchar(50), monto decimal, comentario varchar(50),estado tinyint)
 		begin
 			update Pedido as p
 				set 
@@ -487,6 +488,7 @@ DELIMITER $$
                     p.pedidoTelefonoReceptor = telefono,
                     p.pedidoDesc = descripcion,
                     p.pedidoMonto = monto,
+                    p.pedidoComentario = comentario,
                     p.pedidoEstadoId = estado
 						where pedidoId = idBuscado;
 		end $$
