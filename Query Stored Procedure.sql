@@ -1,32 +1,54 @@
-#Mensajero 
+#datos mensajero
 DELIMITER $$
-	create procedure Sp_AgregarRegistro(pNombre varchar(30), sNombre varchar(30), pApellido varchar(30), sApellido varchar(30), dpi varchar(10), placas varchar(20), telefono varchar(8), direccion varchar(30), estado int)
-		begin
-			insert into Mensajero(primerNombreMensajero,segundoNombreMensajero,primerApellidoMensajero,segundoApellidoMensajero,dpiMensajero,placasMensajero,telefonoMensajero,direccionMensajero,estadoCivil)
-				values(pNombre, sNombre, pApellido , sApellido, dpi, placas, telefono, direccion, estado);
-        end $$
+	CREATE PROCEDURE Sp_BuscarRuta(pedidobuscado int)
+		BEGIN
+			SELECT rutasDesc 
+            FROM rutas
+            WHERE pedidoId = pedidobuscado;
+        END $$
+
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_ListarRegistro()
-		begin
-			select 
-            m.primerNombreMensajero,
-            m.segundoNombreMensajero,
-            m.primerApellidoMensajero,
-            m.segundoApellidoMensajero,
-            m.dpiMensajero,
-            m.placasMensajero,
-            m.telefonoMensajero,
-			m.direccionMensajero,
-			ec.estadoCivilDesc	
-				from Mensajero as m
-					inner join estadocivil as ec
-						on m.estadoCivil = ec.estadoCivilId;
-		end $$
+	CREATE PROCEDURE Sp_BuscarDatosMensajero(usuario int)
+		BEGIN
+			SELECT primerNombreMensajero,segundoNombreMensajero,primerApellidoMensajero,segundoApellidoMensajero,usuarioId,dpiMensajero,placasMensajero,telefonoMensajero,direccionMensajero,estadoCivilDesc
+            FROM Mensajero, estadoCivil
+            WHERE Mensajero.estadoCivil = estadoCivil.estadoCivilId and Mensajero.usuarioId = usuario;
+        END $$
+
 DELIMITER ;
 
+DELIMITER $$
+	CREATE PROCEDURE Sp_listarEstadoCivil()
+		BEGIN
+			SELECT estadoCivilId, estadoCivilDesc
+            FROM estadoCivil;
+        END $$
+
+DELIMITER ;
+
+DELIMITER $$ 
+	CREATE PROCEDURE Sp_AgregarDatos(primerNombre varchar(30),segundoNombre varchar(30),primerApellido varchar(30),segundoApellido varchar(30),usuario int,dpi varchar(13),placas varchar(20),telefono varchar(8),direccion varchar(150),estado int)
+		BEGIN 
+			INSERT INTO mensajero(primerNombreMensajero,segundoNombreMensajero,primerApellidoMensajero,segundoApellidoMensajero,usuarioId,dpiMensajero,placasMensajero,telefonoMensajero,direccionMensajero,estadoCivil) 
+            values(primerNombre,segundoNombre,primerApellido,segundoApellido,usuario,dpi,placas,telefono,direccion,estado);
+        END $$
+DELIMITER ;
+
+DELIMITER $$ 
+	CREATE PROCEDURE Sp_ActualizarDatos(primerNombre varchar(30),segundoNombre varchar(30),primerApellido varchar(30),segundoApellido varchar(30),usuario int,dpi varchar(13),placas varchar(20),telefono varchar(8),direccion varchar(150),estado int)
+		BEGIN 
+			update mensajero
+            set primerNombreMensajero = primerNombre,segundoNombreMensajero=segundoNombre,
+				primerApellidoMensajero = primerApellido, segundoApellidoMensajero = segundoApellido,
+				dpiMensajero = dpi, placasMensajero = placas, telefonoMensajero = telefono,
+				direccionMensajero = direccion,  estadoCivil = estado
+            where usuarioId = usuario;
+        END $$
+DELIMITER ;
 #TipoUsuario
+
 DELIMITER $$
 	create procedure Sp_ListarTipoUsuario()
 		begin 
@@ -360,7 +382,21 @@ DELIMITER $$
 								usuarioId = idBuscado;
         end $$
 DELIMITER ;
-
+DELIMITER $$
+	create procedure Sp_ActualizarUsuarioAdmin(idBuscado int,nombre varchar(50), apellido varchar(50),nuevoUsername varchar(25),nuevaContrasena varchar(200), correoNuevo varchar(30))
+		begin
+			update 
+				usuario as u
+					set 
+						u.usuarioNombre = nombre,
+                        u.usuarioApellido = apellido,
+                        u.userName = nuevoUsername,
+                        u.usuarioContrasena = nuevaContrasena,
+                        u.usuarioCorreo = correoNuevo
+							where 
+								usuarioId = idBuscado;
+        end $$
+DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ConfirmarUsuario(idBuscado int, estadoUsuarioId tinyint)
 		begin
@@ -382,11 +418,18 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+DELIMITER $$
+	create procedure Sp_BuscarUsuario(idBuscado int)
+		begin
+			select * from usuario where usuario.usuarioId = idBuscado;
+        end $$
+DELIMITER ;
 
 #Pedidos
 DELIMITER $$
 	create procedure Sp_ListarPedido()
 		begin
+<<<<<<< HEAD
 	select  p.pedidoId,
 			p.pedidoFecha,
 			p.nombreReceptor,
@@ -423,12 +466,41 @@ DELIMITER $$
                             and pf.nombreLugar = nl.nombreLugarId
 							and mensajero.usuarioId = p.pedidomensajeroId group by pedidoId
 							order by p.pedidoFecha ASC ;
+=======
+	select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
+			p.pedidoUsuarioId,p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, p.pedidoCosto, fp.formaPagoDesc, ep.estadoPedidoDesc
+	from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+		usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+	where  p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+		and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+		and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+		and mensajero.usuarioId = p.pedidomensajeroId group by pedidoId
+	order by p.pedidoFecha ASC ;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ListarPedidoMensajero(mensajeroId int)
+		begin
+	select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
+			p.pedidoUsuarioId,p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, p.pedidoCosto, fp.formaPagoDesc, ep.estadoPedidoDesc
+	from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+		usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+	where  p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+		and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+		and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+		and mensajero.usuarioId = p.pedidomensajeroId and mensajeroId = p.pedidoMensajeroId and p.pedidoEstadoid != '1' group by pedidoId
+	order by p.pedidoFecha ASC ;
+>>>>>>> Davis-Roldan
         end $$
 DELIMITER ;
 
 DELIMITER $$
 	create procedure Sp_ListarPedidosCliente(usuario1 int)
 		begin
+<<<<<<< HEAD
 			select  p.pedidoId,
             p.pedidoFecha,
             p.nombreReceptor,
@@ -467,6 +539,18 @@ DELIMITER $$
 					and mensajero.usuarioId = p.pedidomensajeroId
                     group by pedidoId
 						order by p.pedidoFecha ASC ;
+=======
+			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,p.pedidoUsuarioId ,
+			p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc,p.pedidoCosto, fp.formaPagoDesc, ep.estadoPedidoDesc
+	from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+		usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+	where cliente.usuarioId = usuario1  and p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+    and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+    and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+    and mensajero.usuarioId = p.pedidomensajeroId group by pedidoId
+	order by p.pedidoFecha ASC ;
+>>>>>>> Davis-Roldan
         end $$
 DELIMITER ;
 
@@ -495,8 +579,9 @@ DELIMITER $$
 DELIMITER ;
 
 
+
 DELIMITER $$
-	create procedure Sp_ConfirmarPedido(idBuscado int, mensajero int, costo int,estado int)
+	create procedure Sp_ConfirmarPedido(idBuscado int, mensajero int, costo decimal,estado int)
 		begin
 			update Pedido as p
 				set 
@@ -506,7 +591,16 @@ DELIMITER $$
 						where pedidoId = idBuscado;
         end $$
 DELIMITER ;
-
+DELIMITER $$
+	create procedure Sp_EntregarPedido(idBuscado int,estado int, ruta varchar(150))
+		begin
+			update Pedido as p
+				set 
+                    p.pedidoEstadoId = estado
+						where pedidoId = idBuscado;
+			insert into rutas(rutasDesc, pedidoId) values(ruta,idBuscado);
+        end $$
+DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ConfirmarPago(idBuscado int, costo decimal, mensajero int, estado int,formaPago int)
 		begin
@@ -627,11 +721,9 @@ DELIMITER $$
 DELIMITER ;
 
 #inserts obligatorios
-insert into EstadoCivil(estadoCivilDesc) values("Casado"),("Soltero"),("Otros");
-
 insert into tipoUsuario(tipoUsuarioDesc) values("Administrador"),("Mensajero"),("Cliente");
 insert into  estadoPedido(estadoPedidoDesc) values("En Revisión"),("Pendiente"),("Entregado");
-
+insert into estadocivil(estadoCivilDesc) values("Casado"),("Soltero"),("Divorciado");
 	-- puntoInicio
 insert into puntoInicio(puntoInicioDesc) values("Ciudad Capital"),("Carretera al Salvador"),("Villa Nueva"),("Mixco"),("San Miguel Petapa");
 
@@ -699,7 +791,7 @@ insert into usuario(userName,usuarioNombre,UsuarioApellido,usuarioCorreo,usuario
 insert into tipoCuenta(tipoCuentaId,tipoCuentaDesc) values(1, "Ahorro"),(2, "Monetaria"),(3,"Inversión");
 
 	-- Banco
-insert into banco(bancoId,bancoDesc) values(1, "Banco BAC"),(2, "Banco Citi"),(3, "Banco Industrial"),(4, "Banco Bantrab"),(5, "Banco G&T Continental"),(6, "Agromercantil"),(7, "Banco Azteca"),(8, "Banco Credito Hipotecario"),(9, "Banco Vivibanco"),(10, "Banco Banrural");
+insert into banco(bancoId,bancoDesc) values(1, "Banco BAC"),(2, "Banco Citi"),(3, "Banco Industrial"),(4, "Banco Bantrab"),(5, "Banco G&T Continental"),(6, "Agromercantil"),(7, "Banco Azteca"),(8, "Banco Credito Hipotecario"),(9, "Banco Vivibanco");
 
 #PROCEDURE EXTRA
 DELIMITER $$
@@ -790,6 +882,7 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+
 DELIMITER $$
 	create procedure Sp_ListarClientes()
 		begin
@@ -799,21 +892,18 @@ DELIMITER $$
                 u.usuarioApellido,
                 u.userName,
                 u.usuarioContrasena,
-                u.usuarioCorreo,
-                u.empresaDesc,
-                u.empresaNumeroCuenta,
-                tc.tipoCuentaDesc,
-                b.bancoDesc
-					from usuario as u
-						inner join tipoUsuario as tu
-							on u.tipoUsuarioId = tu.tipoUsuarioId
-								inner join tipocuenta as tc
-									on u.empresaCuentaTipo = tc.tipoCuentaId
-										inner join banco as b
-											on u.empresaBanco = b.bancoId
-												where u.tipoUsuarioId = 3
-													and usuarioId != 1
-														order by u.usuarioId asc;
+                u.usuarioCorreo
+					from
+						usuario as u
+							inner join 
+								tipoUsuario as tu
+									on 
+										u.tipoUsuarioId = tu.tipoUsuarioId
+											where 
+												u.tipoUsuarioId = 3
+													and 
+														usuarioId != 1
+													order by u.usuarioId asc;
 												
         end $$
 DELIMITER ;
@@ -848,8 +938,13 @@ DELIMITER $$
 	create procedure Sp_BuscarPedido(idBuscado int)
 		begin 
 			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+<<<<<<< HEAD
 				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
 				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc,p.pedidoDesc
+=======
+				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente, p.pedidoUsuarioId as clienteId,
+				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, p.pedidoCosto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc
+>>>>>>> Davis-Roldan
 			from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
 				usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
 			where p.pedidoId = idBuscado  and p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
@@ -877,6 +972,8 @@ DELIMITER $$
                 mensajero.userName as mensajero,
                 P.pedidoMonto,
                 ca.costoPedidoDesc,
+                p.pedidoUsuarioId ,
+                p.pedidoCosto,
                 fp.formaPagoDesc,
                 ep.estadoPedidoDesc,
                 p.pedidoDesc
@@ -906,41 +1003,65 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_ListarPedidoPorEstado(estadoPedido varchar(25))
-		begin
-			select 
+	create procedure Sp_BuscarPedidoMensajero(idBuscado int, idUsuario int)
+	begin 
+        select
 				p.pedidoId,
                 p.pedidoFecha,
                 p.nombreReceptor,
+                pi.puntoInicioDesc,
                 p.pedidoDireccionInicio,
+                pf.puntoFinalDesc,
+                nl.nombreLugarDesc,
                 p.pedidoDireccionFinal,
 				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
-                p.pedidoDesc,
                 mensajero.userName as mensajero,
                 P.pedidoMonto,
+                ca.costoPedidoDesc,
+                p.pedidoUsuarioId ,
                 p.pedidoCosto,
                 fp.formaPagoDesc,
                 ep.estadoPedidoDesc
 				from
 					Pedido as p
-						 inner JOIN	
-							usuario as cliente
-								on 
-									p.pedidoUsuarioId = cliente.usuarioId
-										inner join 
-											usuario as mensajero
-												on 
-													p.pedidoMensajeroId = mensajero.usuarioId
-														inner join 
-															formapago as fp
-																on 
-																	pedidoFormaPagoId = formaPagoId
-																		inner join 
-																			estadopedido as ep
-																				on 
-																					pedidoEstadoId = estadoPedidoId
-																						where ep.estadoPedidoDesc = estadoPedido;
+						inner JOIN usuario as cliente
+							on p.pedidoUsuarioId = cliente.usuarioId
+								inner join usuario as mensajero
+									on p.pedidoMensajeroId = mensajero.usuarioId
+									inner join formapago as fp
+										on pedidoFormaPagoId = formaPagoId
+											inner join estadopedido as ep
+												on pedidoEstadoId = estadoPedidoId 
+													inner join costopedido as cp
+														on  p.pedidoCosto= cp.costoPedidoId
+															inner join puntoinicio as pi
+																on cp.puntoInicio = pi.puntoInicioCodigo
+																	inner join puntofinal as pf
+																		on puntoFinal = pf.puntoFinalCodigo
+																			inner join nombrelugar as nl
+                                                                            on nombreLugar = nombreLugarId
+                                                                            inner join costoasignado as ca
+                                                                            on costoAsignado = ca.costoPedidoId
+                                                                        where pedidoId = idBuscado and pedidoMensajeroId =idUsuario
+																			order by p.pedidoFecha DESC;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_ListarPedidoPorEstado(estadoPedido varchar(25))
+		begin
+			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
+			p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc,p.pedidoCosto, fp.formaPagoDesc, ep.estadoPedidoDesc
+			from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+				usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+			where  p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+				and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+				and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+				and mensajero.usuarioId = p.pedidomensajeroId and ep.estadoPedidoDesc = estadoPedido group by pedidoId
+			order by p.pedidoFecha ASC ;
+																						 
         end $$
 DELIMITER ;
 
@@ -949,39 +1070,16 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ListarPedidoPorFecha(fechaBusqueda date)
 		begin
-			select 
-				p.pedidoId,
-                p.pedidoFecha,
-                p.nombreReceptor,
-                p.pedidoDireccionInicio,
-                p.pedidoDireccionFinal,
-				cliente.userName as cliente,
-                p.pedidoTelefonoReceptor,
-                p.pedidoDesc,
-                mensajero.userName as mensajero,
-                P.pedidoMonto,
-                p.pedidoCosto,
-                fp.formaPagoDesc,
-                ep.estadoPedidoDesc
-				from
-					Pedido as p
-						 inner JOIN	
-							usuario as cliente
-								on 
-									p.pedidoUsuarioId = cliente.usuarioId
-										inner join 
-											usuario as mensajero
-												on 
-													p.pedidoMensajeroId = mensajero.usuarioId
-														inner join 
-															formapago as fp
-																on 
-																	pedidoFormaPagoId = formaPagoId
-																		inner join 
-																			estadopedido as ep
-																				on 
-																					pedidoEstadoId = estadoPedidoId
-																						where p.pedidoFecha = fechaBusqueda;
+			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
+				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
+				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, p.pedidoCosto,ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc
+			from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
+				usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
+			where  p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
+				and pedidoFormaPagoId = fp.formaPagoId and pedidoEstadoId = ep.estadoPedidoId and cp.puntoInicio = pi.puntoInicioCodigo
+				and cp.puntoFinal = pf.puntofinalCodigo and  cp.costoAsignado = ca.costoPedidoId and pf.nombreLugar = nl.nombreLugarId
+				and mensajero.usuarioId = p.pedidomensajeroId and p.pedidoFecha = fechaBusqueda group by pedidoId
+			order by p.pedidoFecha ASC ;
         end $$
 DELIMITER ;
 
@@ -1018,26 +1116,32 @@ DELIMITER $$
 							where usuarioCorreo = correo;
         end $$
 DELIMITER ;
+
 #REPORTES
 call Sp_TotalesReporteVentas('2021-01-27','2021-01-27');
 DELIMITER $$
-	create procedure Sp_TotalesReporteVentas(fechaInicio date, fechaFinal date)
+	create procedure Sp_TotalesReporteVentas(fechaCorte date)
 		begin
 			select distinct p.pedidoId, 
             pedidoFecha, 
             sum(distinct pedidoMonto) as "Total a pagar",
             sum(distinct pedidoCosto) as "Total a cobrar",
             (sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total",
-            count(distinct pedidoId) as "Pedidos Total Entregados"
+            count(distinct pedidoId)
 				from pedido as p
+<<<<<<< HEAD
 				where pedidoFecha between fechaInicio and fechaFinal and pedidoFormaPagoId = 2
 					and pedidoEstadoId = 3;
+=======
+					where pedidoFecha = fechaCorte and pedidoEstadoId = 3;
+>>>>>>> Davis-Roldan
         end $$
 DELIMITER ;
 
-call Sp_SubReporteVentas("2021-01-27","2021-01-27")
+
+
 DELIMITER $$
-	create procedure Sp_SubReporteVentas(fechaInicio date, fechaFinal date)
+	create procedure Sp_SubReporteVentas(pedidoId int)
 		begin 
 			select 
 				p.pedidoMensajeroId,
@@ -1047,6 +1151,7 @@ DELIMITER $$
                 P.pedidoMonto,
                 p.pedidoCosto,
                 fp.formaPagoDesc
+<<<<<<< HEAD
 				from Pedido as p
 						 inner JOIN	usuario as cliente
 								on p.pedidoUsuarioId = cliente.usuarioId
@@ -1082,17 +1187,44 @@ DELIMITER $$
 DELIMITER ;
 
 #-------------------------------------------------------------------------
+=======
+				from
+					Pedido as p
+						 inner JOIN	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		where p.pedidoId = pedidoId;
+        end $$
+DELIMITER ;
+
+>>>>>>> Davis-Roldan
 DELIMITER $$
-	create procedure Sp_SubReporteCierreDeCaja(fechaInicio date, fechaFinal date)
+	create procedure Sp_SubReporteCierreDeCaja(fechaCorte date)
 		begin
 			select distinct p.pedidoId, 
             pedidoFecha, 
             sum(distinct pedidoMonto) as "Total a pagar",
+<<<<<<< HEAD
             sum(distinct pedidoCosto) as "Total a cobrar",
             (sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total",
             count(distinct pedidoId) as "Pedidos Total Entregados"
 				from pedido as p
 				where pedidoFecha between fechaInicio and fechaFinal and pedidoEstadoId = 3;
+=======
+            sum(distinct pedidoCosto) as "Total a cobrar"
+				from 
+					pedido
+						where pedidoFecha = fechaCorte and pedidoFormaPagoId = 1;
+>>>>>>> Davis-Roldan
 		end $$
 DELIMITER ;
 
@@ -1104,6 +1236,7 @@ DELIMITER $$
 			select
 				mensajero.userName as mensajero,
 				cliente.userName as cliente,
+<<<<<<< HEAD
 				fp.formaPagoDesc
 					from pedido as p
 						inner join usuario as cliente
@@ -1113,12 +1246,31 @@ DELIMITER $$
 										inner join formapago as fp
 											on pedidoFormaPagoId = formaPagoId
 												where pedidoFecha between fechaInicio and fechaFinal;
+=======
+				fp.formaPagoDesc,
+				(sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total Efectivo",
+				(sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total Tranferencia"
+					from pedidos as p
+						inner join 	
+							usuario as cliente
+								on 
+									p.pedidoUsuarioId = cliente.usuarioId
+										inner join 
+											usuario as mensajero
+												on 
+													p.pedidoMensajeroId = mensajero.usuarioId
+														inner join 
+															formapago as fp
+																on 
+																	pedidoFormaPagoId = formaPagoId
+																		where p.pedidoId = pedidoId;
+>>>>>>> Davis-Roldan
 
                 
         end $$
 DELIMITER ;
 
-#--------------
+
 DELIMITER $$ 
 	create procedure Sp_BuscarPuntoFinal(puntoDesc varchar(40), lugar varchar(40))
 		begin
@@ -1179,6 +1331,7 @@ BEGIN
 	where cp.puntoInicio = punto and cp.puntoFinal = pf.puntoFinalCodigo and nl.nombreLugarId = pf.nombreLugar and cp.puntoInicio = pi.puntoInicioCodigo;
 
 END $$
+<<<<<<< HEAD
 DELIMITER ;
 call Sp_PruebasReportes()
 
@@ -1189,4 +1342,6 @@ DELIMITER $$
 				bancoDesc
 					from banco;
         end $$
+=======
+>>>>>>> Davis-Roldan
 DELIMITER ;

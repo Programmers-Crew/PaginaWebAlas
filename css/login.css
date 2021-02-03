@@ -1,5 +1,3 @@
-
-
 @font-face{
     font-family: Cream Cake;
     src: url("../assets/fonts/Cream\ Cake.ttf");
@@ -26,7 +24,7 @@
 } 
 
 @keyframes slide { 
-    0% { transform: translate(0,  -105px); } 
+    0% { transform: translate(0,  -505px); } 
     100%   { transform: translate(0, 0px); }     
 }
 
@@ -37,25 +35,34 @@
     99% {opacity: 0%;}
     100% {opacity: 100%;}
 } 
- 
 
+
+html{
+  min-height: 100%;
+}
 
 body{
-    min-height: 100% !important;
-    width: 100%;
-    
+  background-image: url("../assets/images/fondo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
 }
 section{
-    width: 100%;
-    background-image: url(../assets/images/fondo.png) !important;
-    background-repeat: no-repeat !important;
-    background-size: cover;
-    padding-left: 0 !important;
+  height: 100%;
+}
+.contenedor{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-
+.tamaño{
+  font-size: 4vh;
+}
 .imagen_derecha{
-    width: 30%;
+    z-index: 0;
+    width: 25%;
     height: 15%;
     position: absolute;
     top: 30px;
@@ -67,20 +74,14 @@ section{
 }
 
 .imagen_izquierda{
-    
+    z-index: 0;
     position: absolute;
     bottom: 40px;
     right: 0;
-    width: 30%;
+    width: 25%;
     animation-name: floating;
     animation-duration: 3s;
     animation-iteration-count: infinite;
-}
-.moto{
-    
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
 }
 
 
@@ -107,48 +108,64 @@ section{
 
 .titulos{
     font-family: Cream Cake;
-    font-size: 66px;
+    font-size: 11vh;
     color: #707070;
 }
 
-.inicio_sesion{
-    display: flex;
+.centrado{
+  display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100%;
 }
-
+.imagen{
+  width: 100%;
+}
 .caja{
+  position: relative;
+    z-index: 1;
     text-align: center;
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 25px;
-    padding: 42px;
-    padding-top: 25px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 4vh;
+    border-radius: 5px;
     animation-name: slide;
     animation-duration: 3s;
     animation-iteration-count: 1;
+    height: 100%;
+    width: 100%;
 }
-
+.caja:hover{
+  transform: scale(1.05);    
+  -webkit-transition: transform 1.05s ease-in-out;
+  -webkit-box-shadow: 5px 5px 5px 6px  #4c3b7e;  
+  box-shadow:         5px 5px 5px 6px  #4c3b7e; 
+}
+.contenedorform{
+  padding-left: 1vh;
+}
+.formInput{
+  width: 100%;
+  height: 100%;
+}
+.inicio_sesion{
+  width: 60%;
+}
 .icono{
     font-family: fa-regular-400;
-    font-size: 25px;
     padding-right: 7px;
-    color: #707070;
+    color: #432A90;
 }
 .iconoBrands{
     font-family: fa-brands-400;
-    font-size: 25px;
-    color: #707070;
+    color: #432A90;
 }
 .iconoSolid{
     font-family: fa-solid-900;
-    font-size: 25px;
     padding-right: 7px;
     color: #432A90;
 }
 
 .form-texto{
-
+    
     border-top: 0 !important;
     border-left: 0 !important;
     border-right: 0 !important;
@@ -156,78 +173,28 @@ section{
 
 }
 
-
-
+.ancho-50{
+  width: 50%;
+}
+.ancho-40{
+  width: 40%;
+}
 
 .registrar{
     font-family: Berlin Sans FB;
     color: #432A90;
-    font-size: 20px;
+    font-size: 3vh;
     text-decoration: underline;
 }
 
 .registrar:hover{
     cursor: pointer;
-    color: black;
-}
-.footerText{
-    font-family: Berlin Sans FB;
-    color: white;
-}
-
-.footer-background{
-    background-color: black;
-    text-align: center;
-}
-.facebook:hover{
-    color:white;
-    text-decoration: none;
-}
-
-
-.form-correo{
-    margin: 10px !important;
-}
-
- .form-texto:focus{
-    border-color: #432A90;
-    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
-    outline: 0 none;
-}
-
-.form-texto-correcto{
-    border-color: #0FE642;
-    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #0FE642;
-    outline: 0 none;
-}
-
-.form-texto-incorrecto{
-    border-color: #E60F33;
-    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #E60F33;
-    outline: 0 none;
-}
-
-.textarea1:focus{
-    border-color: #432A90;
-    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
-    outline: 0 none;
-}
-
-.error{
-    font-family:Berlin Sans FB ;
-    color: red;
-}
-
-.grupo-correcto{
-    display: none !important;
-}
-
-.grupo-incorrecto{
-    display: block;
+    color: #543c99;
 }
 
 
 
+/*boton*/
   .custom-btn {
     width: 130px;
     height: 40px;
@@ -250,8 +217,6 @@ section{
     margin: 20px;
   }
 
-  
-/* 3 */
 .btn-3 {
     background: rgb(91, 62, 179);
   background: linear-gradient(0deg, rgba(91,62,179,1) 0%, rgba(67, 42, 144, 1) 100%);
@@ -322,3 +287,130 @@ section{
     width: 100%;
   }
   
+
+  /*footer*/
+.facebook{
+    color: rgb(197, 190, 190);
+}
+
+
+.footerText{
+  font-family: Berlin Sans FB;
+  color: white;
+  font-size: 3vh;
+}
+
+.footer-background{
+  background-color: black;
+  text-align: center;
+}
+.facebook:hover{
+  color:white;
+  text-decoration: none;
+}
+.facebook{
+  font-size: 4vh;
+}
+
+.form-correo{
+  margin: 10px !important;
+}
+
+.form-texto:focus{
+  border-color: #432A90;
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
+  outline: 0 none;
+}
+
+.form-texto-correcto{
+  border-color: #0FE642;
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #0FE642;
+  outline: 0 none;
+}
+
+.form-texto-incorrecto{
+  border-color: #E60F33;
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #E60F33;
+  outline: 0 none;
+}
+.textarea1{
+  resize: vertical; 
+  max-height: 200px !important;
+  min-height: 100px !important;
+}
+.textarea1:focus{
+  border-color: #432A90;
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px #432A90;
+  outline: 0 none;
+}
+.form-footer{
+  width: 60%;
+}
+
+
+
+/*clases validación*/
+
+.error{
+  font-family:Berlin Sans FB ;
+  color: red;
+}
+
+.grupo-correcto{
+  display: none !important;
+}
+
+.grupo-incorrecto{
+  display: block;
+}
+
+
+/*responsive*/
+@media only screen and (max-width:600px){
+  .inicio_sesion{
+    width: 87% !important;
+  }
+  .d-flex{
+    display: block !important;
+  }
+  .ancho-50{
+    width: 100%;
+  }
+  .contenedor{
+    height: 114vh;
+  }
+  section{
+    min-height: 100%;
+  }
+  .footerText{
+     font-size: 16px;
+  }
+  .ancho-40{
+    width: 100%;
+  }
+  .facebook{
+    font-size: 4vh; 
+  }
+  .form-footer{
+    width: 84%;
+  }
+  .form-correo{
+    margin-left: 0 !important;
+    margin-right: 0;
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+  .imagen_derecha{
+      width: 80%;
+  }
+  .imagen_izquierda{
+      width: 60%;
+      bottom: 0;
+  }
+  .moto{
+    width: 40% !important;
+  }
+  .titulos{
+    font-size: 8vh;
+  }
+}

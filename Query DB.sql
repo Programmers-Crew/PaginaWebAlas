@@ -7,20 +7,7 @@ create table EstadoCivil(
     primary key PK_EstadoCivil(estadoCivilId)
 );
 
-create table Mensajero(
-	idMensajero int auto_increment not null,
-    primerNombreMensajero varchar(30) not null,
-    segundoNombreMensajero varchar(30) not null,
-    primerApellidoMensajero varchar(30) not null,
-	segundoApellidoMensajero varchar(30) not null,
-    dpiMensajero varchar(10) not null unique,
-    placasMensajero varchar(20) not null unique,
-    telefonoMensajero varchar(8) not null unique,
-    direccionMensajero varchar(30) not null,
-    estadoCivil int not null,
-    primary key PK_Mensajero(idMensajero),
-	Constraint FK_Mensajero_EstadoCivil foreign key (estadoCivil) references EstadoCivil(estadoCivilId)
-);
+
 
 create table tipoUsuario(
 	tipoUsuarioId tinyint auto_increment not null,
@@ -79,6 +66,24 @@ create table Usuario(
 	constraint FK_Empresa_Tipocuenta foreign key (empresaCuentaTipo) references TipoCuenta(tipoCuentaId),
     constraint FK_Empresa_Banco foreign key (empresaBanco) references Banco(bancoId)
 );
+
+create table Mensajero(
+	idMensajero int auto_increment not null,
+    primerNombreMensajero varchar(30) not null,
+    segundoNombreMensajero varchar(30) not null,
+    primerApellidoMensajero varchar(30) not null,
+	segundoApellidoMensajero varchar(30) not null,
+    usuarioId int not null,
+    dpiMensajero varchar(13) not null unique,
+    placasMensajero varchar(20) not null unique,
+    telefonoMensajero varchar(8) not null unique,
+    direccionMensajero varchar(150) not null,
+    estadoCivil int not null,
+    primary key PK_Mensajero(idMensajero),
+	Constraint FK_Mensajero_EstadoCivil foreign key (estadoCivil) references EstadoCivil(estadoCivilId),
+    Constraint FK_Mensajero_UsuarioId foreign key (usuarioId) references Usuario(usuarioId)
+);
+
 
 
 create table puntoInicio(
@@ -145,6 +150,13 @@ create table pedido(
     constraint FK_PedidoPuntoFinal foreign key (pedidoPuntoFinal) references puntoFinal(puntoFinalCodigo)
 );
 
+create table rutas(
+	rutasId int auto_increment not null,
+    rutasDesc varchar(150),
+    pedidoId int not null,
+    primary key PK_rutas (rutasId),
+    constraint FK_rutas foreign key (pedidoid) references Pedido(pedidoId)
+);
 
 create table Sala(
 	salaId int auto_increment not null,

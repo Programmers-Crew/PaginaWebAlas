@@ -1,28 +1,11 @@
 <?php
      require_once 'controllers/PedidosController.php';
+     require_once 'controllers/UsuariosController.php';
      $pedidos = new Pedidos();
      if(isset($_POST['id'])){
-        $result1 = $pedidos->getPedidosBuscadoCliente($_POST['id'],$usuario->getId());
+        $result1 = $pedidos->getPedidosBuscadoMensajero($_POST['id'],$usuario->getId());
     }else{
-        if(isset($_GET['f'])){
-            switch($_GET['f']){
-                case 'enRevision':
-                    $result1 = $pedidos->getPedidosEstado('En Revisión');
-                    break;
-                case 'pendiente':
-                    $result1 = $pedidos->getPedidosEstado('Pendiente');
-                    break;
-                case 'entregados':
-                    $result1 = $pedidos->getPedidosEstado('Entregado');
-                    break;
-                case 'fecha':
-                    $result1 = $pedidos->getPedidosfecha($_POST['fecha']);
-                    break;
-            }
-        }else{
-            $result1 = $pedidos->getPedidosCliente($usuario->getId());
-        }
-        
+        $result1 = $pedidos->getPedidosMensajero($usuario->getId());
     }
 ?>
 
@@ -45,7 +28,6 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css.map" type="text/css">
-        <link rel="stylesheet" href="css/Login.css" type="text/css">
         <link rel="stylesheet" href="css/inicio.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
@@ -59,16 +41,12 @@
         </div>
         <header>
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
-                <div class="ancho-50 d-flex">
+                <div class="d-flex ancho-80">
                     <div class="ancho-40" style="display: flex;">
-                        <div class="col-lg-6 col-md-6 col-xs-6">
-                            <a  href="#">
-                                <img class="imagen img-fluid" src="assets/images/Logotipo sin fondo.png"  alt="AlasGT">
-                            </a>
-                        </div>
-                        <div class="centrado col-lg-6 col-md-6 col-xs-6">
-                            <a class="navbar-brand tamaño" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
-                        </div>
+                        <a class="" style="padding-left: 10px;" href="#">
+                            <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
+                        </a>
+                        <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
                     </div>
                     <div class="ancho-60" style="display: flex;">
                         <div style="display: flex; align-items:center">
@@ -89,10 +67,10 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php">Inicio<span class="sr-only">(current)</span></a>
+                                <a class="nav-link " href="index.php">Inicio<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
+                                <a class="nav-link " href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
                             </li>
                             </ul>
                             
@@ -105,6 +83,16 @@
             <div class="titulos centrado">
                 <h1 class="titulos" style="color: white;">Mis Pedidos</h1>
             </div>
+            <?php
+                if(isset($errorRegistrar)){
+                    echo "
+                    <p  class='centrado fuentes h-100' style='font-size:1rem; color:white;'>".$errorRegistrar."</p>";
+                }else{
+                    if(isset($registrarExito)){
+                        echo "<p  class='centrado fuentes h-100 ' style='font-size:1rem; color:white;'>".$registrarExito."</p>";
+                    }
+                }
+            ?>
             <div id="pedidos" style="padding:10px">
             
                 <?php
@@ -113,11 +101,30 @@
                 if($result->fetch_row()){
                     
                     foreach($result as $resultadoActual){
+                        $idUsuario = $resultadoActual['pedidoUsuarioId'];
                         
+                        $usuario1 = new Usuarios();
+
+                        $resultado = $usuario1->usuarioBuscar($idUsuario);
+                        foreach($resultado as $resuladoActualUsuario){
+                            $clienteCuenta = $resuladoActualUsuario['empresaNumeroCuenta'];
+                            $banco = $resuladoActualUsuario['empresaBanco'];
+                            $tipoCuenta = $resuladoActualUsuario['empresaCuentaTipo'];
+                        }
+                        $usuario2 = new Usuarios();
+                        $resultado2 = $usuario2->buscarTipoCuentaUsuario($tipoCuenta);
+                        foreach($resultado2 as $resuladoActualUsuario2){
+                            $tipoCuentaDesc = $resuladoActualUsuario2['tipoCuentaDesc'];
+                        }
+                        $usuario3 = new Usuarios();
+                        $resultado3 = $usuario3->buscarBanco($banco);
+                        foreach($resultado3 as $resuladoActualUsuario3){
+                            $bancoDesc = $resuladoActualUsuario3['bancoDesc'];
+                        }
                     echo "
-                        <div class='col-lg-12 row centrado' style='padding:0px'>
+                        <div class='col-xl-12 row centrado' style='padding:0px'>
                             <div  class='col-lg-5 col-md-9 col-xs-9 pedidos'>
-                                <div class='row col-lg-12 col-md-12 col-xs-12'>
+                                <div class='row col-xl-12 col-md-12 col-xs-12'>
                                     <div class='fecha w-60'>
                                         <p class='fuentes campos'>fecha: ".$resultadoActual['pedidoFecha']."</p>
                                     </div>
@@ -125,8 +132,8 @@
                                         <p class='campos fuentes'>".$resultadoActual['pedidoId']."</p>
                                     </div>
                                 </div>
-                                <div class='row col-lg-12 col-md-12 col-xs-12 centrado-absoluto'>
-                                    <div class='fecha col-lg-6' style='display:flex; align-items:center'>
+                                <div class='row col-xl-12 col-md-12 col-xs-12 centrado-absoluto'>
+                                    <div class='fecha col-xl-6' style='display:flex; align-items:center'>
                                             <div class='w-50'>
                                                 <p class='campos fuentes'>Receptor:</p>
                                             </div>
@@ -134,7 +141,7 @@
                                                 <p class='campos fuentes'>".$resultadoActual['nombreReceptor']."</p>
                                             </div>
                                     </div>
-                                    <div class='fecha col-lg-6' style='display:flex; align-items:center;'>
+                                    <div class='fecha col-xl-6' style='display:flex; align-items:center;'>
                                             <div class='w-50'>
                                                 <p class='campos fuentes'>Usuario:</p>
                                             </div>
@@ -142,25 +149,49 @@
                                                 <p class='campos fuentes'>".$resultadoActual['cliente']."</p>
                                             </div>
                                     </div>
+                                    <div class='fecha col-xl-6' style='display:flex; align-items:center'>
+                                            <div class='w-50'>
+                                                <p class='campos fuentes'>No. cuenta:</p>
+                                            </div>
+                                            <div class='w-50'>
+                                                <p class='campos fuentes'>".$clienteCuenta."</p>
+                                            </div>
+                                    </div>
+                                    <div class='fecha col-xl-6' style='display:flex; align-items:center'>
+                                            <div class='w-50'>
+                                                <p class='campos fuentes'>Tipo de Cuenta:</p>
+                                            </div>
+                                            <div class='w-50'>
+                                                <p class='campos fuentes'>".$tipoCuentaDesc."</p>
+                                            </div>
+                                    </div>
+                                    <div class='fecha col-xl-6' style='display:flex; align-items:center'>
+                                            <div class='w-50'>
+                                                <p class='campos fuentes'>Banco:</p>
+                                            </div>
+                                            <div class='w-50'>
+                                                <p class='campos fuentes'>".$bancoDesc."</p>
+                                            </div>
+                                    </div>
                                 </div>
-                                <div class='row col-lg-12 col-md-12 col-xs-12'>
-                                    <div class='fecha col-lg-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                    <div class='fecha col-xl-2 col-md-2 col-xs-2 centrado-absoluto'>
                                         <p class='campos fuentes'>Dirección Recolección:</p>
                                     </div>
-                                    <div class='col-lg-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                    <div class='col-xl-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
                                         <p class='campos fuentes'>".$resultadoActual['pedidoDireccionInicio']." ".$resultadoActual['puntoInicioDesc']."</p>
                                     </div>
                                 </div>
-                                <div class='row col-lg-12 col-md-12 col-xs-12'>
-                                    <div class='fecha col-lg-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                    <div class='fecha col-xl-2 col-md-2 col-xs-2 centrado-absoluto'>
                                         <p class='campos fuentes'>Dirección Final:</p>
                                     </div>
-                                    <div class='col-lg-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                    <div class='col-xl-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
                                         <p class='campos fuentes'>".$resultadoActual['pedidoDireccionFinal']." ".$resultadoActual['puntoFinalDesc']." ".$resultadoActual['nombreLugarDesc']."</p>
                                     </div>
                                 </div>
-                                <div class='row col-lg-12 col-md-12 col-xs-12'>
-                                    <div class='col-lg-6' style='display:flex'>
+                                <div class='row col-xl-12 col-md-12 col-xs-12'>
+                                    <div class='col-xl-6' style='display:flex'>
                                         <div class='fecha w-50'>
                                             <p class='campos fuentes'>Mensajero:</p>
                                         </div>
@@ -168,17 +199,17 @@
                                             <p class='campos fuentes'>".$resultadoActual['mensajero']."</p>
                                         </div>
                                     </div>
-                                    <div class='col-lg-6' style='display:flex'>
+                                    <div class='col-xl-6' style='display:flex'>
                                         <div class='fecha w-50'>
-                                            <p class='campos fuentes'>Teléfono:</p>
+                                            <p class='campos fuentes'>Teléfono Receptor:</p>
                                         </div>
                                         <div class='w-50 fecha'>
                                             <p class='campos fuentes'>".$resultadoActual['pedidoTelefonoReceptor']."</p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class='row col-lg-12 col-md-12 col-xs-12' >
-                                    <div class='col-lg-6' style='display:flex;'>
+                                <div class='row col-xl-12 col-md-12 col-xs-12' >
+                                    <div class='col-xl-6' style='display:flex;'>
                                         <div class='fecha w-50'>
                                             <p class='campos fuentes'>Estado:</p>
                                         </div>
@@ -186,7 +217,7 @@
                                             <p id='estado' class='campos fuentes'>".$resultadoActual['estadoPedidoDesc']."</p>
                                         </div>
                                     </div>
-                                    <div class='col-lg-6' style='display:flex;'>
+                                    <div class='col-xl-6' style='display:flex;'>
                                     <div class='w-50'>
                                         <p class='campos fuentes'>Monto: ".$resultadoActual['pedidoMonto']."</p>
                                     </div>
@@ -194,16 +225,37 @@
                                         <p class='campos fuentes'>Precio del Envío: ".$resultadoActual['pedidoCosto']."</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
                                 ";
+                                if($resultadoActual['estadoPedidoDesc'] == "Pendiente"){
+                                    ?>
+                                    <div>
+                                        <form  name='formEntregar' id='formEntregar'>
+                                            <input type='hidden' name='id' value=".$resultadoActual['pedidoId'].">
+                                            <input type='hidden' name='a' value='entregar'>
+                                            <button class='custom-btn btn-3' type='submit' form='formEntregar'><span>Entregar</span></button>
+                                        </form>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <?php
+                                }else{
+                                    ?>
+
+                                    <div>
+                                        <button class="custom-btn btn-3" disabled><span>ENTREGADO</span></button>
+                                    </div>
+                                    </div>
+                                    </div>  
+                                <?php
+                                }
                     }
                 }else{
                     
                     echo "
-                    <div class='centrado fuentes h-100' style='font-size:2vw; color:white;'>
-                        <span>No se encontraron resultados de la busqueda</span>
-                    </div>";
+                        <div class='centrado fuentes h-100' style='font-size:2vw; color:white;'>
+                            <span>No se encontraron resultados de la busqueda</span>
+                        </div>
+                    ";
                 }
 
                 ?>
@@ -212,43 +264,6 @@
         <div class="moto col-lg-2 col-md-3 col-xs-6">
                 <img src="assets/images/moto.png" class="img-fluid" >
         </div>
-        <footer class="w-100"  style="display: flex; justify-content:center">
-            <div class="w-100 footer-background">
-                <p class="footerText">Si necesitas más información de nuestros servicios<br>
-                    nos puedes escribir en nuestras redes sociales:</p>
-                <div class="w-90 d-flex centrado">
-                    <div class="ancho-40 text-align-center">
-                        <p class="iconoBrands facebook"> +502 4860 7638 <br> +502 3596 2610</p>
-                    </div>
-                    <div class="ancho-40 text-align-center">
-                        <a href="https://www.facebook.com/Alasgt-693341821107003" class="iconoBrands facebook h-100 w-100 centrado"> AlasGT</a>
-                    </div>
-                    <div class="ancho-40 text-align-center">
-                        <p class="icono facebook centrado h-100 w-100"> alasentregas@gmail.com</p>
-                    </div>
-                </div>
-                <div class="w-100 centrado">
-                    <div class="form-footer">
-                        <form action="#" id="correo">
-                            <div class="d-flex">
-                                <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
-                                <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
-                            </div>
-                            <div class="d-flex">
-                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
-                            </div>
-                            <div class="d-flex">
-                                <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
-                            </div>
-                            <div class="centrado">
-                                <button type="submit"  form="correo" class="custom-btn btn-3"><span>Enviar</span></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
-        </footer> 
     </body>
     
     <script>

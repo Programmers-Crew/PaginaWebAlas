@@ -76,7 +76,11 @@
             
         }
 
-
+        public function usuarioBuscar($usuario){
+            $sql = "call Sp_BuscarUsuario('$usuario')";
+            $resultado = $this->db->query($sql);
+            return $resultado;
+        }
         public function getTipo(){
             return $this->tipo;
         }
@@ -188,6 +192,25 @@
             $tipoCuenta = $_POST['tipoCuenta'];
             $banco = $_POST['banco'];
             $sql = "call Sp_ActualizarUsuario('$id','$usuarioNombre','$usuarioApellido','$userName','$md5Contraseña','$correo','$nombreEmpresa','$numeroCuenta','$tipoCuenta','$banco')";
+            $resultado = $this->db->query($sql);
+            if(!$resultado){
+                $validar = false;
+            }else{
+                $validar = true;
+            }
+            
+            return $validar;
+        }
+
+        public function editarCuentaAdmin(){
+            $id = $_POST['idUsuario'];
+            $usuarioNombre = $_POST['nombre'];
+            $usuarioApellido = $_POST['apellido'];
+            $userName = $_POST['usuarioAgregar'];
+            $usuarioContrasena = $_POST['contraseñaAgregar'];
+            $correo = $_POST['correo'];
+            $md5Contraseña = md5($usuarioContrasena);
+            $sql = "call Sp_ActualizarUsuarioAdmin('$id','$usuarioNombre','$usuarioApellido','$userName','$md5Contraseña','$correo')";
             $resultado = $this->db->query($sql);
             if(!$resultado){
                 $validar = false;
