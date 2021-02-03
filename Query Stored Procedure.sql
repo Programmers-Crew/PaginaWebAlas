@@ -1017,6 +1017,7 @@ DELIMITER $$
         end $$
 DELIMITER ;
 #REPORTES
+call Sp_TotalesReporteVentas('2021-01-27','2021-01-27');
 DELIMITER $$
 	create procedure Sp_TotalesReporteVentas(fechaInicio date, fechaFinal date)
 		begin
@@ -1027,7 +1028,7 @@ DELIMITER $$
             (sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total",
             count(distinct pedidoId) as "Pedidos Total Entregados"
 				from pedido as p
-				where pedidoFecha between fechaInicio and fechaFinal
+				where pedidoFecha between fechaInicio and fechaFinal and pedidoFormaPagoId = 2
 					and pedidoEstadoId = 3;
         end $$
 DELIMITER ;
@@ -1037,6 +1038,7 @@ DELIMITER $$
 	create procedure Sp_SubReporteVentas(fechaInicio date, fechaFinal date)
 		begin 
 			select 
+				p.pedidoMensajeroId,
 				mensajero.userName as mensajero,
 				cliente.userName as cliente,
                 p.pedidoTelefonoReceptor,
@@ -1050,64 +1052,65 @@ DELIMITER $$
 												on p.pedidoMensajeroId = mensajero.usuarioId
 														inner join formapago as fp
 																on pedidoFormaPagoId = formaPagoId
-																		where pedidoFecha between fechaInicio and fechaFinal
-																			group by mensajero.userName;
-        end $$
+																		where pedidoFecha between fechaInicio and fechaFinal and formaPagoId = 2
+																			order by mensajero.userName;																				
+			end $$
 DELIMITER ;
 
+call Sp_MensajeroPaga("2021-01-27","2021-01-27")
 DELIMITER $$
-	create procedure Sp_MensajeroPaga(idMensajero int)
+	create procedure Sp_MensajeroPaga(fechaInicio date, fechaFinal date)
 		begin
 			select distinct 
 			mensajero.userName as mensajero,
             p.pedidoId, 
             pedidoFecha, 
+			fp.formaPagoDesc,
             sum(distinct pedidoCosto - 5) as "Sueldo mensajero",
             count(distinct pedidoId)*5 as "Ingreso Neto"
 				from pedido as p 
 					inner join usuario as mensajero
 						on p.pedidoMensajeroId = mensajero.usuarioId
-							where idMensajero = p.pedidoMensajeroId;
+                        inner join formapago as fp
+						on p.pedidoFormaPagoId = fp.formaPagoId
+							where pedidoFecha between fechaInicio and fechaFinal and formaPagoId = 2
+								group by mensajero;
 				
         end $$
 DELIMITER ;
 
-
+#-------------------------------------------------------------------------
 DELIMITER $$
 	create procedure Sp_SubReporteCierreDeCaja(fechaInicio date, fechaFinal date)
 		begin
-			select
-            count(distinct pedidoId) as "Pedidos total Entregados",
+			select distinct p.pedidoId, 
+            pedidoFecha, 
             sum(distinct pedidoMonto) as "Total a pagar",
-            sum(distinct pedidoCosto) as "Total a cobrar"
-				from pedido
-						where pedidoFecha between fechaInicio and fechaFinal
-							and pedidoFormaPagoId = 1 and pedidoEstadoId = 3;
+            sum(distinct pedidoCosto) as "Total a cobrar",
+            (sum(distinct pedidoMonto) + sum(distinct pedidoCosto)) as "Total",
+            count(distinct pedidoId) as "Pedidos Total Entregados"
+				from pedido as p
+				where pedidoFecha between fechaInicio and fechaFinal and pedidoEstadoId = 3;
 		end $$
 DELIMITER ;
 
+call Sp_SubReporteCierreDeCaja("2021-01-27","2021-01-27")
 
 DELIMITER $$
-	create procedure Sp_ReporteCierreDeCaja(pedidoId int)
+	create procedure Sp_ReporteCierreDeCaja(fechaInicio date, fechaFinal date)
 		begin
 			select
 				mensajero.userName as mensajero,
 				cliente.userName as cliente,
 				fp.formaPagoDesc
-					from pedidos as p
-						inner join 	
-							usuario as cliente
-								on 
-									p.pedidoUsuarioId = cliente.usuarioId
-										inner join 
-											usuario as mensajero
-												on 
-													p.pedidoMensajeroId = mensajero.usuarioId
-														inner join 
-															formapago as fp
-																on 
-																	pedidoFormaPagoId = formaPagoId
-																		where p.pedidoId = pedidoId;
+					from pedido as p
+						inner join usuario as cliente
+							on p.pedidoUsuarioId = cliente.usuarioId
+								inner join  usuario as mensajero
+									on p.pedidoMensajeroId = mensajero.usuarioId
+										inner join formapago as fp
+											on pedidoFormaPagoId = formaPagoId
+												where pedidoFecha between fechaInicio and fechaFinal;
 
                 
         end $$
@@ -1175,6 +1178,7 @@ BEGIN
 
 END $$
 DELIMITER ;
+call Sp_PruebasReportes()
 
 DELIMITER $$
 	create procedure Sp_PruebasReportes()
