@@ -41,6 +41,9 @@ const validarFormularioAlPrincipio = (inputs) =>{
            
             validarCampo(expresiones.descripcionInicial,inputs,'descripcionFinal');
             break;
+        case "comentario":
+            validarCampo(expresiones.descripcionInicial,inputs,'comentario');
+            break;
         case "puntoInicio":
               validarSelect(inputs,"puntoInicio");
               break;
@@ -156,4 +159,9 @@ function descFinal(){
       var text = document.getElementById("descripcionFinal");
       
       validarFormularioAlPrincipio(text);
+}
+
+function descComentario(){
+    var text = document.getElementById("comentario");
+    validarFormularioAlPrincipio(text);
 }

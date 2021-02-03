@@ -50,17 +50,17 @@
                     </div>
                 </div>
                 <div class="ancho-50 d-flex justify-content-flex-end">
-                    <div class="ancho-60">
+                    <div >
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link tamaño1" href="index.php">Inicio<span class="sr-only">(current)</span></a>
+                                    <a class="nav-link " href="index.php">Inicio<span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link tamaño1 active" href="index.php?a=agregarUsuario">Agregar Usuario</a>
+                                    <a class="nav-link  active" href="index.php?a=agregarUsuario">Agregar Usuario</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link tamaño1" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
+                                    <a class="nav-link " href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
                                 </li>
                             </ul>
                             

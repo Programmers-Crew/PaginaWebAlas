@@ -89,10 +89,10 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php">Inicio<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
+                                <a class="nav-link" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
                             </li>
                             </ul>
                             
@@ -160,6 +160,14 @@
                                     </div>
                                 </div>
                                 <div class='row col-lg-12 col-md-12 col-xs-12'>
+                                    <div class='fecha col-lg-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                        <p class='campos fuentes'>Comentario:</p>
+                                    </div>
+                                    <div class='col-lg-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                        <p class='campos fuentes'>".$resultadoActual['pedidoDesc']."</p>
+                                    </div>
+                                </div>
+                                <div class='row col-lg-12 col-md-12 col-xs-12'>
                                     <div class='col-lg-6' style='display:flex'>
                                         <div class='fecha w-50'>
                                             <p class='campos fuentes'>Mensajero:</p>
@@ -199,7 +207,6 @@
                                 ";
                     }
                 }else{
-                    
                     echo "
                     <div class='centrado fuentes h-100' style='font-size:2vw; color:white;'>
                         <span>No se encontraron resultados de la busqueda</span>

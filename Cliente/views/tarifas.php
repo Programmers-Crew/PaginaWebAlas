@@ -59,8 +59,8 @@
             <div class="centrado">
                 <h1 class="titulos" style="text-align: center;">Conoce Nuestras Tarifas</h1>
             </div>
-            <div class="col-xl-12 col-md-12 col-xs-12 row centrado" style="margin-right: 0; margin-left:0">
-                <div class="col-xl-9 col-md-9 col-xs-9 galeria row">
+            <div class="col-lg-12 col-md-12 col-xs-12 row centrado" style="margin-right: 0; margin-left:0">
+                <div class="col-lg-9 col-md-9 col-xs-9 galeria row">
                     <?php
                         $folder_path = 'assets/images/tarifas/'; 
 
@@ -76,7 +76,7 @@
                                 $nombre = basename($file_path,'.'.$extension);
                                 if($extension=='jpg' || $extension =='png' || $extension == 'gif' || $extension == 'bmp' || $extension == 'jpeg') {
                                     ?>  
-                                        <div class="columna col-xl-4 col-md-12 col-xs-12 centrado" id="columna" onclick="galeria('<?php echo $nombre.'.'.$extension; ?>');">
+                                        <div class="columna col-lg-4 col-md-12 col-xs-12 centrado" id="columna" onclick="galeria('<?php echo $nombre.'.'.$extension; ?>');">
                                             <div class="contenedor">
                                                 
                                                 <img class="img-fluid imagen-activado" id="imagenTarifa" name="imagenTarifa" src="<?php echo $file_path; ?>">

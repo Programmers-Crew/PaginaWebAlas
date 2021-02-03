@@ -102,7 +102,6 @@
                     
                     foreach($result as $resultadoActual){
                         $idUsuario = $resultadoActual['pedidoUsuarioId'];
-                        
                         $usuario1 = new Usuarios();
 
                         $resultado = $usuario1->usuarioBuscar($idUsuario);
@@ -190,6 +189,14 @@
                                         <p class='campos fuentes'>".$resultadoActual['pedidoDireccionFinal']." ".$resultadoActual['puntoFinalDesc']." ".$resultadoActual['nombreLugarDesc']."</p>
                                     </div>
                                 </div>
+                                <div class='row col-lg-12 col-md-12 col-xs-12'>
+                                            <div class='fecha col-lg-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                                <p class='campos fuentes'>Comentario:</p>
+                                            </div>
+                                            <div class='col-lg-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                                <p class='campos fuentes'>".$resultadoActual['pedidoDesc']."</p>
+                                            </div>
+                                        </div>
                                 <div class='row col-xl-12 col-md-12 col-xs-12'>
                                     <div class='col-xl-6' style='display:flex'>
                                         <div class='fecha w-50'>
@@ -230,7 +237,7 @@
                                     ?>
                                     <div>
                                         <form  name='formEntregar' id='formEntregar'>
-                                            <input type='hidden' name='id' value=".$resultadoActual['pedidoId'].">
+                                            <input type='hidden' name='id' value="<?php echo  $resultadoActual['pedidoId'] ?>">
                                             <input type='hidden' name='a' value='entregar'>
                                             <button class='custom-btn btn-3' type='submit' form='formEntregar'><span>Entregar</span></button>
                                         </form>

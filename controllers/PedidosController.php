@@ -104,9 +104,10 @@
             $idUsuario = $_POST['id'];
             $telefono = $_POST['telefono'];
             $costo = $_POST['costo'];
+            $comentario = $_POST['comentario'];
             $monto = $_POST['monto'];
             $nombreReceptor = $_POST['nombre'];
-            $sql = "call Sp_AgregarPedido('$fecha',$puntoInicio,'$descInicio',$puntoFinal,'$descFinal',$idUsuario,'$telefono',$costo,$monto,'$nombreReceptor')";
+            $sql = "call Sp_AgregarPedido('$fecha',$puntoInicio,'$descInicio',$puntoFinal,'$descFinal','$idUsuario','$telefono',$costo,$monto,'$nombreReceptor','$comentario')";
             $resultado = $this->db->query($sql);
             if($resultado){
                 include "config/solicitarPedidoEmail.php";
