@@ -400,7 +400,7 @@ DELIMITER $$
             mensajero.userName as mensajero,
             P.pedidoMonto,
             ca.costoPedidoDesc,
-            p.pedidoComentario,
+            p.pedidoDesc,
             fp.formaPagoDesc,
             ep.estadoPedidoDesc
 				from Pedido as p,
@@ -442,7 +442,7 @@ DELIMITER $$
             mensajero.userName as mensajero,
             P.pedidoMonto,
             ca.costoPedidoDesc,
-            p.pedidoComentario,
+            p.pedidoDesc,
             fp.formaPagoDesc,
             ep.estadoPedidoDesc
 				from Pedido as p,
@@ -471,16 +471,16 @@ DELIMITER $$
 DELIMITER ;
 
 DELIMITER $$
-	create procedure Sp_AgregarPedido(fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), costo decimal,monto decimal, nombreReceptor varchar(50), comentario varchar(50))
+	create procedure Sp_AgregarPedido(fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), costo decimal,monto decimal, nombreReceptor varchar(50), pedidoDesc varchar(150))
 		begin
-			insert into Pedido(pedidoFecha,pedidoPuntoInicio,pedidoDireccionInicio,pedidoPuntoFinal,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoCosto,pedidoMonto,nombreReceptor,pedidoComentario)
-				values(fecha,puntoInicio ,direccionInicio,puntoFinal,direccionFinal, usuario, telefono, costo,monto, nombreReceptor,comentario);
+			insert into Pedido(pedidoFecha,pedidoPuntoInicio,pedidoDireccionInicio,pedidoPuntoFinal,pedidoDireccionFinal,pedidoUsuarioId,pedidoTelefonoReceptor,pedidoCosto,pedidoMonto,nombreReceptor,pedidoDesc)
+				values(fecha,puntoInicio ,direccionInicio,puntoFinal,direccionFinal, usuario, telefono, costo,monto, nombreReceptor,pedidoDesc);
         end $$
 DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ActualizarPedido(idBuscado int,direccion varchar(50),telefono varchar(8), descripcion varchar(50), monto decimal, comentario varchar(50),estado tinyint)
+	create procedure Sp_ActualizarPedido(idBuscado int,direccion varchar(50),telefono varchar(8), descripcion varchar(50), monto decimal, pedidoDesc varchar(50),estado tinyint)
 		begin
 			update Pedido as p
 				set 
@@ -488,7 +488,7 @@ DELIMITER $$
                     p.pedidoTelefonoReceptor = telefono,
                     p.pedidoDesc = descripcion,
                     p.pedidoMonto = monto,
-                    p.pedidoComentario = comentario,
+                    p.pedidoDesc = pedidoDesc,
                     p.pedidoEstadoId = estado
 						where pedidoId = idBuscado;
 		end $$
@@ -849,7 +849,7 @@ DELIMITER $$
 		begin 
 			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
 				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
-				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc
+				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc,p.pedidoDesc
 			from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
 				usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
 			where p.pedidoId = idBuscado  and p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo
@@ -859,6 +859,7 @@ DELIMITER $$
 			order by p.pedidoFecha ASC ;
         end $$
 DELIMITER ;
+
 DELIMITER $$
 	create procedure Sp_BuscarPedidoCliente(idBuscado int, idUsuario int)
 	begin 
@@ -877,7 +878,8 @@ DELIMITER $$
                 P.pedidoMonto,
                 ca.costoPedidoDesc,
                 fp.formaPagoDesc,
-                ep.estadoPedidoDesc
+                ep.estadoPedidoDesc,
+                p.pedidoDesc
 				from
 					Pedido as p
 						inner JOIN usuario as cliente
