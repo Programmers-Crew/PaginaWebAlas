@@ -124,7 +124,7 @@ create table costoPedido(
      constraint FK_CostoPedido_PutoFinal foreign key (puntoFinal) references puntoFinal(puntoFinalCodigo),
      constraint FK_CostoPedido_CostoAsignado foreign key (costoASignado) references costoAsignado(costoPedidoId)
 );
-     
+
 create table pedido(
 	pedidoId int auto_increment not null,
     pedidoFecha date not null,
