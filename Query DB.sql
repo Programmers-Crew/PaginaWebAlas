@@ -133,7 +133,7 @@ create table pedido(
     pedidoMensajeroId int default "1",
     pedidoMonto decimal not null,
     pedidoCosto decimal not null,
-    pedidoComentario varchar(50) not null,
+    pedidoDesc varchar(150) not null,
     pedidoFormaPagoId tinyint default "1",
     pedidoEstadoId tinyint default "1",
     primary key PK_pedido (pedidoId),
