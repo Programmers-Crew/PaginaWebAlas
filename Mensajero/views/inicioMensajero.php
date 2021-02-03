@@ -10,6 +10,7 @@
     <head>
         <title>AlasGT-Mensajero</title>
         
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" type="text/css">
@@ -22,28 +23,25 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css.map" type="text/css">
-        <link rel="stylesheet" href="css/Login.css" type="text/css">
-        <link rel="stylesheet" href="css/inicio.css" type="text/css">
+        <link rel="stylesheet" href="css/inicioCliente.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
     <body>     
-    <div class="imagen_derecha-inicio">
+    <div class="imagen_derecha">
                 <img src="assets/images/nube derecha.png" class="img-fluid" >
         </div> 
-        <div class="imagen_izquierda-inicio">
+        <div class="imagen_izquierda">
                     <img src="assets/images/nube izquierda.png" class="img-fluid" >
         </div>
         <header style="padding: 0;">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
-                <a class="" style="padding-left: 10px;" href="#">
-                    <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
-                </a>
-                <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
-                <form class="form-inline navbar my-2 my-lg-0 col-xl-4 col-md-4 col-xs-4">
-                    <input style="padding: 0; margin:0" class="form-texto-buscar form-control   mr-sm-2 col-xl-9 col-md-9 col-xs-9" type="search" placeholder="Buscar Pedido">
-                    <button style="padding: 0; margin:0" class="boton-search col-xl-2 col-md-2 col-xs-2" type="submit"></button>
-            </form>
+            <div class="ancho-40" style="display: flex;">
+                        <a class="" style="padding-left: 10px;" href="#">
+                            <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
+                        </a>
+                        <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
+            </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -56,10 +54,10 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Mi Cuenta
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Editar Cuenta</a>
+                        <div class="dropdown-menu dropdown-menu-right drop-content-black" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item " style="color:white" href="index.php?a=editarCuenta">Editar Cuenta</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="config/cerrarSesion.php">Cerrar Sesión</a>
+                            <a class="dropdown-item" style="color:white" href="config/cerrarSesion.php">Cerrar Sesión</a>
                         </div>
                     </li>
                     </ul>
@@ -68,22 +66,32 @@
             </nav>
         </header>
         <section>
-            <div class="titulos centrado">
-                <h1 style="color: white; font-size:7vw"><span style="font-family: berlin sans FB; font-size:5vw">¡</span>Bienvenido de nuevo<span style="font-family: berlin sans FB; font-size:5vw;">!</span></h1>
+            <div class=" centrado">
+                <h1 style="color: white;" class="titulos">Bienvenido de nuevo</h1>
             </div>
-            <div class="col-xl-12 col-md-12 col-xs-12 row centrado">
-                <div class="col-xl-3 col-md-9 col-xs-9 panel" style="text-align:center">
+            <?php
+                if(isset($errorRegistrar)){
+                    echo "
+                    <p  class='centrado fuentes' style='font-size:1rem; color:white;'>".$errorRegistrar."</p>";
+                }else{
+                    if(isset($registrarExito)){
+                        echo "<p  class='centrado fuentes ' style='font-size:1rem; color:white;'>".$registrarExito."</p>";
+                    }
+                }
+            ?>
+            <div class="col-xl-12 col-md-12 col-xs-12 row centrado" style="margin: 0;">
+                <a class="col-xl-3 col-md-3 col-xs-9 panel panel1" style="text-align:center;text-decoration:none" href="index.php?a=pedidos">
                     <span class="iconoSolid inicio-cliente"></span>
                     <p class="letra">Pedidos</p>
-                </div>
-                <div class="col-xl-3 col-md-9 col-xs-9 panel" style="text-align:center">
-                    <span class="icono inicio-cliente"></span>
+                </a>
+                <a class="col-xl-3 col-md-3 col-xs-9 panel panel2" style="text-align:center;text-decoration:none" href="index.php?a=chat">
+                    <span class="icono inicio-cliente d-block"></span>
                     <p class="letra">Escribir Duda</p>
-                </div>
-                <div class="col-xl-3 col-md-9 col-xs-9 panel" style="text-align:center">
-                    <span class="icono inicio-cliente"></span>
-                    <p class="letra">Mi cuenta</p>
-                </div>
+                </a>
+                <a class="col-xl-3 col-md-3 col-xs-9 panel panel3" style="text-align:center; text-decoration:none" href="index.php?a=datos">
+                    <span class="icono inicio-cliente d-block"></span>
+                    <p class="letra">Mis Datos</p>
+                </a>
             </div>
         </section>
     </body>

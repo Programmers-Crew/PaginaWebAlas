@@ -460,7 +460,9 @@ a{
   width: 60%;
 }
 
-
+.ancho-80{
+  width: 80%;
+}
 
 
 @media only screen and (max-width:668px){
@@ -480,7 +482,9 @@ a{
     .ancho-60{
         width: 100% !important;
     }
-    
+    .ancho-80{
+      width: 100% !important;
+    }
     .facebook{
     font-size: 4vh; 
     }
@@ -519,6 +523,9 @@ a{
     }
     .tamaño1{
         font-size: 17px;
+    }
+    .moto{
+      display: none;
     }
 }
 

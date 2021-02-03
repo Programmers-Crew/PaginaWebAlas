@@ -67,4 +67,11 @@ $(document).ready(function(){
 $(".moto").hover(function(){
     $(this).addClass("animationx");        
     
-})
+});
+
+var fichero = document.getElementById("fichero");
+var texto = document.getElementById("texto");
+
+fichero.onchange = function () {
+    texto.innerHTML = fichero.files[0].name;
+};

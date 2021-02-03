@@ -163,6 +163,19 @@
                                             <span style="float: left;" class=" error grupo-correcto" id="alerta_descripcionFinal">Solo se permiten 150 caracteres</span>
                                         </div>
                                 </div>
+                                <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0;padding:0;">    
+                                        <div class="col-lg-12 row" >
+                                            <div class="col-lg-3" style="display: flex; align-items:center">
+                                                <p class="fuentes" style="color: #432A90; margin:0; text-align:initial">Comentario del paquete:</p>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <textarea  style="max-height: 200px;" id="comentario" oninput="descComentario()" class="form-control textarea1"  required placeholder="Breve comentario, puede poner observaciones, datos extras para ayudar al mensajero etc." name="comentario" form="formSolicitarPedido"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <span style="float: left;" class=" error grupo-correcto" id="alerta_comentario">Solo se permiten 150 caracteres</span>
+                                        </div>
+                                </div>
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0;padding:0;">
                                         <div class="col-lg-12 row" >
                                             <div class="col-lg-3" style="display: flex; align-items:center">

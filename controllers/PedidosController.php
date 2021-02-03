@@ -40,7 +40,11 @@
             $resultado = $this->db->query($sql);
             return $resultado;
         }
-
+        public function getPedidosBuscadoMensajero($id,$usuario){
+            $sql="call Sp_BuscarPedidoMensajero($id,$usuario)";
+            $resultado = $this->db->query($sql);
+            return $resultado;
+        }
         public function getPedidosEstado($estado){
             $sql="call Sp_ListarPedidoPorEstado('$estado')";
             $resultado = $this->db->query($sql);
@@ -109,10 +113,35 @@
             }
             return $resultado;
         }
+        public function getPedidosMensajero($id){
+            $sql = "call Sp_ListarPedidoMensajero('$id')";
+            $resultado = $this->db->query($sql);
+            return $resultado;
+        }
+        public function entregarPedido(){
+            $id = $_POST['id'];
+            $estado = '3';
+            $target_path = "assets/images/mensajeroEntregas/";
+            $target_path = $target_path . basename( $_FILES['imagen']['name']); 
+            if(move_uploaded_file($_FILES['imagen']['tmp_name'], $target_path)) {
+                $sql = "call Sp_EntregarPedido('$id','$estado','$target_path')";
+                $resultado = $this->db->query($sql);
+            } else{
+                $resultado = null;
+            }
+            if($resultado){
+                include_once 'config/pedidoEntregado.php';
+            }
+            return $resultado;
+        }
+
+        public function buscarRuta($idRuta){
+            $sql = "call Sp_BuscarRuta('$idRuta')";
+            $resultado = $this->db->query($sql);
+            return $resultado;
+        }
 
     }
-
-
 
 
 ?>

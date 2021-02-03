@@ -62,12 +62,12 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
                 <div class="ancho-50 d-flex">
                     <div class="ancho-40" style="display: flex;">
-                        <div class="col-xl-6 col-md-6 col-xs-6">
+                        <div class="col-lg-6 col-md-6 col-xs-6">
                             <a  href="#">
                                 <img class="imagen img-fluid" src="assets/images/Logotipo sin fondo.png"  alt="AlasGT">
                             </a>
                         </div>
-                        <div class="centrado col-xl-6 col-md-6 col-xs-6">
+                        <div class="centrado col-lg-6 col-md-6 col-xs-6">
                             <a class="navbar-brand tamaño" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
                         </div>
                     </div>
@@ -86,26 +86,26 @@
                     </div>
                 </div>
                 <div class="ancho-50 d-flex justify-content-flex-end">
-                    <div class="ancho-77">
+                    <div>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link tamaño1" href="index.php">Inicio<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php?a=agregarUsuario">Agregar Usuario</a>
+                                <a class="nav-link" href="index.php?a=agregarUsuario">Agregar Usuario</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
+                                <a class="nav-link" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link tamaño1 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Mi Cuenta
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right drop-content-black" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item tamaño1" style="color:white" href="index.php?a=editarCuenta">Editar Cuenta</a>
+                                    <a class="dropdown-item " style="color:white" href="index.php?a=editarCuenta">Editar Cuenta</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item tamaño1" style="color:white" href="config/cerrarSesion.php">Cerrar Sesión</a>
+                                    <a class="dropdown-item " style="color:white" href="config/cerrarSesion.php">Cerrar Sesión</a>
                                 </div>
                             </li>
                             </ul>
@@ -115,18 +115,18 @@
                 </div>
             </nav>
         </header>
-        <section style="min-height: 100%;">
+        <section style="min-height: 100vh;">
             <div class="imagen_izquierda-inicio">
                 <img src="assets/images/nube izquierda.png" class="img-fluid" >
             </div>
-            <div class="col-xl-12 col-md-12 col-xs-12 row" style="padding: 0; margin:0">
-                <div class="col-xl-4 col-md-4 col-xs-4">
+            <div class="col-lg-12 col-md-12 col-xs-12 row" style="padding: 0; margin:0">
+                <div class="col-lg-4 col-md-4 col-xs-4">
                 </div>
-                <div class="centrado col-xl-4 col-md-12 col-xs-12">
+                <div class="centrado col-lg-4 col-md-12 col-xs-12">
                     <h1 class="titulos" style="color: white;">Pedidos</h1>
                 </div>
-                <div class="col-xl-4 col-md-12 col-xs-12 centrado-1">
-                    <div class="dropdown col-xl-5 col-md-5 col-xs-5">
+                <div class="col-lg-4 col-md-12 col-xs-12 centrado-1">
+                    <div class="dropdown col-lg-5 col-md-5 col-xs-5">
                         <button style="margin: 0;" class=" drop btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             FILTRO
                         </button>
@@ -138,7 +138,7 @@
                             <a class="dropdown-item" style=" color:white !important;" href="index.php?f=entregados">ENTREGADOS</a>
                         </div>
                     </div>
-                    <div class="col-xl-5 col-md-5 col-xs-5 centrado-absoluto" id="fecha" style="display: none;">
+                    <div class="col-lg-5 col-md-5 col-xs-5 centrado-absoluto" id="fecha" style="display: none;">
                         <div class="pedidos">
                             <form action="index.php?f=fecha" method="POST" name="formFecha" id="formFecha" class="text-align-center" >
                                 <input type="date" required name="fecha" class="form-control">
@@ -153,28 +153,47 @@
                     <img src="assets/images/nube derecha.png" class="img-fluid" >
             </div> 
             <?php
-                if(isset($errorRegistrar)){
-                    echo "
-                    <p  class='centrado fuentes h-100' style='font-size:1rem; color:white;'>".$errorRegistrar."</p>";
-                }else{
-                    if(isset($registrarExito)){
-                        echo "<p  class='centrado fuentes h-100 ' style='font-size:1rem; color:white;'>".$registrarExito."</p>";
+                    if(isset($errorRegistrar)){
+                        echo "
+                        <h2  class='fuentes h-100' style='font-size:1rem; color:white; text-align:center;'>".$errorRegistrar."</h2>";
+                    }else{
+                        if(isset($registrarExito)){
+                            echo "<h2  class='fuentes h-100 ' style='font-size:1rem; color:white; text-align:center;'>".$registrarExito."</h2>";
+                        }
                     }
-                }
-            ?>
+                ?>
             <div id="pedidos" style="padding:10px">
-            
                 <?php
                   
                   $result=$result1;
                   if($result->fetch_row()){
                       
                       foreach($result as $resultadoActual){
-                          
+                        $idUsuario = $resultadoActual['pedidoUsuarioId'];
+                        
+                        $usuario1 = new Usuarios();
+
+                        $resultado = $usuario1->usuarioBuscar($idUsuario);
+                        foreach($resultado as $resuladoActualUsuario){
+                            $clienteCuenta = $resuladoActualUsuario['empresaNumeroCuenta'];
+                            $banco = $resuladoActualUsuario['empresaBanco'];
+                            $tipoCuenta = $resuladoActualUsuario['empresaCuentaTipo'];
+                        }
+                        $usuario2 = new Usuarios();
+                        $resultado2 = $usuario2->buscarTipoCuentaUsuario($tipoCuenta);
+                        foreach($resultado2 as $resuladoActualUsuario2){
+                            $tipoCuentaDesc = $resuladoActualUsuario2['tipoCuentaDesc'];
+                        }
+                        $usuario3 = new Usuarios();
+                        $resultado3 = $usuario3->buscarBanco($banco);
+                        foreach($resultado3 as $resuladoActualUsuario3){
+                            $bancoDesc = $resuladoActualUsuario3['bancoDesc'];
+                        }
+
                       echo "
-                          <div class='col-xl-12 row centrado' style='padding:0px'>
-                              <div  class='col-xl-5 col-md-9 col-xs-9 pedidos'>
-                                  <div class='row col-xl-12 col-md-12 col-xs-12'>
+                          <div class='col-lg-12 row centrado' style='padding:0px'>
+                              <div  class='col-lg-5 col-md-9 col-xs-9 pedidos'>
+                                  <div class='row col-lg-12 col-md-12 col-xs-12'>
                                       <div class='fecha w-60'>
                                           <p class='fuentes campos'>fecha: ".$resultadoActual['pedidoFecha']."</p>
                                       </div>
@@ -182,8 +201,8 @@
                                           <p class='campos fuentes'>".$resultadoActual['pedidoId']."</p>
                                       </div>
                                   </div>
-                                  <div class='row col-xl-12 col-md-12 col-xs-12 centrado-absoluto'>
-                                      <div class='fecha col-xl-6' style='display:flex; align-items:center'>
+                                  <div class='row col-lg-12 col-md-12 col-xs-12 centrado-absoluto'>
+                                      <div class='fecha col-lg-6' style='display:flex; align-items:center'>
                                             <div class='w-50'>
                                                 <p class='campos fuentes'>Receptor:</p>
                                             </div>
@@ -191,33 +210,57 @@
                                                 <p class='campos fuentes'>".$resultadoActual['nombreReceptor']."</p>
                                             </div>
                                       </div>
-                                      <div class='fecha col-xl-6' style='display:flex; align-items:center;'>
+                                      <div class='fecha col-lg-6' style='display:flex; align-items:center;'>
                                             <div class='w-50'>
-                                                <p class='campos fuentes'>Usuario:</p>
+                                                <p class='campos fuentes'>Usuario Cliente:</p>
                                             </div>
                                             <div class='w-50'>
                                                 <p class='campos fuentes'>".$resultadoActual['cliente']."</p>
                                             </div>
                                       </div>
+                                      <div class='fecha col-xl-6' style='display:flex; align-items:center'>
+                                      <div class='w-50'>
+                                          <p class='campos fuentes'>No. cuenta:</p>
+                                      </div>
+                                      <div class='w-50'>
+                                          <p class='campos fuentes'>".$clienteCuenta."</p>
+                                      </div>
+                                        </div>
+                                        <div class='fecha col-xl-6' style='display:flex; align-items:center'>
+                                                <div class='w-50'>
+                                                    <p class='campos fuentes'>Tipo de Cuenta:</p>
+                                                </div>
+                                                <div class='w-50'>
+                                                    <p class='campos fuentes'>".$tipoCuentaDesc."</p>
+                                                </div>
+                                        </div>
+                                        <div class='fecha col-xl-6' style='display:flex; align-items:center'>
+                                                <div class='w-50'>
+                                                    <p class='campos fuentes'>Banco:</p>
+                                                </div>
+                                                <div class='w-50'>
+                                                    <p class='campos fuentes'>".$bancoDesc."</p>
+                                                </div>
+                                        </div>
                                   </div>
-                                  <div class='row col-xl-12 col-md-12 col-xs-12'>
-                                      <div class='fecha col-xl-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                  <div class='row col-lg-12 col-md-12 col-xs-12'>
+                                      <div class='fecha col-lg-2 col-md-2 col-xs-2 centrado-absoluto'>
                                           <p class='campos fuentes'>Dirección Recolección:</p>
                                       </div>
-                                      <div class='col-xl-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                      <div class='col-lg-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
                                           <p class='campos fuentes'>".$resultadoActual['pedidoDireccionInicio']." ".$resultadoActual['puntoInicioDesc']."</p>
                                       </div>
                                   </div>
-                                  <div class='row col-xl-12 col-md-12 col-xs-12'>
-                                      <div class='fecha col-xl-2 col-md-2 col-xs-2 centrado-absoluto'>
-                                          <p class='campos fuentes'>Dirección Final:</p>
+                                  <div class='row col-lg-12 col-md-12 col-xs-12'>
+                                      <div class='fecha col-lg-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                          <p class='campos fuentes'>Dirección Entrega:</p>
                                       </div>
-                                      <div class='col-xl-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                      <div class='col-lg-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
                                           <p class='campos fuentes'>".$resultadoActual['pedidoDireccionFinal']." ".$resultadoActual['puntoFinalDesc']." ".$resultadoActual['nombreLugarDesc']."</p>
                                       </div>
                                   </div>
-                                  <div class='row col-xl-12 col-md-12 col-xs-12'>
-                                      <div class='col-xl-6' style='display:flex'>
+                                  <div class='row col-lg-12 col-md-12 col-xs-12'>
+                                      <div class='col-lg-6' style='display:flex'>
                                         <div class='fecha w-50'>
                                             <p class='campos fuentes'>Mensajero:</p>
                                         </div>
@@ -225,17 +268,17 @@
                                             <p class='campos fuentes'>".$resultadoActual['mensajero']."</p>
                                         </div>
                                       </div>
-                                      <div class='col-xl-6' style='display:flex'>
+                                      <div class='col-lg-6' style='display:flex'>
                                         <div class='fecha w-50'>
-                                            <p class='campos fuentes'>Teléfono:</p>
+                                            <p class='campos fuentes'>Teléfono Receptor:</p>
                                         </div>
                                         <div class='w-50 fecha'>
                                             <p class='campos fuentes'>".$resultadoActual['pedidoTelefonoReceptor']."</p>
                                         </div>
                                       </div>
                                   </div>
-                                  <div class='row col-xl-12 col-md-12 col-xs-12' >
-                                    <div class='col-xl-6' style='display:flex;'>
+                                  <div class='row col-lg-12 col-md-12 col-xs-12' >
+                                    <div class='col-lg-6' style='display:flex;'>
                                         <div class='fecha w-50'>
                                             <p class='campos fuentes'>Estado:</p>
                                         </div>
@@ -243,23 +286,23 @@
                                             <p id='estado' class='campos fuentes'>".$resultadoActual['estadoPedidoDesc']."</p>
                                         </div>
                                     </div>
-                                    <div class='col-xl-6' style='display:flex;'>
+                                    <div class='col-lg-6' style='display:flex;'>
                                       <div class='w-50'>
-                                          <p class='campos fuentes'>Monto: ".$resultadoActual['pedidoMonto']."</p>
+                                          <p class='campos fuentes'>Monto paquete: ".$resultadoActual['pedidoMonto']."</p>
                                       </div>
                                       <div class='fecha w-50'>
-                                          <p class='campos fuentes'>Precio del Envío: ".$resultadoActual['pedidoCosto']."</p>
+                                          <p class='campos fuentes'>Precio  Envío: ".$resultadoActual['pedidoCosto']."</p>
                                       </div>
                                     </div>
+                                   </div>
                                   ";
                                     if($resultadoActual['estadoPedidoDesc']=='En Revisión'){
-                                        echo "<div class ='row col-xl-12 col-md-12 col-xs-12'>
+                                        echo "<div class ='row col-lg-12 col-md-12 col-xs-12'>
                                         <form  name='formConfirmar' id='formConfirmar'>
                                             <input type='hidden' name='id' value=".$resultadoActual['pedidoId'].">
                                             <input type='hidden' name='a' value='confirmar'>
                                             <button class='custom-btn btn-3' type='submit' form='formConfirmar'><span>Confirmar</span></button>
                                         </form>
-                                    </div>
                               </div>
                             </div>
                           ";
@@ -268,8 +311,22 @@
                                             echo "<button class='btn btn-success' type='submit' disabled><span>Confirmado</span></button> </div>
                                             </div>";
                                         }else{
-                                            echo "<button class='btn btn-success' type='submit' disabled><span>Entregado</span></button> </div>
-                                            </div>";
+                                            if($resultadoActual['estadoPedidoDesc']=='Entregado'){    
+                                                $pedidos2 = new Pedidos();
+                                                $resultado2 = $pedidos2->buscarRuta($resultadoActual['pedidoId']);
+                                                foreach($resultado2 as $resultadoActual2){
+                                                    $ruta = $resultadoActual2['rutasDesc'];
+                                                    ?>
+                                                        <img class="img-fluid" src="<?php echo $ruta?>">
+                                                    <?php
+                                                    break;
+                                                }
+                                                echo "
+                                                    <button class='btn btn-success' type='submit' disabled><span>Entregado</span></button> </div>
+                                                    </div>";
+                                            }else{
+                                                echo "error estado indefinido";
+                                            }
                                         }
                                         
                                     }
@@ -278,8 +335,8 @@
                   }else{
                       
                       echo "
-                      <div class='centrado fuentes h-100' style='font-size:2vw; color:white;'>
-                          <span>No se encontraron resultados de la busqueda</span>
+                      <div class='fuentes h-100 w-100' style='color:white; text-align:center'>
+                          <h2>No se encontraron resultados de la busqueda</h2>
                       </div>";
                   }
 
