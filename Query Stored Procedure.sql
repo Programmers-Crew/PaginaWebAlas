@@ -573,16 +573,23 @@ DELIMITER ;
 
 
 DELIMITER $$
-	create procedure Sp_ActualizarPedido(idBuscado int,direccion varchar(50),telefono varchar(8), descripcion varchar(50), monto decimal, pedidoDesc varchar(50),estado tinyint)
+	create procedure Sp_ActualizarPedido(idBuscado int,fecha date, puntoInicio int,direccionInicio varchar(150),puntoFinal int, direccionFinal varchar(150),  usuario int, telefono varchar(8), costo decimal,monto decimal, nombreReceptor varchar(50), pedidoDesc varchar(150))
 		begin
 			update Pedido as p
 				set 
-					p.pedidoDireccion = direccion,
+					p.pedidoFecha = fecha,
+                    p.pedidoPuntoInicio = puntoInicio,
+                    p.pedidoDireccionInicio = direccionInicio,
+                    p.pedidoPuntoFinal = puntoFinal,
+                    p.pedidoDireccionFinal = direccionFinal,
+                    p.pedidoUsuarioId = usuario,
                     p.pedidoTelefonoReceptor = telefono,
-                    p.pedidoDesc = descripcion,
-                    p.pedidoMonto = monto,
+                    p.pedidoCosto = costo,
+                    p.pedidoMonto =  monto,
+                    p.nombreReceptor = nombreReceptor,
                     p.pedidoDesc = pedidoDesc,
-                    p.pedidoEstadoId = estado
+                    p.pedidoMensajeroId = 1,
+                    p.pedidoEstadoId=1
 						where pedidoId = idBuscado;
 		end $$
 DELIMITER ;

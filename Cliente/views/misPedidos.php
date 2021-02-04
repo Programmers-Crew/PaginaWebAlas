@@ -202,10 +202,22 @@
                                         <p class='campos fuentes'>Precio del Envío: ".$resultadoActual['pedidoCosto']."</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
                                 ";
-                    }
+                                if($resultadoActual['estadoPedidoDesc']=='En Revisión'|| $resultadoActual['estadoPedidoDesc']=='Pendiente'){
+                                    $idPedido = $resultadoActual['pedidoId'];
+                                    echo "
+                                    <a class='custom-btn btn-3' style='text-decoration:none; text-align:center' href='index.php?a=EditarPedidoCliente&idPedido=".$idPedido."'><span>Editar</span></a>
+                                    </div>
+                                    </div>
+                                ";
+                                    }else{
+                                        if($resultadoActual['estadoPedidoDesc']='Entregado'){
+                                            echo "<button class='custom-btn btn-3' disabled><span>Entregado</span></button>
+                                            </div> </div>
+                                            ";
+                                        }
+                                    }   
+                                }
                 }else{
                     echo "
                     <div class='centrado fuentes h-100' style='font-size:2vw; color:white;'>

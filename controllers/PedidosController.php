@@ -114,6 +114,28 @@
             }
             return $resultado;
         }
+
+        public function pedidoEditado(){
+            $fecha = date('d/m/y');
+            $idPedido= $_POST['idPedido'];
+            $puntoInicio = $_POST['puntoInicio'];
+            $descInicio = $_POST['descripcionInicial'];
+            $puntoFinal = $_POST['puntoFinal'];
+            $descFinal = $_POST['descripcionFinal'];
+            $idUsuario = $_POST['id'];
+            $telefono = $_POST['telefono'];
+            $costo = $_POST['costo'];
+            $comentario = $_POST['comentario'];
+            $monto = $_POST['monto'];
+            $nombreReceptor = $_POST['nombre'];
+            $sql = "call Sp_ActualizarPedido('$idPedido','$fecha',$puntoInicio,'$descInicio',$puntoFinal,'$descFinal','$idUsuario','$telefono',$costo,$monto,'$nombreReceptor','$comentario')";
+            $resultado = $this->db->query($sql);
+            if($resultado){
+                include "config/solicitarPedidoEmail.php";
+            }
+            return $resultado;
+        }
+
         public function getPedidosMensajero($id){
             $sql = "call Sp_ListarPedidoMensajero('$id')";
             $resultado = $this->db->query($sql);

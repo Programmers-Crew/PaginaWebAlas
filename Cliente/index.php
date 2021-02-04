@@ -59,6 +59,21 @@ if(isset($_GET['a'])){
                 include_once 'views/inicioCliente.php';
             }
             break;
+        case 'EditarPedidoCliente':
+            include_once 'views/editarPedido.php';
+            break;
+        case 'pedidoEditado':
+            include_once 'controllers/PedidosController.php';
+            $pedidos = new Pedidos();
+            $resultado = $pedidos->pedidoEditado();
+            if($resultado){
+                $registrarExito = "Se ha solicitado su pedido con éxito";
+                include_once 'views/inicioCliente.php';
+            }else{
+                $errorRegistrar = "Ocurrió un error al registrar su pedido";
+                include_once 'views/inicioCliente.php';
+            }
+            break;
     }
 }else{
     include_once 'views/inicioCliente.php';
