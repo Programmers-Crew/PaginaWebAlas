@@ -9,6 +9,7 @@
 <html lang="es">
     <head>
         <title>AlasGT-Chat</title>        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" type="text/css">
@@ -21,84 +22,111 @@
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css.map" type="text/css">
-        <link rel="stylesheet" href="css/Login.css" type="text/css">
-        <link rel="stylesheet" href="css/inicio.css" type="text/css">
+        <link rel="stylesheet" href="css/chat.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     </head>
     <body>    
-        <div class="imagen_derecha-inicio">
-                <img src="assets/images/nube derecha.png" class="img-fluid" >
-        </div> 
-        <div class="imagen_izquierda-inicio">
-                    <img src="assets/images/nube izquierda.png" class="img-fluid" >
-        </div>
-        <header style="padding: 0;">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
-                <a class="" style="padding-left: 10px;" href="#">
-                    <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
-                </a>
-                <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content:flex-end;">
-                    <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Dudas o Inconvenientes(Chat)</a>
-                    </li>
-                    </ul>
-                    
-                </div>
-            </nav>
-        </header>
-        <section class="h-100">
-        <div class="inicio_sesion">
-
-        </div>
-        </section>
-        <footer class="w-100"  style="display: flex; justify-content:center">
-            <div class="col-lg-12   col-xs-12 footer-background">
-                <p class="footerText">Si necesitas más información de nuestros servicios<br>
-                    nos puedes escribir en nuestras redes sociales:</p>
-                <div>
-                    <div  style="display:flex; justify-content:center">
-                        <div style="padding-right: 5px;">
-                            <p class="iconoBrands facebook"> +502 4860 7638  +502 3596 2610</p>
+            <header style="padding: 0;">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
+                    <div class="w-100 d-flex">
+                        <div class="w-20 h-100">
+                            <a onclick="botonMenuChat()" class="iconoSolid botonChats"></a>
                         </div>
-                        <div style="padding-right: 5px; padding-left:5px;">
-                            <a href="https://www.facebook.com/Alasgt-693341821107003" class="iconoBrands facebook"> AlasGT</a>
-                        </div>
-                        <div style="padding-right: 5px; padding-left:5px;">
-                            <p class="icono facebook"> alasentregas@gmail.com</p>
+                        <div  class="w-80 opciones1">
+                            <a class="" style="padding-left: 10px;" href="#">
+                                <img src="assets/images/Logotipo sin fondo.png" width="75px" height="50" alt="">
+                            </a>
+                            <a class="navbar-brand" style="padding-left:10px" href="#"><?php echo $usuario->getNombre() ." ".$usuario->getApellido();?></a>
+                            <div  >
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
+                                    </li>
+                                </ul>
+                                
+                            </div>
                         </div>
                     </div>
+                </nav>
+            </header>
+        <section>
+            <div class="h-100 w-100 d-flex">
+                <div class="sidebar col-lg-3" id="sidebar">
+                    <div>
+                        <form class=" w-100" style="display: flex;" id="formBuscar" action="" method="POST">
+                            <input name="username" class="form-texto-buscar form-control   mr-sm-2" type="text" placeholder="Buscar Usuario">
+                            <button class="boton-search tamaño" type="submit"></button>
+                        </form>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <h5 class="titulos" style="color: white; text-align:center">Mis Chats</h5>
+                        <div class="salas">
+                            <a>Administrador</a>
+                        </div>
+                    </div>
+                   
                 </div>
-                <div style="display: flex; justify-content:center">
-                    <form action="#" id="correo">
-                        
-                        <div style="display: flex;">
-                            <input type="text" class="form-control" style="margin:7px;" required placeholder="Nombre completo" name="nombre">
-                            <input type="email" class="form-control" style="margin:7px;" required placeholder="Email" name="email">
-                        </div>
-                        <div style="display: flex;">
-                            <input type="number" class="form-control" style="margin:7px;" required placeholder="Teléfono" name="nombre">
-                        </div>
-                        <div style="display: flex;">
-                            <textarea  class="form-control form-correo textarea1" style="margin:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
-                        </div>
-                        <div style="display: flex; justify-content:center">
-                            <input type="submit" class="boton-black  btn-lg" style="margin:7px;" required value="ENVIAR">
-                        </div>
-                    </form>
+                <div>
+                    
                 </div>
+                <div class="contenedorMensajes">
+                    <div class="cajasTexto">
+                        <div class="contenedor1">
+                            <div class="cajaChatReceptor col-lg-6">
+                                <div>
+                                    <span>Davis Roldán</span>
+                                </div>
+                                <div>
+                                    <span>
+                                        Hola esto es un mensaje, tengo una duda
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        9.00 PM
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contenedor2">
+                            <div class="cajaChatUsuario col-lg-6">
+                                <div>
+                                    <span>Davis Roldán</span>
+                                </div>
+                                <div>
+                                    <span>
+                                        Hola esto es un mensaje, tengo una duda
+                                    </span>
+                                </div>
+                                <div>
+                                    <span>
+                                        9.00 PM
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contenedorForm">
+                        <div>
+                            <form style="display: flex; align-items:center">
+                                <div style="width: 80%; margin-left: 10px;">
+                                    <input type="text" class="form-control" placeholder="Ingrese su mensaje">
+                                </div>
+                                <div>
+                                    <button type="submit" form="formFecha" class="btn-3 custom-btn"><span style="font-family: fa-solid-900;"></span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                    
             </div>
-            
-        </footer>
+           
+        </section>
     </body>
+    <script src="scripts/chat.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

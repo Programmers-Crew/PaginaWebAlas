@@ -75,3 +75,5 @@ var texto = document.getElementById("texto");
 fichero.onchange = function () {
     texto.innerHTML = fichero.files[0].name;
 };
+
+
