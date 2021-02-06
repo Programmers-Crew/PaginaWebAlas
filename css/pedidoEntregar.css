@@ -22,7 +22,10 @@
       50%  { transform: translate(0, 10px); } 
       100%   { transform: translate(0, -0px); }     
   } 
-  
+  @font-face{
+    font-family: Berlin Sans FB;
+    src: url("../assets/fonts/Berlin\ Sans\ FB\ Regular.ttf");
+}
   @keyframes slide { 
       0% { transform: translate(0,  -505px); } 
       100%   { transform: translate(0, 0px); }     
