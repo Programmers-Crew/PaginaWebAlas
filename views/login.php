@@ -6,6 +6,7 @@
 <html lang="es">
     <head>
         <title>AlasGT</title>
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
@@ -93,13 +94,13 @@
                 </div>
                 <div class="w-100 centrado">
                     <div class="form-footer">
-                        <form action="#" id="correo">
+                        <form action="index.php?a=mandarCorreo" id="correo" method="POST">
                             <div class="d-flex">
                                 <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
                                 <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
                             </div>
                             <div class="d-flex">
-                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
+                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="telefono">
                             </div>
                             <div class="d-flex">
                                 <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>

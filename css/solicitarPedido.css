@@ -36,7 +36,10 @@
       100% {opacity: 100%;}
       } 
       
-      
+      @font-face{
+            font-family: Berlin Sans FB;
+            src: url("../assets/fonts/Berlin\ Sans\ FB\ Regular.ttf");
+      }
       html{
       min-height: 100%;
       }

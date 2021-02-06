@@ -11,6 +11,7 @@
     <head>
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>AlasGT - Registrar Usuario</title>
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" type="text/css">
@@ -176,7 +177,7 @@
             <div class="w-100 footer-background">
                 <p class="footerText">Si necesitas más información de nuestros servicios<br>
                     nos puedes escribir en nuestras redes sociales:</p>
-                <div class="w-90 d-flex centrado">
+                <div class="w-100 d-flex centrado">
                     <div class="col-xl-4 text-align-center">
                         <p class="iconoBrands facebook"> +502 4860 7638 <br> +502 3596 2610</p>
                     </div>
@@ -185,25 +186,6 @@
                     </div>
                     <div class="col-xl-4 text-align-center">
                         <p class="icono facebook centrado h-100 w-100"> alasentregas@gmail.com</p>
-                    </div>
-                </div>
-                <div class="w-100 centrado">
-                    <div class="form-footer">
-                        <form action="#" id="correo">
-                            <div class="d-flex">
-                                <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
-                                <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
-                            </div>
-                            <div class="d-flex">
-                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
-                            </div>
-                            <div class="d-flex">
-                                <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
-                            </div>
-                            <div class="centrado">
-                                <button type="submit"  form="correo" class="custom-btn btn-3"><span>Enviar</span></button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

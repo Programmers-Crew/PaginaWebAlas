@@ -120,11 +120,20 @@ const validarCampo= (expresion,input,campo)=>{
     }
 }
 
-inputs.forEach((input)=>{      
+inputs.forEach((input)=>{   
+      validarFormularioAlPrincipio(input);   
     input.addEventListener('keyup', validarFormulario); 
     input.addEventListener('blur', validarFormulario);
 });
+selects.forEach((input)=>{   
+      validarFormularioAlPrincipio(input);   
+});
 
+text.forEach((input)=>{   
+      validarFormularioAlPrincipio(input);   
+    input.addEventListener('keyup', validarFormulario); 
+    input.addEventListener('blur', validarFormulario);
+});
 
 formSolicitarPedido.addEventListener('submit', (e) =>{
     

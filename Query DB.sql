@@ -157,21 +157,23 @@ create table rutas(
     primary key PK_rutas (rutasId),
     constraint FK_rutas foreign key (pedidoid) references Pedido(pedidoId)
 );
-
-create table Sala(
+create table sala(
 	salaId int auto_increment not null,
-    salaDesc varchar(50) not null,
-    primary key PK_sala (salaId)
+	UsuarioSendMessageId int not null,
+	UsuarioReceiverId int not null,
+	primary key PK_sala (salaId),
+    constraint FK_UsuarioSendMessage foreign key (UsuarioSendMessageId) references Usuario(usuarioId),
+    constraint FK_UsuarioReceiverId foreign key (UsuarioReceiverId) references Usuario(usuarioId)
 );
-
 create table Mensaje(
-
 	mensajeId int auto_increment not null,
-    mensajeSalaId int not null, 
-    mensajeUsuarioId int not null,
+    idSalaMensaje int not null,
     mensajeDesc varchar(1000) not null,
-    mensajeFecha date not null,
+    UsuarioSendMessageId int not null,
+	UsuarioReceiverId int not null,
+    mensajeFecha timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     primary key PK_mensaje (mensajeId),
-    constraint FK_Mensaje_Sala foreign key (mensajeSalaId) references Sala(salaId),
-    constraint FK_Mensaje_Usuario foreign key (mensajeUsuarioId) references Usuario(usuarioId)
+     constraint FK_UsuarioSendMessageMensaje foreign key (UsuarioSendMessageId) references Usuario(usuarioId),
+    constraint FK_UsuarioReceiverIdMensaje foreign key (UsuarioReceiverId) references Usuario(usuarioId),
+    constraint FK_salaId foreign key (idSalaMensaje) references sala(salaId)
 );

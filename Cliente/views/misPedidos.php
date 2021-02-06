@@ -32,6 +32,7 @@
 <html lang="es">
     <head>
         <title>AlasGT-Mis Pedidos</title>
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
@@ -89,10 +90,10 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php">Inicio<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="index.php">Inicio<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link tamaño1" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
+                                <a class="nav-link" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
                             </li>
                             </ul>
                             
@@ -160,6 +161,14 @@
                                     </div>
                                 </div>
                                 <div class='row col-lg-12 col-md-12 col-xs-12'>
+                                    <div class='fecha col-lg-2 col-md-2 col-xs-2 centrado-absoluto'>
+                                        <p class='campos fuentes'>Comentario:</p>
+                                    </div>
+                                    <div class='col-lg-10 col-md-10 col-xs-10' style='display:flex;  align-items:center'>
+                                        <p class='campos fuentes'>".$resultadoActual['pedidoDesc']."</p>
+                                    </div>
+                                </div>
+                                <div class='row col-lg-12 col-md-12 col-xs-12'>
                                     <div class='col-lg-6' style='display:flex'>
                                         <div class='fecha w-50'>
                                             <p class='campos fuentes'>Mensajero:</p>
@@ -194,12 +203,23 @@
                                         <p class='campos fuentes'>Precio del Envío: ".$resultadoActual['pedidoCosto']."</p>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
                                 ";
-                    }
+                                if($resultadoActual['estadoPedidoDesc']=='En Revisión'|| $resultadoActual['estadoPedidoDesc']=='Pendiente'){
+                                    $idPedido = $resultadoActual['pedidoId'];
+                                    echo "
+                                    <a class='custom-btn btn-3' style='text-decoration:none; text-align:center' href='index.php?a=EditarPedidoCliente&idPedido=".$idPedido."'><span>Editar</span></a>
+                                    </div>
+                                    </div>
+                                ";
+                                    }else{
+                                        if($resultadoActual['estadoPedidoDesc']='Entregado'){
+                                            echo "<button class='custom-btn btn-3' disabled><span>Entregado</span></button>
+                                            </div> </div>
+                                            ";
+                                        }
+                                    }   
+                                }
                 }else{
-                    
                     echo "
                     <div class='centrado fuentes h-100' style='font-size:2vw; color:white;'>
                         <span>No se encontraron resultados de la busqueda</span>
@@ -225,25 +245,6 @@
                     </div>
                     <div class="ancho-40 text-align-center">
                         <p class="icono facebook centrado h-100 w-100"> alasentregas@gmail.com</p>
-                    </div>
-                </div>
-                <div class="w-100 centrado">
-                    <div class="form-footer">
-                        <form action="#" id="correo">
-                            <div class="d-flex">
-                                <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
-                                <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
-                            </div>
-                            <div class="d-flex">
-                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
-                            </div>
-                            <div class="d-flex">
-                                <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
-                            </div>
-                            <div class="centrado">
-                                <button type="submit"  form="correo" class="custom-btn btn-3"><span>Enviar</span></button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,345 @@
+@font-face{
+      font-family: Cream Cake;
+      src: url("../assets/fonts/Cream\ Cake.ttf");
+  }
+  
+  @font-face{
+      font-family: fa-regular-400;
+      src: url("../assets/fonts/fa-regular-400.ttf");
+  }
+  
+  @font-face{
+      font-family: fa-brands-400;
+      src: url("../assets/fonts/fa-brands-400.ttf");
+  }
+  @font-face{
+    font-family: Berlin Sans FB;
+    src: url("../assets/fonts/Berlin\ Sans\ FB\ Regular.ttf");
+}
+  @font-face{
+      font-family: fa-solid-900;
+      src: url("../assets/fonts/fa-solid-900.ttf");
+  }
+  
+  @keyframes floating { 
+      0% { transform: translate(0,  0px); } 
+      50%  { transform: translate(0, 10px); } 
+      100%   { transform: translate(0, -0px); }     
+  } 
+  
+  @keyframes slide { 
+      0% { transform: translate(0,  -505px); } 
+      100%   { transform: translate(0, 0px); }     
+  }
+  
+  @keyframes moto { 
+      5% { transform: rotate(-45deg) }
+      97% { transform: translate(80vw,0px);}
+      98% {transform:translateX(0)}
+      99% {opacity: 0%;}
+      100% {opacity: 100%;}
+  } 
+  
+  
+  html{
+    height: 100%;
+  }
+  
+  body{
+    background-image: url("../assets/images/fondo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+  section{
+      height: 90%;
+  }
+  .contenedor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .titulos{
+      font-family: Cream Cake;
+      font-size: 9vh;
+      color: #707070;
+  }
+  
+  .centrado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .imagen{
+      width: 74%;
+  }
+  .menu{
+      background-color: black !important;
+  }
+  .icono{
+      font-family: fa-regular-400;
+      padding-right: 7px;
+      color: #432A90;
+  }
+  .iconoBrands{
+      font-family: fa-brands-400;
+      color: #432A90;
+  }
+  .iconoSolid{
+      font-family: fa-solid-900;
+      padding-right: 7px;
+      color: #432A90;
+  }
+  .fuentes{
+      font-family: Berlin Sans FB;
+      font-size: 2vh;
+  }
+  .w-20{
+        width: 20%;
+  }
+  .w-80{
+        width: 80%;
+  }
+  .sidebar{
+        height: 100%;
+        display: block;
+        background-color: rgba(0, 0, 0, 0.8);
+  }
+  .chatsSalas{
+    margin-top: 10px;
+    height: 40%;
+    overflow-y: scroll;
+
+  }
+  .headerMenu{
+    width: 100%;
+    color: white;
+    padding: 15px;
+    background-color: black;
+  }
+  .totalMensajes{
+    height: 87%;
+    overflow-y: scroll;
+  }
+  .posiblesChats{
+    height: 40%;
+    overflow-y: scroll;
+  }
+  .opciones1{
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+  }
+  .botonChats{
+        font-size: 5vh;
+        color: white;
+  }
+  .botonChats:hover{
+        text-decoration: none;
+        color: white;
+        cursor: pointer;
+  }
+  .botonChat{
+      background-color: transparent;
+      color: white;
+      border: 0;
+      text-align: inherit;
+      width: 100%;
+  }
+
+  .cajaChatUsuario{
+        background-color: white;
+        border-radius: 5px;       
+      margin:5px;
+      padding:5px;
+      font-family: Berlin Sans FB;
+  }
+  .cajaChatReceptor{
+      background-color: white;
+      border-radius: 5px;       
+      margin:5px;
+      padding:5px;         
+      font-family: Berlin Sans FB;  
+  }
+  .usuario{
+    color: #4c3b7e;
+    margin-bottom: 10px;
+  }
+  .fecha{
+    color: #707070;
+    text-align: end;
+  }
+  .contenedor1{
+      width: 100%; 
+  }
+  .contenedor2{
+      display: flex;
+      justify-content: flex-end;
+      width: 100%; 
+  }
+  .boton-search{
+      background-color: transparent;
+      color: white;
+      text-align: left;
+      border: 0;
+      margin: 0;
+      font-family: fa-solid-900;
+  }
+  .form-texto-buscar {
+      border-top: 0 !important;
+      border-left: 0 !important;
+      border-right: 0 !important;
+      background-color: transparent !important;
+      color: white !important;
+      width: 88% !important;
+  }
+  .form-texto-buscar::-ms-fill{
+      color: white;
+  }
+  .form-texto-buscar:focus{
+      border-color: #432A90;
+      box-shadow:0px 10px 10px -8px #432A90;
+      outline: 0 none;
+  }
+  .salas{
+        background-color: black;
+        padding: 15px;
+        display: flex;
+        margin-top: 10px;
+        align-items: center;
+        color: white;
+        font-family: Berlin Sans FB;
+  }
+  .salas:hover{
+    transform: scale(1.02);    
+    -webkit-transition: transform 0.55s ease-in-out;
+    -webkit-box-shadow:3px 3px 3px 5px  #4c3b7e;  
+    box-shadow:        3px 3px 3px 5px  #4c3b7e; 
+  }
+  .contenedorMensajes{
+        height: 100%;
+        width: 100%;
+  }
+  .contenedorForm{
+      width: 100%;
+  }
+  .cajasTexto{
+        height: 90%;
+        width: 100%;
+  }
+  ::-webkit-scrollbar {display: none;}
+
+
+  
+  
+/*boton*/
+.custom-btn {
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px 25px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+       box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+       7px 7px 20px 0px rgba(0,0,0,.1),
+       4px 4px 5px 0px rgba(0,0,0,.1);
+      outline: none;
+    }
+  
+  .btn-3 {
+      background: rgb(91, 62, 179);
+    background: linear-gradient(0deg, rgba(91,62,179,1) 0%, rgba(67, 42, 144, 1) 100%);
+      line-height: 42px;
+      padding: 0;
+      border: none;
+      
+    }
+    .btn-3 span {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .btn-3:before,
+    .btn-3:after {
+      position: absolute;
+      content: "";
+      right: 0;
+      top: 0;
+       background: rgba(91,62,179,1);
+      transition: all 0.3s ease;
+    }
+    .btn-3:before {
+      height: 0%;
+      width: 2px;
+    }
+    .btn-3:after {
+      width: 0%;
+      height: 2px;
+    }
+    .btn-3:hover{
+       background: transparent;
+      box-shadow: none;
+    }
+    .btn-3:hover:before {
+      height: 100%;
+    }
+    .btn-3:hover:after {
+      width: 100%;
+    }
+    .btn-3 span:hover{
+       color:rgba(91,62,179,1);
+    }
+    .btn-3 span:before,
+    .btn-3 span:after {
+      position: absolute;
+      content: "";
+      left: 0;
+      bottom: 0;
+       background: rgba(91,62,179,1);
+      transition: all 0.3s ease;
+    }
+    .btn-3 span:before {
+      width: 2px;
+      height: 0%;
+    }
+    .btn-3 span:after {
+      width: 0%;
+      height: 2px;
+    }
+    .btn-3 span:hover:before {
+      height: 100%;
+    }
+    .btn-3 span:hover:after {
+      width: 100%;
+    }
+
+
+    @media only screen and (max-width:668px){
+      .sidebar{
+        position: absolute;
+        display: none;
+        height: 91% !important;
+        z-index: 1;
+      }
+      .contenedorMensajes{
+        z-index: 0;
+      }
+      html{
+        height: 103vh;
+      }
+      body{
+        height: 102vh;
+      }
+      .cajaChatReceptor{
+        width: 70%;
+      }
+      .cajaChatUsuario{
+        width: 70%;
+      }
+    }

@@ -16,7 +16,10 @@
       font-family: fa-solid-900;
       src: url("../assets/fonts/fa-solid-900.ttf");
   }
-  
+  @font-face{
+    font-family: Berlin Sans FB;
+    src: url("../assets/fonts/Berlin\ Sans\ FB\ Regular.ttf");
+}
   @keyframes floating { 
       0% { transform: translate(0,  0px); } 
       50%  { transform: translate(0, 10px); } 

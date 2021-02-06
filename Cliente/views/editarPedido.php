@@ -1,14 +1,30 @@
 <?php
     require_once 'controllers/puntosDireccionesController.php';
+    require_once 'controllers/PedidosController.php';
+    $pedidos = new Pedidos();
     $puntos = new PuntosDirecciones();
+
+    $resultado = $pedidos->getPedidosBuscadoCliente($_GET['idPedido'],$usuario->getId());
+    if($resultado){
+      foreach($resultado as $resultadoActual){
+            $nombreReceptor = $resultadoActual['nombreReceptor'];
+            $direccionInicio = $resultadoActual['puntoInicioDesc'];
+            $direccionFinal = $resultadoActual['puntoFinalDesc'];
+            $comentario = $resultadoActual['pedidoDesc'];
+            $telefono = $resultadoActual['pedidoTelefonoReceptor'];
+            $monto = $resultadoActual['pedidoMonto'];
+      }
+    }else{
+          echo "<p>NO PUEDES EDITAR ESTE PEDIDO</p>";
+    }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
     <head>
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>AlasGT-Solicitar Pedido</title> 
-        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />       
+        <title>AlasGT-Editar Pedido</title>        
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.min.css" type="text/css">
@@ -58,8 +74,9 @@
             <div class="inicio_sesion col-xl-12">
                         <div class="caja col-lg-9 col-md-10 col-xs-10">
                             <h2 class="titulos">Solicitar Pedido</h2>
-                            <form action="index.php?a=solicitarPedidoDB" id="formSolicitarPedido" class="formSolicitarPedido" method="POST">
+                            <form action="index.php?a=pedidoEditado" id="formSolicitarPedido" class="formSolicitarPedido" method="POST">
                                 <input type="hidden" name="id" value="<?php echo $usuario->getId(); ?>">
+                                <input type="hidden" name="idPedido" value="<?php echo $_GET['idPedido']?>">
                                 <input type="hidden" name="correoUsuario" value="<?php echo $usuario->getCorreo(); ?>">
                                 <?php
                                     if(isset($errorRegistrar)){
@@ -75,7 +92,7 @@
                                                 <p class="fuentes" style="color: #432A90; margin:0">Nombre de Receptor:</p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <input class="form-control form-texto" name="nombre" id="nombre" required  type="text" placeholder="Ingrese el nombre de la persona quien recibe el paquete">
+                                                <input class="form-control form-texto" name="nombre" id="nombre" value="<?php echo $nombreReceptor ?>" required  type="text" placeholder="Ingrese el nombre de la persona quien recibe el paquete">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -88,7 +105,7 @@
                                                 <p class="fuentes" style="color: #432A90; margin:0">Teléfono de Receptor: </p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <input class="form-control form-texto"  name="telefono" id="telefono" required placeholder="Ingrese el Teléfono de la persona quien recibe el paquete"  type="number">
+                                                <input class="form-control form-texto"  name="telefono" id="telefono" value="<?php echo $telefono ?>" required placeholder="Ingrese el Teléfono de la persona quien recibe el paquete"  type="number">
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -125,10 +142,10 @@
                                 <div class="col-lg-12 row" style="margin-top:10px; margin-right:0; margin-left:0;padding:0;">    
                                         <div class="col-lg-12 row" >
                                             <div class="col-lg-3" style="display: flex; align-items:center">
-                                                <p class="fuentes" style="color: #432A90; margin:0;text-align:initial">Descripción de Dirección Inicial:</p>
+                                                <p class="fuentes" style="color: #432A90; margin:0;text-align:initial">Descripción de Dirección Recolección:</p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <textarea  style="max-height: 200px;" oninput="descInicio()" id="descripcionInicial"  class="form-control form-control textarea1"  required placeholder="Breve descripción de donde se recojerá el paquete" name="descripcionInicial" form="formSolicitarPedido"></textarea>
+                                                <textarea  style="max-height: 200px;" oninput="descInicio()"  id="descripcionInicial"  class="form-control form-control textarea1"  required placeholder="Breve descripción de donde se recojerá el paquete" name="descripcionInicial" form="formSolicitarPedido"><?php echo $direccionInicio ?></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -157,7 +174,7 @@
                                                 <p class="fuentes" style="color: #432A90; margin:0; text-align:initial">Descripción de Dirección Final:</p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <textarea  style="max-height: 200px;" id="descripcionFinal" oninput="descFinal()" class="form-control textarea1"  required placeholder="Breve descripción de donde se entregará el paquete" name="descripcionFinal" form="formSolicitarPedido"></textarea>
+                                                <textarea  style="max-height: 200px;" id="descripcionFinal"  oninput="descFinal()" class="form-control textarea1"  required placeholder="Breve descripción de donde se entregará el paquete" name="descripcionFinal" form="formSolicitarPedido"><?php  echo $direccionFinal?></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -170,7 +187,7 @@
                                                 <p class="fuentes" style="color: #432A90; margin:0; text-align:initial">Comentario del paquete:</p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <textarea  style="max-height: 200px;" id="comentario" oninput="descComentario()" class="form-control textarea1"  required placeholder="Breve comentario, puede poner observaciones, datos extras para ayudar al mensajero etc." name="comentario" form="formSolicitarPedido"></textarea>
+                                                <textarea  style="max-height: 200px;" id="comentario"  oninput="descComentario()" class="form-control textarea1"  required placeholder="Breve comentario, puede poner observaciones, datos extras para ayudar al mensajero etc." name="comentario" form="formSolicitarPedido"><?php echo  $comentario ?></textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -183,7 +200,7 @@
                                                 <p class="fuentes" style="color: #432A90; margin:0">Monto: </p>
                                             </div>
                                             <div class="col-lg-9">
-                                                <input class="form-control form-texto"   name="monto" id="monto" required  type="number" step=".01" placeholder="Ingrese el monto que pagará el receptor">
+                                                <input class="form-control form-texto"    name="monto" id="monto" required  type="number" step=".01" placeholder="Ingrese el monto que pagará el receptor">
                                             </div>
                                         </div>
                                     <div class="col-lg-12">
@@ -198,12 +215,15 @@
                                             <div class="col-lg-9" id="precio">
                                             </div>
                                         </div>
-                                </div>                            
+                                </div>  
+                                <div>
+                                    <span>Si lo Editas Tu pedido pasará a estado de revisión de nuevo.</span>
+                                </div>                          
                                 <div>
                                     <span id="errorGlobal" class="error grupo-correcto">Hay campos incorrectos</span>
                                 </div>                           
                                 
-                                <button type="submit" form="formSolicitarPedido" class="custom-btn btn-3"><span>Solicitar</span></button>
+                                <button type="submit" form="formSolicitarPedido" class="custom-btn btn-3"><span>Editar</span></button>
                             </form>
                         </div>
                     </div>
@@ -233,7 +253,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="scripts/funciones.js"></script>
-        <script src="scripts/solicitar.js"></script>
+        <script src="scripts/editarPedido.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </html>

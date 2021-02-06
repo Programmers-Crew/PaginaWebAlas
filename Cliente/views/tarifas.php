@@ -9,6 +9,7 @@
 <html lang="es">
     <head>
         <title>AlasGT-Tarifas</title>
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
@@ -59,8 +60,8 @@
             <div class="centrado">
                 <h1 class="titulos" style="text-align: center;">Conoce Nuestras Tarifas</h1>
             </div>
-            <div class="col-xl-12 col-md-12 col-xs-12 row centrado" style="margin-right: 0; margin-left:0">
-                <div class="col-xl-9 col-md-9 col-xs-9 galeria row">
+            <div class="col-lg-12 col-md-12 col-xs-12 row centrado" style="margin-right: 0; margin-left:0">
+                <div class="col-lg-9 col-md-9 col-xs-9 galeria row">
                     <?php
                         $folder_path = 'assets/images/tarifas/'; 
 
@@ -76,7 +77,7 @@
                                 $nombre = basename($file_path,'.'.$extension);
                                 if($extension=='jpg' || $extension =='png' || $extension == 'gif' || $extension == 'bmp' || $extension == 'jpeg') {
                                     ?>  
-                                        <div class="columna col-xl-4 col-md-12 col-xs-12 centrado" id="columna" onclick="galeria('<?php echo $nombre.'.'.$extension; ?>');">
+                                        <div class="columna col-lg-4 col-md-12 col-xs-12 centrado" id="columna" onclick="galeria('<?php echo $nombre.'.'.$extension; ?>');">
                                             <div class="contenedor">
                                                 
                                                 <img class="img-fluid imagen-activado" id="imagenTarifa" name="imagenTarifa" src="<?php echo $file_path; ?>">
@@ -114,25 +115,6 @@
                     </div>
                     <div class="ancho-40 text-align-center">
                         <p class="icono facebook centrado h-100 w-100"> alasentregas@gmail.com</p>
-                    </div>
-                </div>
-                <div class="w-100 centrado">
-                    <div class="form-footer">
-                        <form action="#" id="correo">
-                            <div class="d-flex">
-                                <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
-                                <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
-                            </div>
-                            <div class="d-flex">
-                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
-                            </div>
-                            <div class="d-flex">
-                                <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
-                            </div>
-                            <div class="centrado">
-                                <button type="submit"  form="correo" class="custom-btn btn-3"><span>Enviar</span></button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

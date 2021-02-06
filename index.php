@@ -10,7 +10,12 @@
 
     $usuarioSesion = new User_session();
     $usuario = new Usuarios();
-
+    if(isset($_GET['a'])){
+        if($_GET['a']=='mandarCorreo'){
+            include_once 'config/mandarCorreo.php';
+            include_once 'views/Login.php';
+        }
+    }
     if(isset($_SESSION['usuario'])){
         $usuario -> setUsuario($usuarioSesion->getUsuarioActual());
         

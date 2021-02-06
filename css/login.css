@@ -27,7 +27,10 @@
     0% { transform: translate(0,  -505px); } 
     100%   { transform: translate(0, 0px); }     
 }
-
+@font-face{
+  font-family: Berlin Sans FB;
+  src: url("../assets/fonts/Berlin\ Sans\ FB\ Regular.ttf");
+}
 @keyframes moto { 
     5% { transform: rotate(-45deg) }
     97% { transform: translate(80vw,0px);}
