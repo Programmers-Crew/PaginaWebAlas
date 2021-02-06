@@ -9,6 +9,7 @@
 <html lang="es">
     <head>
         <title>AlasGT-cliente</title>
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
@@ -118,7 +119,7 @@
             <div class="w-100 footer-background">
                 <p class="footerText">Si necesitas más información de nuestros servicios<br>
                     nos puedes escribir en nuestras redes sociales:</p>
-                <div class="w-90 dis-flex centrado">
+                <div class="w-90 d-flex centrado">
                     <div class="ancho-40 text-align-center">
                         <p class="iconoBrands facebook"> +502 4860 7638 <br> +502 3596 2610</p>
                     </div>
@@ -131,13 +132,13 @@
                 </div>
                 <div class="w-100 centrado">
                     <div class="form-footer">
-                        <form action="#" id="correo">
+                        <form action="index.php?a=mandarCorreo" id="correo" method="POST">
                             <div class="d-flex">
                                 <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
                                 <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
                             </div>
                             <div class="d-flex">
-                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
+                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="telefono">
                             </div>
                             <div class="d-flex">
                                 <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
@@ -150,7 +151,7 @@
                 </div>
             </div>
             
-    </footer>      
+        </footer>      
     <script src="scripts/funciones.js"></script>          
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

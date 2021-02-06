@@ -103,6 +103,9 @@
       
     }
     
+a{
+  font-family: Berlin sans FB;
+}
     .imagen_izquierda{
         z-index: 0;
         position: absolute;

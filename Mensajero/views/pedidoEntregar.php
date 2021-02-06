@@ -7,6 +7,7 @@
 <html lang="es">
     <head>
         <title>AlasGT - Entregar Pedido</title>
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">

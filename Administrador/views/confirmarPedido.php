@@ -6,7 +6,8 @@
 
 <html lang="es">
     <head>
-        <title>AlasGT - Confirmar Usuario</title>
+        <title>AlasGT - Confirmar Pedido</title>
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
@@ -44,16 +45,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?a=chat">Dudas o Inconvenientes(Chat)</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Mi Cuenta
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="index.php?a=editarCuenta">Editar Cuenta</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="config/cerrarSesion.php">Cerrar Sesión</a>
-                        </div>
                     </li>
                     </ul>
                     

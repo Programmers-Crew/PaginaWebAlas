@@ -1,3 +1,50 @@
+#listarChatsusuario
+	DELIMITER $$
+	CREATE PROCEDURE Sp_ListarChatsUsuario( idBuscado int)
+		BEGIN
+			SELECT s.UsuarioSendMessageId, s.UsuarioReceiverId, send.userName as senUser, receiver.userName as receptorUser
+			FROM sala as s, usuario as send, usuario as receiver
+			WHERE s.UsuarioSendMessageId = send.usuarioid and s.UsuarioReceiverId = receiver.usuarioid and idBuscado = s.UsuarioSendMessageId 
+            group by s.UsuarioSendMessageId;
+		END $$
+	DELIMITER ;
+DELIMITER $$
+CREATE PROCEDURE Sp_CrearSala(sendId int, receiverId int)
+	BEGIN
+		insert into sala(UsuarioSendMessageId, UsuarioReceiverid) values(sendId,receiverId),(receiverId,sendId);
+    END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE SpBuscarSala(sendId int, receiverId int)
+	BEGIN
+		SELECT salaId, UsuarioSendMessageId, UsuarioReceiverId
+        FROM sala
+        WHERE (UsuarioSendMessageId = sendId and receiverId = UsuarioReceiverId)
+        or (UsuarioSendMessageId = UsuarioReceiverId  and receiverId =sendId )
+        group by usuarioREceiverId;
+    END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE Sp_ListarMensajes(receptor int, send int)
+	BEGIN
+		SELECT m.mensajeid,mensajeDesc, send.userName as send, receiver.userName as receptor, m.mensajeFecha, m.UsuarioSendMessageId
+		FROM mensaje as m, sala as s, usuario as send, usuario as receiver
+        WHERE ((m.UsuarioSendMessageId = send.usuarioId and m.UsuarioReceiverId = receiver.usuarioid)
+				or ( m.UsuarioSendMessageId =  receiver.usuarioid and m.UsuarioReceiverId = send.usuarioId))
+                and ((m.UsuarioSendMessageId = send and m.UsuarioReceiverId = receptor)
+				or ( m.UsuarioSendMessageId =  receptor and m.UsuarioReceiverId = send))
+                group by m.mensajeId order by m.mensajeFecha ASC;
+    END $$
+DELIMITER ;
+
+DELIMITER $$
+	CREATE PROCEDURE Sp_AgregarMensaje(mensajeText varchar(1000), idSala int,send int, receiver int)
+		BEGIN
+        insert into mensaje(idSalaMensaje, mensajeDesc,UsuarioSendMessageId,UsuarioReceiverId) values(idSala,mensajeText,send,receiver);
+        END $$
+DELIMITER ;
 #datos mensajero
 DELIMITER $$
 	CREATE PROCEDURE Sp_BuscarRuta(pedidobuscado int)
@@ -320,28 +367,37 @@ DELIMITER $$
 	create procedure Sp_ListarUsuario()
 		begin 
 			select 
+					u.usuarioId,
 					u.userName,
 					u.usuarioNombre,
 					u.usuarioApellido,
                     u.usuarioCorreo,
 					u.usuarioContrasena,
-                    u.estadoUsuarioId,
-                    tu.tipoUsuarioDesc,
-                    e.empresaDesc,
-                    e.empresaNumeroCuenta,
-                    e.empresaNombreCuenta,
-                    tp.empresaCuentaTipo,
-                    b.empresaBanco
+                    u.estadoUsuarioId
 					from
 						Usuario as u
 							inner join tipoUsuario  as tu
 									on u.tipoUsuarioId = tu.tipoUsuarioId
-										inner join Empresa as e
-											on u.empresaId = e.empresaId
-												inner join tipocuenta as tp
-													on e.empresaCuentaTipo = tp.tipoCuentaId
-														inner join Banco as b
-															on  e.empresaBanco = b.bancoId;
+                                                            where estadoUsuarioId=2;
+        end $$
+DELIMITER ;
+
+DELIMITER $$
+	create procedure Sp_BuscarUsuarioChat(usuario varchar(25))
+		begin 
+			select 
+					u.usuarioId,
+					u.userName,
+					u.usuarioNombre,
+					u.usuarioApellido,
+                    u.usuarioCorreo,
+					u.usuarioContrasena,
+                    u.estadoUsuarioId
+					from
+						Usuario as u
+							inner join tipoUsuario  as tu
+									on u.tipoUsuarioId = tu.tipoUsuarioId
+                                                            where estadoUsuarioId=2 and u.userName LIKE concat('%' , usuario , '%');
         end $$
 DELIMITER ;
 
@@ -429,7 +485,6 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ListarPedido()
 		begin
-<<<<<<< HEAD
 	select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
 			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,p.pedidoDesc,cliente.userName as cliente,
 			p.pedidoUsuarioId,p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, p.pedidoCosto, fp.formaPagoDesc, ep.estadoPedidoDesc
@@ -446,8 +501,6 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ListarPedidoMensajero(mensajeroId int)
 		begin
-=======
->>>>>>> Diego-Gonzalez
 	select  p.pedidoId,
 			p.pedidoFecha,
 			p.nombreReceptor,
@@ -498,8 +551,6 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ListarPedidoMensajero(mensajeroId int)
 		begin
-<<<<<<< HEAD
-=======
 	select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
 			pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
 			p.pedidoUsuarioId,p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, p.pedidoCosto, fp.formaPagoDesc, ep.estadoPedidoDesc
@@ -516,7 +567,6 @@ DELIMITER ;
 DELIMITER $$
 	create procedure Sp_ListarPedidosCliente(usuario1 int)
 		begin
->>>>>>> Diego-Gonzalez
 			select  p.pedidoId,
             p.pedidoFecha,
             p.nombreReceptor,
@@ -555,11 +605,7 @@ DELIMITER $$
                     and pf.nombreLugar = nl.nombreLugarId
 					and mensajero.usuarioId = p.pedidomensajeroId
                     group by pedidoId
-<<<<<<< HEAD
-						order by p.pedidoFecha ASC ;
-=======
 						order by p.pedidoFecha ASC;
->>>>>>> Diego-Gonzalez
         end $$
 DELIMITER ;
 
@@ -693,25 +739,7 @@ DELIMITER $$
 DELIMITER ;
 
 
-#Mensajes
 
-DELIMITER $$
-	create procedure Sp_ListarMensajes(salaBuscada int)
-		begin
-			select 
-				m.mensajeDesc
-					where mensajeSalaId = salaBuscada;
-		end $$
-DELIMITER ;
-
-
-DELIMITER $$
-	create procedure Sp_EnviarMensaje(sala int, usuario int, descripcion varchar(100), fecha date)
-		begin
-			insert into Mensaje(mensajeSalaId,mensajeUsuarioId,mensajeDesc,mensajeFecha)
-				values(sala, usuario, descripcion, fecha);
-        end $$
-DELIMITER ;
 
 
 DELIMITER $$
@@ -954,15 +982,12 @@ DELIMITER $$
 	create procedure Sp_BuscarPedido(idBuscado int)
 		begin 
 			select  p.pedidoId, p.pedidoFecha, p.nombreReceptor, pi.puntoInicioDesc, p.pedidoDireccionInicio, 
-<<<<<<< HEAD
-				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.empresaBanco,cliente.empresaCuentaTipo,cliente.userName as cliente, cliente.usuarioId as clienteId, p.pedidoUsuarioId,
-				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, p.pedidoCosto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc,p.pedidoDesc
-=======
+
 				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente,
 				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc,p.pedidoDesc,
 				pf.puntoFinalDesc, nl.nombreLugarDesc, p.pedidoDireccionFinal,cliente.userName as cliente, p.pedidoUsuarioId as clienteId,
 				p.pedidoTelefonoReceptor,mensajero.userName as mensajero, P.pedidoMonto, p.pedidoCosto, ca.costoPedidoDesc, fp.formaPagoDesc, ep.estadoPedidoDesc
->>>>>>> Diego-Gonzalez
+
 			from Pedido as p, nombrelugar as nl, puntofinal as pf, puntoInicio as pi, costoasignado as ca, estadopedido as ep,
 				usuario as mensajero, usuario as cliente, formapago as fp, costoPedido as cp
 			where p.pedidoId = idBuscado  and p.pedidoPuntoInicio = pi.puntoInicioCodigo and p.pedidoPuntoFinal = pf.puntoFinalCodigo

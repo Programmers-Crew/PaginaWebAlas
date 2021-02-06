@@ -222,25 +222,6 @@
                         <p class="icono facebook centrado h-100 w-100"> alasentregas@gmail.com</p>
                     </div>
                 </div>
-                <div class="w-100 centrado">
-                    <div class="form-footer">
-                        <form action="#" id="correo">
-                            <div class="d-flex">
-                                <input type="text" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px; margin-right:7px" required placeholder="Nombre completo" name="nombre">
-                                <input type="email" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Email" name="email">
-                            </div>
-                            <div class="d-flex">
-                                <input type="number" class="form-control form-correo" style="margin-top:7px; margin-bottom:7px;" required placeholder="Teléfono" name="nombre">
-                            </div>
-                            <div class="d-flex">
-                                <textarea  class="form-control form-correo textarea1" style="margin-top:7px; margin-bottom:7px;" required placeholder="Escribe tu mensaje" name="mensaje" form="correo"></textarea>
-                            </div>
-                            <div class="centrado">
-                                <button type="submit"  form="correo" class="custom-btn btn-3"><span>Enviar</span></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
             
         </footer> 

@@ -48,7 +48,7 @@
     height: 100%;
   }
   section{
-      height: 89%;
+      height: 90%;
   }
   .contenedor{
     display: flex;
@@ -58,7 +58,7 @@
   }
   .titulos{
       font-family: Cream Cake;
-      font-size: 11vh;
+      font-size: 9vh;
       color: #707070;
   }
   
@@ -100,10 +100,28 @@
   .sidebar{
         height: 100%;
         display: block;
-        overflow-y: scroll;
         background-color: rgba(0, 0, 0, 0.8);
   }
-  
+  .chatsSalas{
+    margin-top: 10px;
+    height: 40%;
+    overflow-y: scroll;
+
+  }
+  .headerMenu{
+    width: 100%;
+    color: white;
+    padding: 15px;
+    background-color: black;
+  }
+  .totalMensajes{
+    height: 87%;
+    overflow-y: scroll;
+  }
+  .posiblesChats{
+    height: 40%;
+    overflow-y: scroll;
+  }
   .opciones1{
         display: flex;
         justify-content: flex-end;
@@ -118,17 +136,35 @@
         color: white;
         cursor: pointer;
   }
+  .botonChat{
+      background-color: transparent;
+      color: white;
+      border: 0;
+      text-align: inherit;
+      width: 100%;
+  }
+
   .cajaChatUsuario{
         background-color: white;
         border-radius: 5px;       
       margin:5px;
       padding:5px;
+      font-family: Berlin Sans FB;
   }
   .cajaChatReceptor{
       background-color: white;
       border-radius: 5px;       
       margin:5px;
-      padding:5px;     
+      padding:5px;         
+      font-family: Berlin Sans FB;  
+  }
+  .usuario{
+    color: #4c3b7e;
+    margin-bottom: 10px;
+  }
+  .fecha{
+    color: #707070;
+    text-align: end;
   }
   .contenedor1{
       width: 100%; 
@@ -166,9 +202,16 @@
         background-color: black;
         padding: 15px;
         display: flex;
+        margin-top: 10px;
         align-items: center;
         color: white;
         font-family: Berlin Sans FB;
+  }
+  .salas:hover{
+    transform: scale(1.02);    
+    -webkit-transition: transform 0.55s ease-in-out;
+    -webkit-box-shadow:3px 3px 3px 5px  #4c3b7e;  
+    box-shadow:        3px 3px 3px 5px  #4c3b7e; 
   }
   .contenedorMensajes{
         height: 100%;
@@ -176,11 +219,9 @@
   }
   .contenedorForm{
       width: 100%;
-      height: 20%;
   }
   .cajasTexto{
-        height: 80%;
-        overflow-y: scroll;
+        height: 90%;
         width: 100%;
   }
   ::-webkit-scrollbar {display: none;}
@@ -190,8 +231,6 @@
   
 /*boton*/
 .custom-btn {
-      width: 130px;
-      height: 40px;
       color: #fff;
       border-radius: 5px;
       padding: 10px 25px;
@@ -207,15 +246,10 @@
        4px 4px 5px 0px rgba(0,0,0,.1);
       outline: none;
     }
-    button {
-      margin: 20px;
-    }
   
   .btn-3 {
       background: rgb(91, 62, 179);
     background: linear-gradient(0deg, rgba(91,62,179,1) 0%, rgba(67, 42, 144, 1) 100%);
-      width: 130px;
-      height: 40px;
       line-height: 42px;
       padding: 0;
       border: none;
@@ -279,4 +313,29 @@
     }
     .btn-3 span:hover:after {
       width: 100%;
+    }
+
+
+    @media only screen and (max-width:668px){
+      .sidebar{
+        position: absolute;
+        display: none;
+        height: 91% !important;
+        z-index: 1;
+      }
+      .contenedorMensajes{
+        z-index: 0;
+      }
+      html{
+        height: 103vh;
+      }
+      body{
+        height: 102vh;
+      }
+      .cajaChatReceptor{
+        width: 70%;
+      }
+      .cajaChatUsuario{
+        width: 70%;
+      }
     }

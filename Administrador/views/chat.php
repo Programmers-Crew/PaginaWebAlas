@@ -1,6 +1,6 @@
 <?php
 
-
+    include_once 'controllers/chatController.php';
 ?>
 
 
@@ -9,6 +9,7 @@
 <html lang="es">
     <head>
         <title>AlasGT-Chat</title>        
+        <link rel="shortcut icon" href="assets/images/Logotipo sin fondo.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css" type="text/css">
         <link rel="stylesheet" href="bootstrap/css/bootstrap-grid.css.map" type="text/css">
@@ -53,16 +54,70 @@
         <section>
             <div class="h-100 w-100 d-flex">
                 <div class="sidebar col-lg-3" id="sidebar">
-                    <div>
-                        <form class=" w-100" style="display: flex;" id="formBuscar" action="" method="POST">
-                            <input name="username" class="form-texto-buscar form-control   mr-sm-2" type="text" placeholder="Buscar Usuario">
-                            <button class="boton-search tamaño" type="submit"></button>
-                        </form>
+                    <div style="display: flex;">
+                        <input name="username" id="userNameBuscar" class="form-texto-buscar form-control   mr-sm-2" type="text" placeholder="Buscar Usuario (userName)">
+                        <button class="boton-search tamaño" type="button" href="javascript:;" onclick="buscarUserName()"></button>
+                       
                     </div>
-                    <div style="margin-top: 10px;">
-                        <h5 class="titulos" style="color: white; text-align:center">Mis Chats</h5>
-                        <div class="salas">
-                            <a>Administrador</a>
+                    <div class="chatsSalas">
+                        <h5 class="titulos" style="color: white; text-align:center">Chats:</h5>
+                        <?php 
+                            $chatObtenerChat = new Chat();
+                            $resultadoObtenerChat = $chatObtenerChat->listarUsuarioChat($usuario->getId());
+                            if($resultadoObtenerChat->fetch_row()){
+                                foreach($resultadoObtenerChat as $resultadoActual2){
+                                    ?>
+                                        <div class="salas">
+                                               <?php
+                                                    $chatObtenerSala = new Chat();
+                                                    $receiver = $resultadoActual2['UsuarioReceiverId'];
+                                                    $receptorname1 = $resultadoActual2["receptorUser"];
+                                                    $sala = $chatObtenerSala->buscarSala($usuario->getId(),$receiver);
+                                               ?>
+                                               
+                                               <input type="hidden" id="receptorName" value="<?php echo $resultadoActual2['receptorUser'] ?>">
+                                                <input type="button"  onclick="nuevoUsuario(<?php echo $receiver ?>,<?php echo $usuario->getId()?>,'<?php echo $receptorname1 ?>','<?php echo $usuario->getUsuario() ?>')" class="botonChat" value="<?php echo $resultadoActual2['receptorUser'] ?>">
+                                        </div>
+                                    <?php
+                                }
+                            }else{
+                                ?>
+                                    <h5 style="color: white; text-align:center" id="valido">No tienes Chats por el momento</h5>
+                                <?php
+                            }
+
+                        ?>
+                    </div>
+                    <div class="posiblesChats">
+                        <h5 class="titulos" style="color: white; text-align:center">Usuarios</h5>
+                        <div id="contenedorPosiblesChat">
+                            <div id="contentDefect">
+                            <?php 
+                                $chatObtenerUsuario = new Chat();
+                                $resultadoObtenerUsurio = $chatObtenerUsuario->listarUsuario();
+                                if($resultadoObtenerUsurio->fetch_row()){
+                                    foreach($resultadoObtenerUsurio as $resultadoActual){
+                                        ?>
+                                            <div class="salas">
+                                                <form action="index.php?a=nuevoChat" style="width: 100%;" id="formSalas" method="POST">
+                                                    <input type="hidden"  id="idUsuarioReceiver" value="<?php echo $chatObtenerUsuario->getReceptorId()?>">
+                                                    <input type="hidden" name="idUsuarioReceiver" value="<?php echo $resultadoActual['usuarioId'] ?>">
+                                                    <input type="hidden" name="idUsuarioSend" id="idSend" value="<?php echo $usuario->getId() ?>">
+                                                    <input type="hidden" id="nombre" value="<?php $receptorname1?>">
+                                                    <input type="submit" class="botonChat" id="botonChat"  value="<?php echo $resultadoActual['userName'] ?>">
+                                                </form>
+                                            </div>
+                                        <?php
+                                    }
+                                }else{
+                                    ?>
+                                        <h5 id="valido" style="color: white; text-align:center">No hay Usuarios Registrados</h5>
+                                    <?php
+                                }
+                            
+
+                            ?>
+                            </div>
                         </div>
                     </div>
                    
@@ -70,53 +125,20 @@
                 <div>
                     
                 </div>
-                <div class="contenedorMensajes">
-                    <div class="cajasTexto">
-                        <div class="contenedor1">
-                            <div class="cajaChatReceptor col-lg-6">
-                                <div>
-                                    <span>Davis Roldán</span>
-                                </div>
-                                <div>
-                                    <span>
-                                        Hola esto es un mensaje, tengo una duda
-                                    </span>
-                                </div>
-                                <div>
-                                    <span>
-                                        9.00 PM
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contenedor2">
-                            <div class="cajaChatUsuario col-lg-6">
-                                <div>
-                                    <span>Davis Roldán</span>
-                                </div>
-                                <div>
-                                    <span>
-                                        Hola esto es un mensaje, tengo una duda
-                                    </span>
-                                </div>
-                                <div>
-                                    <span>
-                                        9.00 PM
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="contenedorMensajes" id="contenedorMensajes">
+                    <div class="cajasTexto" id="contenedorMensaje1"> 
+                        <h5 id="validoMensaje" style="color: white; text-align:center">Selecciona un chat</h5>
                     </div>
                     <div class="contenedorForm">
-                        <div>
-                            <form style="display: flex; align-items:center">
-                                <div style="width: 80%; margin-left: 10px;">
-                                    <input type="text" class="form-control" placeholder="Ingrese su mensaje">
+                        <div style="display:flex; align-items:center" class="block">
+                                <div style="width: 75%; margin-left: 10px; margin-right:10px">
+                                    <input type="hidden" id="receiver" value="<?php echo $receiver ?>">
+                                    <input type="hidden" id="idUsuario" value="<?php echo $usuario->getId() ?>">
+                                    <input type="text" name="mensaje" id="mensaje" class="form-control" placeholder="Ingrese su mensaje">
                                 </div>
-                                <div>
-                                    <button type="submit" form="formFecha" class="btn-3 custom-btn"><span style="font-family: fa-solid-900;"></span></button>
+                                <div style="width: 20%;">
+                                    <button  style="width: 100%;" onclick="nuevoMensaje($('#mensaje').val(),<?php echo $sala ?>,<?php echo $usuario->getId(); ?>,<?php echo $receiver ?>)"  class="btn-3 custom-btn"><span style="font-family: fa-solid-900;"></span></button>
                                 </div>
-                            </form>
                         </div>
                     </div>
 
@@ -126,8 +148,10 @@
            
         </section>
     </body>
-    <script src="scripts/chat.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="scripts/chat.js"></script>
 </html>
