@@ -1183,7 +1183,7 @@ DELIMITER $$
 			end $$
 DELIMITER ;
 
-call Sp_MensajeroPaga("2021-01-27","2021-01-27")
+call Sp_MensajeroPaga("2021-02-03","2021-02-04")
 DELIMITER $$
 	create procedure Sp_MensajeroPaga(fechaInicio date, fechaFinal date)
 		begin
@@ -1205,6 +1205,26 @@ DELIMITER $$
         end $$
 DELIMITER ;
 
+DELIMITER $$
+	create procedure Sp_MensajeroPagaCC(fechaInicio date, fechaFinal date)
+		begin
+			select distinct 
+			mensajero.userName as mensajero,
+            p.pedidoId, 
+            pedidoFecha, 
+			fp.formaPagoDesc,
+            sum(distinct pedidoCosto - 5) as "Sueldo mensajero",
+            count(distinct pedidoId)*5 as "Ingreso Neto"
+				from pedido as p 
+					inner join usuario as mensajero
+						on p.pedidoMensajeroId = mensajero.usuarioId
+                        inner join formapago as fp
+						on p.pedidoFormaPagoId = fp.formaPagoId
+							where pedidoFecha between fechaInicio and fechaFinal
+								group by mensajero;
+				
+        end $$
+DELIMITER ;
 #-------------------------------------------------------------------------
 DELIMITER $$
 	create procedure Sp_SubReporteCierreDeCaja(fechaCorte date)
@@ -1220,7 +1240,7 @@ DELIMITER $$
 		end $$
 DELIMITER ;
 
-call Sp_SubReporteCierreDeCaja("2021-01-27","2021-01-27")
+call Sp_ReporteCierreDeCaja("2021-02-03","2021-02-04")
 
 DELIMITER $$
 	create procedure Sp_ReporteCierreDeCaja(fechaInicio date, fechaFinal date)
